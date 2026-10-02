@@ -1,0 +1,9 @@
+.DS_Store
+*.mov
+*.pdf
+*.PNG
+*.jpg
+!assets/**
+Vasitos/
+Petit Four/
+Tortas/

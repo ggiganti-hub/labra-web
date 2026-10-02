@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LABRA · Pastelería Artesanal en Caballito | Catálogo</title>
+  
+  <meta name="description" content="Pastelería artesanal en Caballito. Tortas y bocados elaborados con materias primas nobles bajo pedido con 48 hs de anticipación.">
+  <meta name="theme-color" content="#46543D">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LABRA · Pastelería Artesanal">
+  <meta property="og:description" content="Pastelería honesta, fresca y hecha a mano en Caballito. Catálogo y pedidos por WhatsApp.">
+  <meta property="og:image" content="assets/images/products/torta-rogel.jpg">
+
+  <!-- Favicon con Logo Verde -->
+  <link rel="icon" type="image/png" href="assets/images/logo-web.png">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Aviso sutil superior -->
+  <div class="top-bar" aria-label="Aviso">
+    <div class="container top-bar-inner">
+      <span>Pedidos con <strong>48 hs de anticipación</strong> · Retiro por <strong>Caballito</strong> · Coordinación directa por WhatsApp</span>
+    </div>
+  </div>
+
+  <!-- Header minimalista -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand-logo-wrap" aria-label="LABRA Pastelería">
+        <img src="assets/images/logo-web.png" alt="LABRA" class="brand-logo-img">
+        <span class="brand-subtitle">PASTELERÍA</span>
+      </a>
+
+      <!-- Navegación -->
+      <nav class="nav-desktop" aria-label="Navegación principal">
+        <a href="#catalogo" class="nav-link">Catálogo</a>
+        <a href="#como-pedir" class="nav-link">Cómo Pedir</a>
+        <a href="#faq" class="nav-link">Preguntas</a>
+      </nav>
+
+      <!-- Acciones directas -->
+      <div class="header-actions">
+        <button type="button" class="order-pill-btn js-open-order-drawer" aria-label="Abrir mi lista de pedido">
+          <span>📋 Mi Pedido</span>
+          <span class="order-pill-badge js-order-count-badge">0</span>
+        </button>
+
+        <a href="https://wa.me/5491173718584?text=%C2%A1Hola%20LABRA!%20Quisiera%20hacer%20un%20pedido." target="_blank" rel="noopener" class="btn-whatsapp">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+          <span>WhatsApp</span>
+        </a>
+
+        <button type="button" class="menu-toggle-btn" id="menu-toggle-btn" aria-label="Menú">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menú móvil -->
+    <div class="mobile-nav-panel" id="mobile-nav-panel">
+      <a href="#catalogo" class="mobile-nav-link">Catálogo</a>
+      <a href="#como-pedir" class="mobile-nav-link">Cómo Pedir</a>
+      <a href="#faq" class="mobile-nav-link">Preguntas Frecuentes</a>
+      
+      <div class="mobile-nav-actions">
+        <button type="button" class="btn-primary js-open-order-drawer" style="width: 100%;">
+          Ver mi lista de pedido (<span class="js-order-count-badge">0</span>)
+        </button>
+        <a href="https://wa.me/5491173718584" target="_blank" rel="noopener" class="btn-whatsapp" style="justify-content: center;">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+          WhatsApp directo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         Hero Minimalista
+         ====================================================================== -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-text-side">
+            <span class="hero-tagline">PASTELERÍA ARTESANAL · CABALLITO</span>
+            
+            <h1 class="hero-title">
+              Pastelería honesta, hecha con <em>tiempo</em> y materias primas nobles.
+            </h1>
+
+            <p class="hero-subtitle">
+              Elaboramos cada pieza desde cero y bajo pedido exclusivo. Sin atajos industriales, con manteca pura, vainillas caseras y frutos de estación.
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="#catalogo" class="btn-primary">
+                <span>Ver Catálogo</span>
+                <span>↓</span>
+              </a>
+              <a href="https://wa.me/5491173718584?text=%C2%A1Hola%20LABRA!%20Quisiera%20hacerles%20una%20consulta." target="_blank" rel="noopener" class="btn-outline">
+                <span>Consultar por WhatsApp</span>
+              </a>
+            </div>
+
+            <div class="hero-meta-inline">
+              <span>🌿 100% Artesanal</span>
+              <span>·</span>
+              <span>⏱️ 48 hs de anticipación</span>
+              <span>·</span>
+              <span>📍 Retiro en Caballito</span>
+            </div>
+          </div>
+
+          <!-- Imagen destacada limpia -->
+          <div class="hero-showcase">
+            <div class="hero-card-main">
+              <div class="hero-card-img-wrap">
+                <img src="assets/images/products/torta-rogel.jpg" alt="Rogel artesanal LABRA" class="hero-card-img">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Catálogo de Productos
+         ====================================================================== -->
+    <section class="catalog-section" id="catalogo">
+      <div class="container">
+        <div class="catalog-header">
+          <h2 class="section-title">Nuestras Creaciones</h2>
+          <p class="section-subtitle">
+            Hacé click en <strong>"Pedir"</strong> para encargar directamente por WhatsApp, o sumá varias delicias a tu lista para enviar un pedido organizado.
+          </p>
+        </div>
+
+        <!-- Barra de Filtros y Búsqueda limpia -->
+        <div class="catalog-toolbar">
+          <div class="filter-pills-row" role="tablist">
+            <button class="filter-pill active" data-category="todos" role="tab" aria-selected="true">
+              <span>Todos</span>
+              <span class="filter-pill-count">15</span>
+            </button>
+            <button class="filter-pill" data-category="tortas" role="tab" aria-selected="false">
+              <span>Tortas</span>
+              <span class="filter-pill-count">10</span>
+            </button>
+            <button class="filter-pill" data-category="vasitos" role="tab" aria-selected="false">
+              <span>Vasitos x 25</span>
+              <span class="filter-pill-count">4</span>
+            </button>
+            <button class="filter-pill" data-category="petitfour" role="tab" aria-selected="false">
+              <span>Petit Four x 25</span>
+              <span class="filter-pill-count">1</span>
+            </button>
+            <button class="filter-pill" data-category="keto" role="tab" aria-selected="false">
+              <span>Línea Keto</span>
+              <span class="filter-pill-count">1</span>
+            </button>
+          </div>
+
+          <div class="search-sort-row">
+            <div class="search-box-wrap">
+              <span class="search-icon">🔍</span>
+              <input 
+                type="text" 
+                id="catalog-search-input" 
+                class="search-input" 
+                placeholder="Buscar (ej: rogel, chocolate, maracuyá, keto...)"
+                aria-label="Buscar en el catálogo"
+              >
+              <button type="button" id="catalog-search-clear" class="search-clear-btn" aria-label="Limpiar">✕</button>
+            </div>
+
+            <div class="results-meta" id="results-count">
+              12 productos
+            </div>
+          </div>
+        </div>
+
+        <!-- Grilla de Productos -->
+        <div class="products-grid" id="products-grid">
+          <!-- Renderizado desde app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Cómo Pedir (Esencial y sin relleno)
+         ====================================================================== -->
+    <section class="how-to-order-minimal" id="como-pedir">
+      <div class="container">
+        <div class="minimal-box">
+          <h2 class="minimal-box-title">Cómo encargar en LABRA</h2>
+          
+          <div class="minimal-steps-grid">
+            <div class="minimal-step">
+              <div class="minimal-step-num">01</div>
+              <h4>48 hs de anticipación</h4>
+              <p>Horneamos exclusivamente a pedido para garantizar máxima frescura y textura óptima.</p>
+            </div>
+
+            <div class="minimal-step">
+              <div class="minimal-step-num">02</div>
+              <h4>Retiro por Caballito</h4>
+              <p>Punto de entrega en Caballito (CABA). También podés coordinar el retiro mediante mensajería o auto.</p>
+            </div>
+
+            <div class="minimal-step">
+              <div class="minimal-step-num">03</div>
+              <h4>Trato directo por WhatsApp</h4>
+              <p>Confirmamos disponibilidad de calendario, coordinamos horario de entrega y seña del 50% por transferencia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Preguntas Frecuentes Concisas
+         ====================================================================== -->
+    <section class="faq-section" id="faq">
+      <div class="container" style="max-width: 780px;">
+        <div class="faq-header">
+          <h2 class="section-title">Preguntas Frecuentes</h2>
+        </div>
+
+        <div class="faq-list">
+          <div class="faq-item active">
+            <button type="button" class="faq-question-btn" aria-expanded="true">
+              <span>¿Con cuánta anticipación debo hacer mi pedido?</span>
+              <span class="faq-icon-arrow">↓</span>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Tomamos pedidos con un <strong>mínimo de 48 horas de antelación</strong>. Para fechas de fin de semana o eventos, recomendamos consultar con unos días extra para asegurar tu lugar.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn" aria-expanded="false">
+              <span>¿Cómo se retira o se envía?</span>
+              <span class="faq-icon-arrow">↓</span>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Los retiros se realizan en <strong>Caballito, CABA</strong> en horario coordinado previamente. Podés retirar en persona o enviar un auto/mensajería (Uber Envíos, Cabify) a retirar tu pedido embalado.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn" aria-expanded="false">
+              <span>¿Cómo se abona?</span>
+              <span class="faq-icon-arrow">↓</span>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Para reservar tu fecha se abona una seña del 50% por transferencia bancaria. El saldo restante se cancela antes de la entrega o al momento del retiro.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn" aria-expanded="false">
+              <span>¿Cómo conservo mi torta?</span>
+              <span class="faq-icon-arrow">↓</span>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Todas las tortas con crema, queso o frutas (Cheesecake, Tiramisú, Sablée, Lemon Pie, Vasitos) deben conservarse en heladera hasta 15-20 minutos antes de servir. El Rogel y Brownie se mantienen perfecto en lugar fresco y seco.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       Footer Minimalista
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-minimal-inner">
+      <div class="footer-left">
+        <img src="assets/images/logo-web.png" alt="LABRA" class="footer-brand-logo">
+        <p class="footer-desc">
+          Pastelería artesanal hecha a mano en Caballito, Buenos Aires.
+        </p>
+      </div>
+
+      <div class="footer-right">
+        <a href="https://wa.me/5491173718584" target="_blank" rel="noopener" class="footer-link">
+          💬 WhatsApp: 11 7371 8584
+        </a>
+        <a href="https://instagram.com/labrapasteleria" target="_blank" rel="noopener" class="footer-link">
+          📷 Instagram: @labrapasteleria
+        </a>
+        <span class="footer-copy">© 2026 LABRA Pastelería · Catálogo oficial</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       Modal / Dialog Accesible de Detalle de Producto
+       ======================================================================== -->
+  <dialog id="product-modal" class="product-dialog" aria-labelledby="modal-title">
+    <button type="button" class="dialog-close-btn" id="modal-close-btn" aria-label="Cerrar modal">✕</button>
+    <div class="dialog-content">
+      <div class="dialog-media-side">
+        <div class="dialog-img-wrapper">
+          <img id="modal-img" src="" alt="" class="dialog-img">
+          <span class="dialog-img-badge" id="modal-img-badge" style="display: none;"></span>
+        </div>
+        <div class="dialog-gallery-thumbs" id="modal-gallery-thumbs" style="display: none;"></div>
+      </div>
+      <div class="dialog-info-side">
+        <span class="dialog-category" id="modal-category">Torta Artesanal</span>
+        <h3 class="dialog-title" id="modal-title">Nombre de la Torta</h3>
+        <div class="dialog-price" id="modal-price">$60.000</div>
+        
+        <p class="dialog-desc" id="modal-desc">Descripción...</p>
+
+        <div class="dialog-section-block">
+          <h5>Ingredientes Destacados</h5>
+          <ul id="modal-ingredients-list" style="padding-left: 1.2rem; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.55;"></ul>
+        </div>
+
+        <div class="dialog-section-block">
+          <h5>Rendimiento</h5>
+          <p id="modal-yield" style="font-size: 0.88rem; color: var(--color-text-secondary);"></p>
+        </div>
+
+        <div class="dialog-section-block">
+          <h5>Conservación</h5>
+          <p id="modal-storage" style="font-size: 0.85rem; color: var(--color-text-muted);"></p>
+        </div>
+
+        <div class="dialog-action-row">
+          <button type="button" class="btn-card-whatsapp" id="modal-btn-direct" style="flex: 1; padding: 0.8rem 1rem;">
+            <svg style="width: 18px; height: 18px; fill: currentColor;" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+            Pedir por WhatsApp
+          </button>
+          <button type="button" class="btn-card-add" id="modal-btn-add" style="flex: 1; padding: 0.8rem 1rem;">
+            + Sumar a mi lista
+          </button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ========================================================================
+       Drawer Lateral: Asistente de Pedido para WhatsApp
+       ======================================================================== -->
+  <div class="order-drawer-backdrop" id="drawer-backdrop"></div>
+  
+  <aside class="order-drawer" id="order-drawer" aria-label="Lista de pedido para WhatsApp">
+    <div class="drawer-header">
+      <div class="drawer-header-title">
+        <h3>Tu Pedido</h3>
+        <span class="drawer-header-badge"><span class="js-order-count-badge">0</span> items</span>
+      </div>
+      <button type="button" class="drawer-close-btn" id="drawer-close-btn" aria-label="Cerrar pedido">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Estado vacío -->
+      <div class="drawer-empty-state" id="drawer-empty-state">
+        <div class="drawer-empty-icon">🍰</div>
+        <h4>Tu lista está vacía</h4>
+        <p>Elegí tus variedades en el catálogo y sumalas aquí para coordinar todo junto por WhatsApp.</p>
+        <button type="button" class="btn-primary" onclick="closeOrderDrawer()">
+          Ver el Catálogo
+        </button>
+      </div>
+
+      <!-- Contenido con productos -->
+      <div id="drawer-content-box" style="display: none;">
+        <div class="drawer-items-list" id="drawer-items-list"></div>
+
+        <div class="drawer-form-box" style="margin-top: 1.5rem;">
+          <h5>Datos de tu pedido</h5>
+          
+          <div class="drawer-input-group">
+            <label for="order-client-name" class="drawer-label">Tu Nombre:</label>
+            <input type="text" id="order-client-name" class="drawer-input" placeholder="Ej: Florencia">
+          </div>
+
+          <div class="drawer-input-group">
+            <label for="order-date-input" class="drawer-label">Fecha deseada:</label>
+            <input type="date" id="order-date-input" class="drawer-input">
+            <div class="drawer-notice">
+              <span>⏱️</span> Pedir con al menos 48 hs de antelación
+            </div>
+          </div>
+
+          <div class="drawer-input-group">
+            <label for="order-delivery-select" class="drawer-label">Modalidad:</label>
+            <select id="order-delivery-select" class="drawer-input">
+              <option value="Retiro por Caballito">Retiro por Caballito (CABA)</option>
+              <option value="Envío por mensajería (a coordinar)">Envío por mensajería (a coordinar cargo del cliente)</option>
+            </select>
+          </div>
+
+          <div class="drawer-input-group">
+            <label for="order-notes-input" class="drawer-label">Observaciones (opcional):</label>
+            <input type="text" id="order-notes-input" class="drawer-input" placeholder="Ej: Agregar velita, es para un cumpleaños">
+          </div>
+        </div>
+
+        <div class="whatsapp-preview-box" style="margin-top: 1.25rem;">
+          <div class="whatsapp-preview-title">
+            <span>💬</span> Mensaje preparado para enviar
+          </div>
+          <pre id="whatsapp-preview-text" style="font-family: inherit; white-space: pre-wrap; margin: 0;"></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-footer">
+      <div class="drawer-total-row">
+        <span class="drawer-total-label">Total Estimado:</span>
+        <span class="drawer-total-val" id="drawer-total-val">$0</span>
+      </div>
+
+      <a href="#" id="btn-send-whatsapp-order" class="btn-send-whatsapp">
+        <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+        <span>Derivar Pedido a WhatsApp</span>
+      </a>
+
+      <div class="drawer-aux-actions">
+        <button type="button" class="btn-clear-order" id="btn-clear-order">Vaciar lista</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Botones flotantes discretos -->
+  <div class="floating-actions-container">
+    <button type="button" class="fab-order-pill js-open-order-drawer" id="fab-order-pill" style="display: none;" aria-label="Abrir mi lista">
+      <span>Mi Pedido</span>
+      <span class="fab-order-badge js-order-count-badge">0</span>
+    </button>
+
+    <a href="https://wa.me/5491173718584?text=%C2%A1Hola%20LABRA!%20Quisiera%20hacerles%20una%20consulta." target="_blank" rel="noopener" class="fab-whatsapp-bubble" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+    </a>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
