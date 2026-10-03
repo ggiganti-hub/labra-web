@@ -108,6 +108,19 @@ button {
   padding-right: 1.5rem;
 }
 
+/* Utilidad de accesibilidad y SEO para lectores de pantalla e indexadores de Google */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 /* ==========================================================================
    Aviso Superior Minimalista
    ========================================================================== */
@@ -415,7 +428,14 @@ button {
   flex-wrap: wrap;
 }
 
+.hero-showcase {
+  width: 100%;
+  max-width: 520px;
+  margin-left: auto;
+}
+
 .hero-card-main {
+  width: 100%;
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -424,6 +444,7 @@ button {
 }
 
 .hero-card-img-wrap {
+  width: 100%;
   aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
@@ -433,6 +454,8 @@ button {
 .hero-slide {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   visibility: hidden;
   transition: opacity 850ms cubic-bezier(0.4, 0, 0.2, 1), visibility 850ms;
@@ -1999,7 +2022,8 @@ button {
     gap: 2.5rem;
   }
   .hero-showcase {
-    max-width: 440px;
+    width: 100%;
+    max-width: 500px;
     margin: 0 auto;
   }
   .minimal-steps-grid {
@@ -2016,6 +2040,26 @@ button {
 }
 
 @media (max-width: 768px) {
+  .hero-section {
+    padding: 2.5rem 0 2rem;
+  }
+  .hero-grid {
+    gap: 2rem;
+  }
+  .hero-showcase {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .hero-card-main {
+    width: 100%;
+    border-radius: var(--radius-lg);
+  }
+  .hero-card-img-wrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    min-height: 290px;
+  }
   .brand-logo-img {
     height: 38px;
   }
@@ -2045,5 +2089,40 @@ button {
   }
   .dialog-info-side {
     padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 2rem 0 2rem;
+  }
+  .hero-section .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .hero-showcase {
+    width: 100%;
+    max-width: 100%;
+  }
+  .hero-card-img-wrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    min-height: 320px;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-subtitle {
+    font-size: 0.96rem;
+    margin-bottom: 1.4rem;
+  }
+  .hero-cta-group {
+    margin-bottom: 1.4rem;
+  }
+  .hero-slide-badge {
+    bottom: 0.75rem;
+    left: 0.75rem;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.74rem;
   }
 }
