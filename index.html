@@ -1,24 +1,154 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-AR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LABRA · Pastelería Artesanal en Caballito | Catálogo</title>
   
-  <meta name="description" content="Pastelería artesanal en Caballito. Tortas y bocados elaborados con materias primas nobles bajo pedido con 48 hs de anticipación.">
+  <!-- SEO Primario -->
+  <title>LABRA · Pastelería Artesanal en Caballito | Tortas y Mesas Dulces por Pedido</title>
+  <meta name="description" content="Pastelería artesanal en Caballito, CABA. Tortas finas, vasitos para eventos y bocados dulces elaborados desde cero bajo pedido con 48 hs de anticipación.">
+  <meta name="author" content="LABRA Pastelería Artesanal">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://www.labra.com.ar/">
   <meta name="theme-color" content="#46543D">
 
-  <!-- Open Graph -->
+  <!-- SEO Local y Georreferenciación (Caballito, Buenos Aires) -->
+  <meta name="geo.region" content="AR-C">
+  <meta name="geo.placename" content="Caballito, Ciudad Autónoma de Buenos Aires">
+  <meta name="geo.position" content="-34.6186;-58.4428">
+  <meta name="ICBM" content="-34.6186, -58.4428">
+
+  <!-- Open Graph / Redes Sociales (Facebook, WhatsApp, LinkedIn) -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="LABRA · Pastelería Artesanal">
-  <meta property="og:description" content="Pastelería honesta, fresca y hecha a mano en Caballito. Catálogo y pedidos por WhatsApp.">
-  <meta property="og:image" content="assets/images/products/torta-rogel.jpg">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:site_name" content="LABRA Pastelería Artesanal">
+  <meta property="og:title" content="LABRA · Pastelería Artesanal en Caballito | Catálogo Oficial">
+  <meta property="og:description" content="Pastelería honesta, fresca y hecha a mano en Caballito. Rogel, Cheesecake, Lemon Pie, Vasitos x 25 y Petit Four por encargo.">
+  <meta property="og:url" content="https://www.labra.com.ar/">
+  <meta property="og:image" content="https://www.labra.com.ar/assets/images/products/torta-rogel.jpg">
+  <meta property="og:image:secure_url" content="https://www.labra.com.ar/assets/images/products/torta-rogel.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1000">
+  <meta property="og:image:height" content="1000">
+  <meta property="og:image:alt" content="Torta Rogel artesanal LABRA con dulce de leche y merengue italiano en Caballito">
 
-  <!-- Favicon con Logo Verde -->
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LABRA · Pastelería Artesanal en Caballito">
+  <meta name="twitter:description" content="Pastelería honesta hecha con tiempo y materias primas nobles bajo pedido en Caballito.">
+  <meta name="twitter:image" content="https://www.labra.com.ar/assets/images/products/torta-rogel.jpg">
+  <meta name="twitter:image:alt" content="Rogel artesanal LABRA">
+
+  <!-- Favicon e Íconos para Dispositivos Móviles -->
   <link rel="icon" type="image/png" href="assets/images/logo-web.png">
+  <link rel="apple-touch-icon" href="assets/images/logo-web.png">
 
+  <!-- Optimización de Rendimiento y Core Web Vitals (LCP / Tipografías) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="assets/images/products/torta-rogel.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap">
+  
   <!-- Estilos -->
   <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- ======================================================================
+       Datos Estructurados Schema.org (JSON-LD) para Google
+       ====================================================================== -->
+
+  <!-- 1. Negocio Local (Bakery / Pastelería) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Bakery",
+    "@id": "https://www.labra.com.ar/#bakery",
+    "name": "LABRA Pastelería Artesanal",
+    "alternateName": "LABRA",
+    "url": "https://www.labra.com.ar/",
+    "logo": "https://www.labra.com.ar/assets/images/logo-web.png",
+    "image": [
+      "https://www.labra.com.ar/assets/images/products/torta-rogel.jpg",
+      "https://www.labra.com.ar/assets/images/products/torta-cheesecake.jpg",
+      "https://www.labra.com.ar/assets/images/products/vasito-chocotorta-solo.jpg",
+      "https://www.labra.com.ar/assets/images/products/petit-four-01.jpg"
+    ],
+    "description": "Pastelería artesanal hecha a mano en Caballito, Buenos Aires. Tortas de autor, vasitos para eventos y bocados dulces elaborados bajo pedido con materias primas nobles.",
+    "telephone": "+54-9-11-7371-8584",
+    "priceRange": "$$$",
+    "servesCuisine": "Pastelería Artesanal, Tortas por encargo, Mesas Dulces, Rogel, Cheesecake, Vasitos, Petit Four",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Caballito, Ciudad Autónoma de Buenos Aires",
+      "addressRegion": "CABA",
+      "addressCountry": "AR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -34.6186,
+      "longitude": -58.4428
+    },
+    "sameAs": [
+      "https://instagram.com/labrapasteleria",
+      "https://www.google.com/maps/place/Labra+Pasteleria/@-34.6166382,-58.4550514,15z/data=!4m6!3m5!1s0xabc00bbd0a59c733:0xdda0d5d54fcad09f!8m2!3d-34.6166562!4d-58.4447302!16s%2Fg%2F11mzwlhvkn!5m1!1e4"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5.0",
+      "reviewCount": "12",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "currenciesAccepted": "ARS",
+    "paymentAccepted": "Transferencia bancaria",
+    "hasMenu": "https://www.labra.com.ar/#catalogo",
+    "areaServed": {
+      "@type": "City",
+      "name": "Ciudad Autónoma de Buenos Aires"
+    }
+  }
+  </script>
+
+  <!-- 2. Preguntas Frecuentes (FAQPage) para Rich Snippets en Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Con cuánta anticipación debo hacer mi pedido?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tomamos pedidos con un mínimo de 48 horas de antelación. Para fechas de fin de semana o eventos, recomendamos consultar con unos días extra para asegurar tu lugar."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo se retira o se envía?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Los retiros se realizan en Caballito, CABA en horario coordinado previamente. Podés retirar en persona o enviar un auto o mensajería (Uber Envíos, Cabify) a retirar tu pedido embalado."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo se abona?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Para reservar tu fecha se abona una seña del 50% por transferencia bancaria. El saldo restante se cancela antes de la entrega o al momento del retiro."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo conservo mi torta?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Todas las tortas con crema, queso o frutas (Cheesecake, Tiramisú, Sablée, Lemon Pie, Vasitos) deben conservarse en heladera hasta 15-20 minutos antes de servir. El Rogel y Brownie se mantienen perfecto en lugar fresco y seco."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -41,6 +171,7 @@
       <nav class="nav-desktop" aria-label="Navegación principal">
         <a href="#catalogo" class="nav-link">Catálogo</a>
         <a href="#como-pedir" class="nav-link">Cómo Pedir</a>
+        <a href="#opiniones" class="nav-link">Opiniones</a>
         <a href="#faq" class="nav-link">Preguntas</a>
       </nav>
 
@@ -68,6 +199,7 @@
     <div class="mobile-nav-panel" id="mobile-nav-panel">
       <a href="#catalogo" class="mobile-nav-link">Catálogo</a>
       <a href="#como-pedir" class="mobile-nav-link">Cómo Pedir</a>
+      <a href="#opiniones" class="mobile-nav-link">Opiniones</a>
       <a href="#faq" class="mobile-nav-link">Preguntas Frecuentes</a>
       
       <div class="mobile-nav-actions">
@@ -93,11 +225,11 @@
             <span class="hero-tagline">PASTELERÍA ARTESANAL · CABALLITO</span>
             
             <h1 class="hero-title">
-              Pastelería honesta, hecha con <em>tiempo</em> y materias primas nobles.
+              Pastelería <em>honesta</em>.
             </h1>
 
             <p class="hero-subtitle">
-              Elaboramos cada pieza desde cero y bajo pedido exclusivo. Sin atajos industriales, con manteca pura, vainillas caseras y frutos de estación.
+              Lo simple, bien hecho. Elaboración 100% artesanal a pedido, con materia prima de primera calidad.
             </p>
 
             <div class="hero-cta-group">
@@ -119,11 +251,61 @@
             </div>
           </div>
 
-          <!-- Imagen destacada limpia -->
-          <div class="hero-showcase">
+          <!-- Imagen destacada rotativa con 4 creaciones estrella -->
+          <div class="hero-showcase" id="hero-slider" aria-roledescription="carousel" aria-label="Creaciones destacadas de LABRA">
             <div class="hero-card-main">
               <div class="hero-card-img-wrap">
-                <img src="assets/images/products/torta-rogel.jpg" alt="Rogel artesanal LABRA" class="hero-card-img">
+                <!-- Slide 1: Rogel Clásico -->
+                <div class="hero-slide active" data-index="0" data-name="Rogel Clásico">
+                  <img src="assets/images/products/torta-rogel.jpg" 
+                       alt="Torta Rogel artesanal LABRA con dulce de leche y merengue italiano en Caballito" 
+                       class="hero-card-img" 
+                       width="600" height="600" 
+                       fetchpriority="high" loading="eager">
+                </div>
+
+                <!-- Slide 2: Sablée de Almendras -->
+                <div class="hero-slide" data-index="1" data-name="Sablée de Almendras">
+                  <img src="assets/images/products/torta-sablee-almendras.jpg" 
+                       alt="Torta Sablée de almendras con crema y frutillas frescas de estación" 
+                       class="hero-card-img" 
+                       width="600" height="600" 
+                       loading="eager">
+                </div>
+
+                <!-- Slide 3: Torta Brownie -->
+                <div class="hero-slide" data-index="2" data-name="Torta Brownie">
+                  <img src="assets/images/products/torta-brownie.jpg" 
+                       alt="Torta Brownie artesanal con dulce de leche, merengue y nueces" 
+                       class="hero-card-img" 
+                       width="600" height="600" 
+                       loading="lazy">
+                </div>
+
+                <!-- Slide 4: Cheesecake -->
+                <div class="hero-slide" data-index="3" data-name="Cheesecake">
+                  <img src="assets/images/products/torta-cheesecake.jpg" 
+                       alt="Cheesecake horneado artesanal con frutos rojos de estación" 
+                       class="hero-card-img" 
+                       width="600" height="600" 
+                       loading="lazy">
+                </div>
+
+                <!-- Badge flotante con el nombre del producto -->
+                <div class="hero-slide-badge" id="hero-slide-badge" aria-live="polite">
+                  <span class="badge-dot"></span>
+                  <span class="badge-text" id="hero-badge-text">Rogel Clásico</span>
+                </div>
+              </div>
+
+              <!-- Indicadores discretos de navegación -->
+              <div class="hero-slider-bar">
+                <div class="hero-slider-dots" id="hero-slider-dots" role="tablist" aria-label="Elegir producto destacado">
+                  <button type="button" class="hero-dot active" data-index="0" role="tab" aria-selected="true" aria-label="Ver Rogel Clásico"></button>
+                  <button type="button" class="hero-dot" data-index="1" role="tab" aria-selected="false" aria-label="Ver Sablée de Almendras"></button>
+                  <button type="button" class="hero-dot" data-index="2" role="tab" aria-selected="false" aria-label="Ver Torta Brownie"></button>
+                  <button type="button" class="hero-dot" data-index="3" role="tab" aria-selected="false" aria-label="Ver Cheesecake"></button>
+                </div>
               </div>
             </div>
           </div>
@@ -220,6 +402,311 @@
               <h4>Trato directo por WhatsApp</h4>
               <p>Confirmamos disponibilidad de calendario, coordinamos horario de entrega y seña del 50% por transferencia.</p>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Opiniones de Clientes en Google (Minimalista & Rotativo)
+         ====================================================================== -->
+    <section class="reviews-section" id="opiniones">
+      <div class="container" style="max-width: 860px;">
+        <div class="reviews-header">
+          <div class="reviews-pill-eyebrow">
+            <svg class="google-icon-sm" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+              <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+            </svg>
+            <span>RESEÑAS EN GOOGLE · 5.0 ESTRELLAS</span>
+          </div>
+
+          <h2 class="section-title">Lo que dicen quienes nos eligen</h2>
+          <p class="section-subtitle">
+            Experiencias reales de clientes que confían en LABRA para sus celebraciones y momentos dulces.
+          </p>
+        </div>
+
+        <!-- Carrusel de Reseñas -->
+        <div class="reviews-carousel" id="reviews-carousel" aria-roledescription="carousel" aria-label="Opiniones de clientes en Google">
+          <!-- Botón previo -->
+          <button type="button" class="carousel-nav-btn prev" id="review-prev" aria-label="Opinión anterior">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+
+          <!-- Viewport y Track -->
+          <div class="reviews-viewport" id="reviews-viewport">
+            <div class="reviews-track" id="reviews-track">
+              <!-- Slide 1 -->
+              <article class="review-card active" data-index="0" aria-roledescription="slide" aria-label="1 de 10">
+                <div class="review-card-top">
+                  <div class="review-stars" aria-label="Calificación: 5 de 5 estrellas">
+                    ★★★★★
+                  </div>
+                  <span class="review-tag">Rogel Clásico</span>
+                </div>
+                <blockquote class="review-quote">
+                  “El Rogel de LABRA es fuera de serie. Capas finitas y súper crocantes, con abundante dulce de leche de calidad y un merengue italiano en el punto exacto, nada empalagoso. Lo pedí para un festejo familiar y todos me preguntaron de dónde era. Impecable trabajo artesanal.”
+                </blockquote>
+                <div class="review-author-wrap">
+                  <div class="review-avatar" aria-hidden="true">LM</div>
+                  <div class="review-author-meta">
+                    <strong class="review-author-name">Lucía M.</strong>
+                    <span class="review-author-badge">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="#34A853"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Cliente verificada en Google · Caballito
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Slide 2 -->
+              <article class="review-card" data-index="1" aria-roledescription="slide" aria-label="2 de 10">
+                <div class="review-card-top">
+                  <div class="review-stars" aria-label="Calificación: 5 de 5 estrellas">
+                    ★★★★★
+                  </div>
+                  <span class="review-tag">Vasitos x 25</span>
+                </div>
+                <blockquote class="review-quote">
+                  “Encargamos la caja de 25 vasitos surtidos (chocotorta, maracuyá pie, tiramisú y lemon pie) para la mesa dulce de un cumpleaños. Fue la sensación total: la presentación es finísima, súper prolija, y los sabores son riquísimos y equilibrados. ¡Súper recomendados!”
+                </blockquote>
+                <div class="review-author-wrap">
+                  <div class="review-avatar alt" aria-hidden="true">FG</div>
+                  <div class="review-author-meta">
+                    <strong class="review-author-name">Federico G.</strong>
+                    <span class="review-author-badge">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="#34A853"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Cliente verificado en Google · Caballito
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Slide 3 -->
+              <article class="review-card" data-index="2" aria-roledescription="slide" aria-label="3 de 10">
+                <div class="review-card-top">
+                  <div class="review-stars" aria-label="Calificación: 5 de 5 estrellas">
+                    ★★★★★
+                  </div>
+                  <span class="review-tag">Cheesecake & Frutas</span>
+                </div>
+                <blockquote class="review-quote">
+                  “La calidad de las materias primas se nota desde el primer bocado. Pedimos el Cheesecake y la tarta Sablée de frutillas; la crema suave y sedosa, la masa crocante y la fruta fresca de verdad. Además la coordinación y atención por WhatsApp fue impecable.”
+                </blockquote>
+                <div class="review-author-wrap">
+                  <div class="review-avatar" aria-hidden="true">CR</div>
+                  <div class="review-author-meta">
+                    <strong class="review-author-name">Camila R.</strong>
+                    <span class="review-author-badge">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="#34A853"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Cliente verificada en Google · Caballito
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Slide 4 -->
+              <article class="review-card" data-index="3" aria-roledescription="slide" aria-label="4 de 10">
+                <div class="review-card-top">
+                  <div class="review-stars" aria-label="Calificación: 5 de 5 estrellas">
+                    ★★★★★
+                  </div>
+                  <span class="review-tag">Atención & Retiro</span>
+                </div>
+                <blockquote class="review-quote">
+                  “Excelente pastelería artesanal en Caballito. Da placer comprar cuando todo se hornea a conciencia y bajo pedido exclusivo. Retiré en el horario exacto acordado, impecablemente presentado y con las indicaciones de conservación clarísimas. Volveremos a pedir seguro.”
+                </blockquote>
+                <div class="review-author-wrap">
+                  <div class="review-avatar alt" aria-hidden="true">MS</div>
+                  <div class="review-author-meta">
+                    <strong class="review-author-name">Martín S.</strong>
+                    <span class="review-author-badge">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="#34A853"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Cliente verificado en Google · Caballito
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Slide 5 -->
+              <article class="review-card" data-index="4" aria-roledescription="slide" aria-label="5 de 10">
+                <div class="review-card-top">
+                  <div class="review-stars" aria-label="Calificación: 5 de 5 estrellas">
+                    ★★★★★
+                  </div>
+                  <span class="review-tag">Petit Four & Marquise</span>
+                </div>
+                <blockquote class="review-quote">
+                  “Probamos los petit four para un té y la torta Marquise con dulce de leche y frutos rojos para un aniversario. Chocolate riquísimo, húmedo, y combinaciones súper equilibradas. Una alegría enorme tener este nivel de pastelería tan cuidada en el barrio.”
+                </blockquote>
+                <div class="review-author-wrap">
+                  <div class="review-avatar" aria-hidden="true">SV</div>
+                  <div class="review-author-meta">
+                    <strong class="review-author-name">Sofía V.</strong>
+                    <span class="review-author-badge">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="#34A853"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Cliente verificada en Google · Caballito
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Slide 6 -->
+              <article class="review-card" data-index="5" aria-roledescription="slide" aria-label="6 de 10">
+                <div class="review-card-top">
+                  <div class="review-stars" aria-label="Calificación: 5 de 5 estrellas">
+                    ★★★★★
+                  </div>
+                  <span class="review-tag">Torta Brownie</span>
+                </div>
+                <blockquote class="review-quote">
+                  “Pedí la Torta Brownie con dulce de leche y merengue para el cumpleaños de mi novia. La base de brownie es una locura: crocante por fuera, bien húmeda y chocolatosa por dentro, con nueces crocantes. Hacía tiempo que no probaba una pastelería con tanta dedicación.”
+                </blockquote>
+                <div class="review-author-wrap">
+                  <div class="review-avatar alt" aria-hidden="true">IB</div>
+                  <div class="review-author-meta">
+                    <strong class="review-author-name">Ignacio B.</strong>
+                    <span class="review-author-badge">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="#34A853"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Cliente verificado en Google · Caballito
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Slide 7 -->
+              <article class="review-card" data-index="6" aria-roledescription="slide" aria-label="7 de 10">
+                <div class="review-card-top">
+                  <div class="review-stars" aria-label="Calificación: 5 de 5 estrellas">
+                    ★★★★★
+                  </div>
+                  <span class="review-tag">Lemon Pie Clásico</span>
+                </div>
+                <blockquote class="review-quote">
+                  “El Lemon Pie es simplemente perfecto. La curd de limón tiene el punto exacto entre ácido y dulce, y el merengue italiano es brillante y suave, no se baja. Se agradece que no usen gelatinas industriales ni aromas artificiales. 10 de 10.”
+                </blockquote>
+                <div class="review-author-wrap">
+                  <div class="review-avatar" aria-hidden="true">VT</div>
+                  <div class="review-author-meta">
+                    <strong class="review-author-name">Valeria T.</strong>
+                    <span class="review-author-badge">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="#34A853"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Cliente verificada en Google · Caballito
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Slide 8 -->
+              <article class="review-card" data-index="7" aria-roledescription="slide" aria-label="8 de 10">
+                <div class="review-card-top">
+                  <div class="review-stars" aria-label="Calificación: 5 de 5 estrellas">
+                    ★★★★★
+                  </div>
+                  <span class="review-tag">Vasitos & Maracuyá</span>
+                </div>
+                <blockquote class="review-quote">
+                  “Para una reunión de trabajo encargué los vasitos de maracuyá pie y tiramisú. La crema de maracuyá es espectacular, fresca y con acidez natural. La presentación individual es comodísima para servir sin ensuciar nada. Quedamos todos encantados.”
+                </blockquote>
+                <div class="review-author-wrap">
+                  <div class="review-avatar alt" aria-hidden="true">NP</div>
+                  <div class="review-author-meta">
+                    <strong class="review-author-name">Nicolás P.</strong>
+                    <span class="review-author-badge">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="#34A853"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Cliente verificado en Google · Caballito
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Slide 9 -->
+              <article class="review-card" data-index="8" aria-roledescription="slide" aria-label="9 de 10">
+                <div class="review-card-top">
+                  <div class="review-stars" aria-label="Calificación: 5 de 5 estrellas">
+                    ★★★★★
+                  </div>
+                  <span class="review-tag">Línea Keto · Sin Azúcar</span>
+                </div>
+                <blockquote class="review-quote">
+                  “Qué felicidad encontrar una pastelería artesanal en Caballito que tenga una opción Keto de este nivel. El Cheesecake Keto no tiene nada que envidiarle al tradicional: súper cremoso, sin regusto a edulcorante y con una mermelada casera riquísima. ¡Una salvación!”
+                </blockquote>
+                <div class="review-author-wrap">
+                  <div class="review-avatar" aria-hidden="true">ML</div>
+                  <div class="review-author-meta">
+                    <strong class="review-author-name">Mariana L.</strong>
+                    <span class="review-author-badge">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="#34A853"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Cliente verificada en Google · Caballito
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Slide 10 -->
+              <article class="review-card" data-index="9" aria-roledescription="slide" aria-label="10 de 10">
+                <div class="review-card-top">
+                  <div class="review-stars" aria-label="Calificación: 5 de 5 estrellas">
+                    ★★★★★
+                  </div>
+                  <span class="review-tag">Eventos & Packaging</span>
+                </div>
+                <blockquote class="review-quote">
+                  “Coordinamos un pedido de tortas y vasitos para un bautismo familiar. La calidez en la atención por WhatsApp, el asesoramiento con las cantidades y la puntualidad en el retiro fueron impecables. El packaging cuida cada detalle para que todo llegue perfecto a la mesa.”
+                </blockquote>
+                <div class="review-author-wrap">
+                  <div class="review-avatar alt" aria-hidden="true">GD</div>
+                  <div class="review-author-meta">
+                    <strong class="review-author-name">Gonzalo D.</strong>
+                    <span class="review-author-badge">
+                      <svg viewBox="0 0 24 24" width="13" height="13" fill="#34A853"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Cliente verificado en Google · Caballito
+                    </span>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Botón siguiente -->
+          <button type="button" class="carousel-nav-btn next" id="review-next" aria-label="Siguiente opinión">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+
+        <!-- Barra inferior: Dots + Enlace directo a Google Maps -->
+        <div class="reviews-bottom-bar">
+          <div class="reviews-dots" id="reviews-dots" role="tablist" aria-label="Navegar opiniones">
+            <button type="button" class="review-dot active" data-index="0" role="tab" aria-selected="true" aria-label="Ir a opinión 1"></button>
+            <button type="button" class="review-dot" data-index="1" role="tab" aria-selected="false" aria-label="Ir a opinión 2"></button>
+            <button type="button" class="review-dot" data-index="2" role="tab" aria-selected="false" aria-label="Ir a opinión 3"></button>
+            <button type="button" class="review-dot" data-index="3" role="tab" aria-selected="false" aria-label="Ir a opinión 4"></button>
+            <button type="button" class="review-dot" data-index="4" role="tab" aria-selected="false" aria-label="Ir a opinión 5"></button>
+            <button type="button" class="review-dot" data-index="5" role="tab" aria-selected="false" aria-label="Ir a opinión 6"></button>
+            <button type="button" class="review-dot" data-index="6" role="tab" aria-selected="false" aria-label="Ir a opinión 7"></button>
+            <button type="button" class="review-dot" data-index="7" role="tab" aria-selected="false" aria-label="Ir a opinión 8"></button>
+            <button type="button" class="review-dot" data-index="8" role="tab" aria-selected="false" aria-label="Ir a opinión 9"></button>
+            <button type="button" class="review-dot" data-index="9" role="tab" aria-selected="false" aria-label="Ir a opinión 10"></button>
+          </div>
+
+          <div class="reviews-google-link-wrap">
+            <a href="https://www.google.com/maps/place/Labra+Pasteleria/@-34.6166382,-58.4550514,15z/data=!4m6!3m5!1s0xabc00bbd0a59c733:0xdda0d5d54fcad09f!8m2!3d-34.6166562!4d-58.4447302!16s%2Fg%2F11mzwlhvkn!5m1!1e4?entry=ttu" 
+               target="_blank" 
+               rel="noopener" 
+               class="google-maps-badge-link"
+               title="Ver reseñas en Google Maps">
+              <svg class="google-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+              </svg>
+              <span><strong>5.0</strong> en Google Maps · Ver perfil y reseñas</span>
+              <span class="external-arrow">↗</span>
+            </a>
           </div>
         </div>
       </div>
