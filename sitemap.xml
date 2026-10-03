@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.labra.com.ar/</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    
+    <!-- Tortas Artesanales -->
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/torta-rogel.jpg</image:loc>
+      <image:title>Torta Rogel Artesanal en Caballito · LABRA</image:title>
+      <image:caption>Finas capas crocantes de masa casera, abundante dulce de leche repostero y merengue italiano en Caballito.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/torta-cheesecake.jpg</image:loc>
+      <image:title>Cheesecake con Frutos Rojos · Pastelería LABRA Caballito</image:title>
+      <image:caption>Cheesecake horneado con masa sucrée casera y coulis artesanal de frutos rojos naturales.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/torta-lemon-pie.jpg</image:loc>
+      <image:title>Lemon Pie Artesanal · LABRA Pastelería en Caballito</image:title>
+      <image:caption>Lemon Pie con curd suave de limones naturales, masa sablée crocante y merengue italiano.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/torta-tiramisu.jpg</image:loc>
+      <image:title>Tiramisú Tradicional con Café de Especialidad · LABRA Caballito</image:title>
+      <image:caption>Vainillas artesanales de la casa, café de especialidad recién infusionado y auténtico queso mascarpone.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/torta-sablee-almendras.jpg</image:loc>
+      <image:title>Torta Sablée de Almendras y Frutos Rojos · LABRA Caballito</image:title>
+      <image:caption>Doble masa sablée de almendras tostadas molidas, dulce de leche, chantilly fresca y frutos rojos.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/torta-chocotorta.jpg</image:loc>
+      <image:title>Chocotorta Especial · Pastelería en Caballito</image:title>
+      <image:caption>Chocolinas humedecidas en café espresso con crema suave de dulce de leche y queso.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/torta-brownie.jpg</image:loc>
+      <image:title>Torta Brownie con Dulce de Leche y Merengue · LABRA Caballito</image:title>
+      <image:caption>Brownie húmedo con nueces seleccionadas, dulce de leche repostero y merengue italiano flameado.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/torta-maracuya.jpg</image:loc>
+      <image:title>Maracuyá Pie Artesanal · LABRA Pastelería Caballito</image:title>
+      <image:caption>Masa sablée casera, mousse de pulpa pura natural de maracuyá y coulis con semillas.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/torta-manzana.jpg</image:loc>
+      <image:title>Tarta de Manzana Especiada y Crumble de Almendras · LABRA</image:title>
+      <image:caption>Manzanas verdes caramelizadas, masa especiada con canela y crumble crocante con almendras.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/torta-cheesecake-keto.jpg</image:loc>
+      <image:title>Cheesecake Keto sin Harinas ni Azúcar · Pastelería Caballito</image:title>
+      <image:caption>Tarta de queso horneada estilo vasco, sin harinas refinadas ni azúcar agregada, con frutos rojos.</image:caption>
+    </image:image>
+
+    <!-- Vasitos y Petit Four para Eventos / Mesas Dulces -->
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/vasito-chocotorta-solo.jpg</image:loc>
+      <image:title>Vasitos de Chocotorta para Mesas Dulces en Caballito · LABRA</image:title>
+      <image:caption>Vasitos individuales de Chocotorta para cumpleaños, mesas dulces y eventos en CABA.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/vasito-tiramisu-solo.jpg</image:loc>
+      <image:title>Vasitos de Tiramisú para Eventos · LABRA Pastelería</image:title>
+      <image:caption>Porciones individuales de Tiramisú tradicional con mascarpone y café de especialidad.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/vasito-lemon-pie-solo.jpg</image:loc>
+      <image:title>Vasitos de Lemon Pie x 25 Unidades · LABRA Caballito</image:title>
+      <image:caption>Caja de vasitos individuales de Lemon Pie con curd natural y merengue flameado.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/vasito-maracuya-solo.jpg</image:loc>
+      <image:title>Vasitos de Maracuyá Pie para Mesas Dulces · LABRA</image:title>
+      <image:caption>Mousse de pulpa pura de maracuyá en formato vasito para eventos y reuniones.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/petit-four-01.jpg</image:loc>
+      <image:title>Caja de Petit Four x 25 Bocados · LABRA Pastelería Caballito</image:title>
+      <image:caption>Surtido de bocados finos: Mini Rogel, Mini Sablée de almendras con arándanos y Mini Brownie.</image:caption>
+    </image:image>
+  </url>
+</urlset>

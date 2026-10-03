@@ -264,6 +264,19 @@ const LABRA_CONFIG = {
   leadTimeHours: 48
 };
 
+// ==========================================================================
+// Integración Google Analytics 4 (Eventos de Conversión)
+// ==========================================================================
+function trackAnalyticsEvent(eventName, params = {}) {
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, params);
+    }
+  } catch (err) {
+    console.debug('Analytics dispatch error:', err);
+  }
+}
+
 // Estado de la aplicación
 const state = {
   cart: [], // Lista de items para armar pedido: [{ id, product, qty }]
@@ -425,6 +438,24 @@ function initEventListeners() {
         alert('Por favor sumá al menos un producto a tu pedido.');
         return;
       }
+
+      // Tracking GA4 de Pedido Completo por Carrito
+      const total = state.cart.reduce((sum, item) => sum + (item.product.price * item.qty), 0);
+      const totalQty = state.cart.reduce((sum, item) => sum + item.qty, 0);
+
+      trackAnalyticsEvent('generate_lead', {
+        currency: 'ARS',
+        value: total,
+        lead_type: 'whatsapp_cart_order',
+        items_count: totalQty
+      });
+
+      trackAnalyticsEvent('click_whatsapp_cart', {
+        value: total,
+        items_count: totalQty,
+        items_summary: state.cart.map(i => `${i.qty}x ${i.product.name}`).join(', ')
+      });
+
       const url = buildWhatsAppUrl();
       window.open(url, '_blank');
     });
@@ -465,6 +496,31 @@ function initEventListeners() {
       link.addEventListener('click', () => mobileNavPanel.classList.remove('open'));
     });
   }
+
+  // Medición de clics en WhatsApp y Redes para Google Analytics
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a');
+    if (!anchor) return;
+    const href = anchor.getAttribute('href') || '';
+
+    if (href.includes('wa.me')) {
+      if (anchor.id !== 'btn-send-whatsapp-order') {
+        const linkText = anchor.innerText.trim() || 'WhatsApp Flotante';
+        trackAnalyticsEvent('generate_lead', {
+          lead_type: 'whatsapp_general_contact',
+          link_text: linkText
+        });
+        trackAnalyticsEvent('click_whatsapp_contact', {
+          link_url: href,
+          link_text: linkText
+        });
+      }
+    } else if (href.includes('instagram.com')) {
+      trackAnalyticsEvent('click_social_instagram', {
+        link_url: href
+      });
+    }
+  });
 
   // Scroll Header Shadow
   window.addEventListener('scroll', () => {
@@ -637,6 +693,18 @@ function openProductModal(productId) {
   const prod = PRODUCTS.find(p => p.id === productId);
   if (!prod) return;
 
+  // Medición GA4: Ver Producto
+  trackAnalyticsEvent('view_item', {
+    currency: 'ARS',
+    value: prod.price,
+    items: [{
+      item_id: prod.id,
+      item_name: prod.name,
+      item_category: prod.category,
+      price: prod.price
+    }]
+  });
+
   const dialog = document.getElementById('product-modal');
   const imgEl = document.getElementById('modal-img');
   const catEl = document.getElementById('modal-category');
@@ -736,6 +804,19 @@ function openProductModal(productId) {
 function addToOrder(productId, qty = 1) {
   const prod = PRODUCTS.find(p => p.id === productId);
   if (!prod) return;
+
+  // Medición GA4: Agregar al Carrito
+  trackAnalyticsEvent('add_to_cart', {
+    currency: 'ARS',
+    value: prod.price * qty,
+    items: [{
+      item_id: prod.id,
+      item_name: prod.name,
+      item_category: prod.category,
+      price: prod.price,
+      quantity: qty
+    }]
+  });
 
   const existing = state.cart.find(item => item.id === productId);
   if (existing) {
@@ -925,6 +1006,21 @@ function buildWhatsAppUrl() {
 function orderSingleProductDirectly(productId) {
   const prod = PRODUCTS.find(p => p.id === productId);
   if (!prod) return;
+
+  // Medición GA4: Lead directo de WhatsApp por producto
+  trackAnalyticsEvent('generate_lead', {
+    currency: 'ARS',
+    value: prod.price,
+    lead_type: 'whatsapp_single_product',
+    item_id: prod.id,
+    item_name: prod.name
+  });
+
+  trackAnalyticsEvent('click_whatsapp_direct', {
+    product_id: prod.id,
+    product_name: prod.name,
+    price: prod.price
+  });
 
   const msg = [
     '¡Hola LABRA Pastelería! 🍰',
