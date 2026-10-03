@@ -850,12 +850,15 @@ button {
 .product-yield-badge {
   font-size: 0.75rem;
   color: var(--color-text-muted);
+  white-space: nowrap;
 }
 
 .product-card-actions {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .btn-card-whatsapp {
@@ -869,6 +872,8 @@ button {
   font-size: 0.82rem;
   font-weight: 600;
   transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-card-whatsapp:hover {
@@ -884,6 +889,7 @@ button {
 .btn-card-add {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   padding: 0.45rem 0.75rem;
   background-color: var(--color-rose-soft);
   color: var(--color-olive-dark);
@@ -892,6 +898,8 @@ button {
   font-size: 0.82rem;
   font-weight: 600;
   transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-card-add:hover {
@@ -2124,5 +2132,8 @@ button {
     left: 0.75rem;
     padding: 0.3rem 0.65rem;
     font-size: 0.74rem;
+  }
+  .dialog-action-row {
+    flex-direction: column;
   }
 }

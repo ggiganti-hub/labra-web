@@ -566,7 +566,7 @@ function renderProducts() {
           <p class="product-card-desc">${prod.shortDesc}</p>
 
           <div class="product-card-footer">
-            <span class="product-yield-badge">${prod.category === 'tortas' || prod.category === 'keto' ? (prod.id === 'chocotorta' ? '16x18 cm · 10 a 12 porc.' : 'Diámetro 22 cm · 10 a 12 porc.') : 'Caja x 25 unidades'}</span>
+            <span class="product-yield-badge">${prod.category === 'tortas' || prod.category === 'keto' ? (prod.id === 'chocotorta' ? '16 x 18 cm' : 'Diámetro 22 cm') : 'Caja x 25 un.'}</span>
 
             <div class="product-card-actions">
               <button class="btn-card-whatsapp" onclick="orderSingleProductDirectly('${prod.id}')" title="Pedir por WhatsApp">
@@ -574,9 +574,7 @@ function renderProducts() {
                 Pedir
               </button>
 
-              <button class="btn-card-add" onclick="addToOrder('${prod.id}', 1)" title="Sumar a mi lista de pedido">
-                + Sumar
-              </button>
+              <button class="btn-card-add" onclick="addToOrder('${prod.id}', 1)" title="Sumar a mi lista de pedido">+&nbsp;Sumar</button>
             </div>
           </div>
         </div>
