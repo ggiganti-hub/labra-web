@@ -1,9 +1,13 @@
 .DS_Store
+*.DS_Store
+**/.DS_Store
 *.mov
 *.pdf
 *.PNG
 *.jpg
 !assets/**
+assets/**/.DS_Store
+assets/**/.DS_Store*
 Vasitos/
 Petit Four/
 Tortas/

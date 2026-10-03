@@ -1,0 +1,6 @@
+# robots.txt para https://www.labra.com.ar
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.labra.com.ar/sitemap.xml
