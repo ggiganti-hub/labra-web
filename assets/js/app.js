@@ -579,7 +579,7 @@ function renderProducts() {
   if (filtered.length === 0) {
     grid.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; background: var(--color-surface); border-radius: var(--radius-lg); border: 1px dashed var(--color-border);">
-        <div style="font-size: 2.5rem; margin-bottom: 0.8rem;">🍰</div>
+        <div style="margin-bottom: 1rem; display: flex; justify-content: center; color: var(--color-olive); opacity: 0.65;"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
         <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--color-olive-dark); margin-bottom: 0.5rem;">No encontramos coincidencias</h3>
         <p style="color: var(--color-text-secondary); max-width: 400px; margin: 0 auto 1.5rem;">Probá buscando con otros ingredientes (ej: dulce de leche, frutos rojos, limón, chocolate) o restablecé los filtros.</p>
         <button class="btn-primary" onclick="resetFilters()">Ver todos los productos</button>
@@ -596,7 +596,7 @@ function renderProducts() {
     let multiImgHtml = '';
     if (prod.images && prod.images.length > 1) {
       multiImgHtml = `
-        <span class="card-photo-count-badge">📷 2 fotos</span>
+        <span class="card-photo-count-badge"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>2 fotos</span>
         <div class="card-multi-img-pills" onclick="event.stopPropagation();">
           ${prod.images.map((img, idx) => `
             <button type="button" class="card-img-pill ${idx === 0 ? 'active' : ''}" onclick="switchCardPhoto(event, '${prod.id}', ${idx})" title="Ver ${img.label}">${img.label}</button>
@@ -625,9 +625,8 @@ function renderProducts() {
             <span class="product-yield-badge">${prod.category === 'tortas' || prod.category === 'keto' ? (prod.id === 'chocotorta' ? '16 x 18 cm' : 'Diámetro 22 cm') : 'Caja x 25 un.'}</span>
 
             <div class="product-card-actions">
-              <button class="btn-card-whatsapp" onclick="orderSingleProductDirectly('${prod.id}')" title="Pedir por WhatsApp">
-                <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-                Pedir
+              <button class="btn-card-whatsapp" onclick="orderSingleProductDirectly('${prod.id}')" title="Pedir ${prod.name} por WhatsApp" aria-label="Pedir ${prod.name} por WhatsApp">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.676.15-.2.301-.776.98-1.002 1.23-.226.25-.452.276-.753.125-.301-.15-1.272-.469-2.424-1.498-.897-.8-1.503-1.789-1.68-2.09-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.175.2-.301.301-.501.1-.2.05-.376-.025-.526-.075-.15-.677-1.631-.928-2.235-.245-.589-.494-.509-.677-.518-.175-.008-.376-.01-.577-.01-.2 0-.527.075-.803.376s-1.054 1.03-1.054 2.511 1.079 2.912 1.23 3.113c.15.2 2.124 3.243 5.144 4.549.718.31 1.279.496 1.716.634.721.23 1.378.197 1.898.12.58-.087 1.78-.727 2.03-1.43.25-.702.25-1.303.175-1.43-.075-.126-.275-.201-.576-.351zM12.004 2C6.48 2 2 6.48 2 12c0 1.84.5 3.565 1.372 5.044L2.05 22l5.12-1.342A9.957 9.957 0 0 0 12.004 22c5.523 0 10.004-4.48 10.004-10s-4.481-10-10.004-10zm0 18.257c-1.606 0-3.1-.476-4.364-1.3l-.313-.205-3.057.802.816-2.98-.225-.327a8.21 8.21 0 0 1-1.36-4.447c0-4.557 3.708-8.265 8.265-8.265 4.557 0 8.265 3.708 8.265 8.265 0 4.558-3.708 8.266-8.265 8.266z"/></svg>
               </button>
 
               <button class="btn-card-add" onclick="addToOrder('${prod.id}', 1)" title="Sumar a mi lista de pedido">+&nbsp;Sumar</button>
@@ -889,6 +888,92 @@ function closeOrderDrawer() {
   document.body.style.overflow = '';
 }
 
+// Recomendaciones en el estado vacío del Drawer
+function toggleDrawerRecommendation(productId) {
+  const existingIdx = state.cart.findIndex(i => i.id === productId);
+  if (existingIdx >= 0) {
+    state.cart.splice(existingIdx, 1);
+    showToast('Producto quitado de tu lista');
+  } else {
+    const prod = PRODUCTS.find(p => p.id === productId);
+    if (prod) {
+      state.cart.push({
+        id: prod.id,
+        product: prod,
+        qty: 1
+      });
+      showToast(`¡Sumaste ${prod.name} a tu lista!`);
+      if (typeof trackAnalyticsEvent === 'function') {
+        trackAnalyticsEvent('add_to_cart', {
+          currency: 'ARS',
+          value: prod.price,
+          items: [{ item_id: prod.id, item_name: prod.name, price: prod.price, quantity: 1 }]
+        });
+      }
+    }
+  }
+
+  saveCart();
+  updateOrderBadge();
+  updateDrawerRecommendationsUI();
+}
+
+function updateDrawerRecommendationsUI() {
+  const recCards = document.querySelectorAll('.js-rec-card');
+  let checkedCount = 0;
+  let totalAmount = 0;
+
+  recCards.forEach(card => {
+    const prodId = card.getAttribute('data-product-id');
+    const isChecked = state.cart.some(i => i.id === prodId);
+    const checkbox = card.querySelector('.drawer-rec-checkbox');
+    if (isChecked) {
+      card.classList.add('checked');
+      if (checkbox) checkbox.setAttribute('aria-checked', 'true');
+      checkedCount++;
+      const item = state.cart.find(i => i.id === prodId);
+      if (item && item.product) {
+        totalAmount += item.product.price * item.qty;
+      }
+    } else {
+      card.classList.remove('checked');
+      if (checkbox) checkbox.setAttribute('aria-checked', 'false');
+    }
+  });
+
+  const continueBtn = document.getElementById('drawer-btn-continue-order');
+  const totalValEl = document.getElementById('drawer-total-val');
+
+  if (continueBtn) {
+    if (checkedCount > 0) {
+      continueBtn.classList.add('visible');
+      continueBtn.innerHTML = `<span>Avanzar con mi pedido (${formatCurrency(totalAmount)})</span> <span>→</span>`;
+    } else {
+      continueBtn.classList.remove('visible');
+    }
+  }
+
+  if (totalValEl) {
+    totalValEl.textContent = formatCurrency(totalAmount);
+  }
+}
+
+function proceedFromEmptyStateToOrder() {
+  const emptyEl = document.getElementById('drawer-empty-state');
+  const contentEl = document.getElementById('drawer-content-box');
+  if (emptyEl) emptyEl.style.display = 'none';
+  if (contentEl) contentEl.style.display = 'block';
+  renderOrderDrawer();
+}
+
+function goToCatalogFromDrawer() {
+  closeOrderDrawer();
+  const catalogEl = document.getElementById('catalogo');
+  if (catalogEl) {
+    catalogEl.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
 function renderOrderDrawer() {
   const listEl = document.getElementById('drawer-items-list');
   const emptyEl = document.getElementById('drawer-empty-state');
@@ -903,6 +988,7 @@ function renderOrderDrawer() {
     if (emptyEl) emptyEl.style.display = 'flex';
     if (contentEl) contentEl.style.display = 'none';
     if (totalValEl) totalValEl.textContent = '$0';
+    updateDrawerRecommendationsUI();
     return;
   }
 
@@ -923,10 +1009,12 @@ function renderOrderDrawer() {
           <div class="drawer-item-price">${item.product.priceDisplay} c/u</div>
         </div>
         <div class="drawer-item-controls">
-          <button class="qty-btn" onclick="updateOrderItemQty('${item.id}', -1)" title="Reducir">－</button>
+          <button class="qty-btn" onclick="updateOrderItemQty('${item.id}', -1)" title="Reducir" aria-label="Reducir cantidad">−</button>
           <span class="qty-val">${item.qty}</span>
-          <button class="qty-btn" onclick="updateOrderItemQty('${item.id}', 1)" title="Aumentar">＋</button>
-          <button class="drawer-item-delete" onclick="removeOrderItem('${item.id}')" title="Eliminar">✕</button>
+          <button class="qty-btn" onclick="updateOrderItemQty('${item.id}', 1)" title="Aumentar" aria-label="Aumentar cantidad">+</button>
+          <button class="drawer-item-delete" onclick="removeOrderItem('${item.id}')" title="Eliminar" aria-label="Eliminar producto">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
         </div>
       </div>
     `;
@@ -959,11 +1047,11 @@ function updateWhatsAppPreview() {
   if (sendBtn) sendBtn.href = buildWhatsAppUrl();
 }
 
-// Generador del texto para WhatsApp
+// Generador del texto para WhatsApp (limpio y natural)
 function generateOrderTextMessage() {
   let lines = [];
-  lines.push('¡Hola LABRA Pastelería! 🍰');
-  lines.push('Quisiera hacer una consulta / pedido con los siguientes productos:');
+  lines.push('¡Hola LABRA Pastelería!');
+  lines.push('Quisiera hacer un pedido con los siguientes productos:');
   lines.push('');
 
   let total = 0;
@@ -974,21 +1062,21 @@ function generateOrderTextMessage() {
   });
 
   lines.push('');
-  lines.push(`💰 Total estimado: ${formatCurrency(total)}`);
+  lines.push(`Total estimado: ${formatCurrency(total)}`);
 
   if (state.targetDate) {
     const [y, m, d] = state.targetDate.split('-');
-    lines.push(`📅 Fecha deseada: ${d}/${m}/${y}`);
+    lines.push(`Fecha deseada: ${d}/${m}/${y}`);
   }
 
-  lines.push(`📍 Modalidad: ${state.deliveryMethod || 'Retiro por Caballito'}`);
+  lines.push(`Modalidad: ${state.deliveryMethod || 'Retiro por Caballito'}`);
 
   if (state.clientName && state.clientName.trim()) {
-    lines.push(`👤 Nombre: ${state.clientName.trim()}`);
+    lines.push(`Nombre: ${state.clientName.trim()}`);
   }
 
   if (state.notes && state.notes.trim()) {
-    lines.push(`📝 Observaciones: ${state.notes.trim()}`);
+    lines.push(`Observaciones: ${state.notes.trim()}`);
   }
 
   lines.push('');
@@ -1023,12 +1111,12 @@ function orderSingleProductDirectly(productId) {
   });
 
   const msg = [
-    '¡Hola LABRA Pastelería! 🍰',
+    '¡Hola LABRA Pastelería!',
     `Quisiera encargar:`,
     `• 1x ${prod.name} (${prod.priceDisplay})`,
     '',
-    `📍 Retiro por Caballito (con 48 hs de anticipación).`,
-    '¿Tienen disponibilidad en estos días? ¡Gracias!'
+    `Retiro por Caballito (con 48 hs de anticipación).`,
+    '¿Tienen disponibilidad en estos días? ¡Muchas gracias!'
   ].join('\n');
 
   const url = `https://wa.me/${LABRA_CONFIG.phone}?text=${encodeURIComponent(msg)}`;
@@ -1045,7 +1133,7 @@ function showToast(text) {
     document.body.appendChild(toast);
   }
 
-  toast.innerHTML = `<span>✨</span><span>${text}</span>`;
+  toast.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>${text}</span>`;
   toast.classList.add('show');
 
   setTimeout(() => {
