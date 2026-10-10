@@ -386,28 +386,36 @@
 
   <main>
     <!-- ======================================================================
-         Hero Minimalista
+         Hero Minimalista - Lanzamiento Postres Cuchareables
          ====================================================================== -->
-    <section class="hero-section">
+    <section class="hero-section hero-launch-banner">
       <div class="container">
         <div class="hero-grid">
           <div class="hero-text-side">
-            <span class="hero-tagline">PASTELERÍA ARTESANAL · CABALLITO</span>
+            <div class="hero-launch-badge-wrap">
+              <span class="hero-launch-badge">
+                <span class="launch-badge-pulse" aria-hidden="true"></span>
+                ¡Nuevo Lanzamiento en LABRA!
+              </span>
+            </div>
             
-            <h1 class="hero-title">
-              Pastelería <em>honesta</em>.<span class="sr-only"> Pastelería en Caballito con tortas artesanales por pedido.</span>
+            <h1 class="hero-title hero-launch-title">
+              Nuevos Postres <em>Cuchareables</em>.<span class="sr-only"> Nuevos postres individuales en pote de 250 cc en Caballito.</span>
             </h1>
 
-            <p class="hero-subtitle">
-              Lo simple, bien hecho. Elaboración 100% artesanal a pedido, con materia prima de primera calidad.
+            <p class="hero-subtitle hero-launch-subtitle">
+              Tus sabores favoritos de LABRA, ahora en formato individual de 250 cc. Listos para disfrutar.
             </p>
 
-            <div class="hero-cta-group">
-              <a href="#catalogo" class="btn-primary">
-                <span>Ver Catálogo</span>
-                <span>↓</span>
+            <div class="hero-cta-group hero-launch-cta-group">
+              <a href="#catalogo" class="btn-launch-primary" onclick="goToCuchareablesCatalog(); return false;" title="Ver sabores y pedir cuchareables">
+                <span>Ver Sabores</span>
+                <span class="launch-cta-arrow" aria-hidden="true">↓</span>
               </a>
-              <a href="https://wa.me/5491173718584?text=%C2%A1Hola%20LABRA!%20Quisiera%20hacerles%20una%20consulta." target="_blank" rel="noopener" class="btn-hero-whatsapp" title="Consultar por WhatsApp" aria-label="Consultar por WhatsApp">
+              <a href="#catalogo" class="btn-launch-secondary" title="Ver toda la pastelería">
+                <span>Ver toda la carta</span>
+              </a>
+              <a href="https://wa.me/5491173718584?text=%C2%A1Hola%20LABRA!%20Quisiera%20consultar%20por%20los%20nuevos%20postres%20cuchareables." target="_blank" rel="noopener" class="btn-hero-whatsapp" title="Consultar por WhatsApp" aria-label="Consultar por WhatsApp">
                 <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.676.15-.2.301-.776.98-1.002 1.23-.226.25-.452.276-.753.125-.301-.15-1.272-.469-2.424-1.498-.897-.8-1.503-1.789-1.68-2.09-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.175.2-.301.301-.501.1-.2.05-.376-.025-.526-.075-.15-.677-1.631-.928-2.235-.245-.589-.494-.509-.677-.518-.175-.008-.376-.01-.577-.01-.2 0-.527.075-.803.376s-1.054 1.03-1.054 2.511 1.079 2.912 1.23 3.113c.15.2 2.124 3.243 5.144 4.549.718.31 1.279.496 1.716.634.721.23 1.378.197 1.898.12.58-.087 1.78-.727 2.03-1.43.25-.702.25-1.303.175-1.43-.075-.126-.275-.201-.576-.351zM12.004 2C6.48 2 2 6.48 2 12c0 1.84.5 3.565 1.372 5.044L2.05 22l5.12-1.342A9.957 9.957 0 0 0 12.004 22c5.523 0 10.004-4.48 10.004-10s-4.481-10-10.004-10zm0 18.257c-1.606 0-3.1-.476-4.364-1.3l-.313-.205-3.057.802.816-2.98-.225-.327a8.21 8.21 0 0 1-1.36-4.447c0-4.557 3.708-8.265 8.265-8.265 4.557 0 8.265 3.708 8.265 8.265 0 4.558-3.708 8.266-8.265 8.266z"/></svg>
               </a>
             </div>
@@ -415,12 +423,12 @@
             <div class="hero-meta-inline">
               <span class="hero-meta-item">
                 <svg class="hero-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-                <span>100% Artesanal</span>
+                <span>Chocotorta · Tiramisú · Chocolate</span>
               </span>
               <span class="hero-meta-dot">·</span>
               <span class="hero-meta-item">
                 <svg class="hero-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>48 hs de anticipación</span>
+                <span>Potes de 250 cc</span>
               </span>
               <span class="hero-meta-dot">·</span>
               <span class="hero-meta-item">
@@ -430,60 +438,62 @@
             </div>
           </div>
 
-          <!-- Imagen destacada rotativa con 4 creaciones estrella -->
-          <div class="hero-showcase" id="hero-slider" aria-roledescription="carousel" aria-label="Creaciones destacadas de LABRA">
+          <!-- Imagen destacada rotativa con las 4 fotos de los nuevos cuchareables -->
+          <div class="hero-showcase" id="hero-slider" aria-roledescription="carousel" aria-label="Nuevos Postres Cuchareables de LABRA" onclick="openProductModal('cuchareables')" style="cursor: pointer;" title="Hacé click para ver detalles y pedir">
             <div class="hero-card-main">
               <div class="hero-card-img-wrap">
-                <!-- Slide 1: Rogel Clásico -->
-                <div class="hero-slide active" data-index="0" data-name="Rogel">
-                  <img src="assets/images/products/torta-rogel.jpg" 
-                       alt="Torta Rogel artesanal LABRA con dulce de leche y merengue italiano en Caballito" 
+                <!-- Slide 1: Presentación Trío -->
+                <div class="hero-slide active" data-index="0" data-name="Los 3 Sabores (250 cc)">
+                  <img src="assets/images/products/cuchareables-01-presentacion.jpg" 
+                       alt="Nuevos Postres Cuchareables LABRA - Chocotorta, Tiramisú y Chocolate" 
                        class="hero-card-img" 
                        width="600" height="600" 
                        fetchpriority="high" loading="eager">
                 </div>
 
-                <!-- Slide 2: Sablée de Almendras -->
-                <div class="hero-slide" data-index="1" data-name="Sablée de Almendras">
-                  <img src="assets/images/products/torta-sablee-almendras.jpg" 
-                       alt="Torta Sablée de almendras con crema y frutillas frescas de estación" 
+                <!-- Slide 2: Chocotorta -->
+                <div class="hero-slide" data-index="1" data-name="Chocotorta Cuchareable">
+                  <img src="assets/images/products/cuchareables-02-chocotorta.jpg" 
+                       alt="Pote cuchareable de Chocotorta con galletitas Chocolinas y crema de DDL" 
                        class="hero-card-img" 
                        width="600" height="600" 
                        loading="eager">
                 </div>
 
-                <!-- Slide 3: Brownie -->
-                <div class="hero-slide" data-index="2" data-name="Brownie">
-                  <img src="assets/images/products/torta-brownie.jpg" 
-                       alt="Brownie con dulce de leche, merengue y nueces" 
+                <!-- Slide 3: Tiramisú -->
+                <div class="hero-slide" data-index="2" data-name="Tiramisú Cuchareable">
+                  <img src="assets/images/products/cuchareables-03-tiramisu.jpg" 
+                       alt="Pote cuchareable de Tiramisú con vainillas caseras y mascarpone" 
                        class="hero-card-img" 
                        width="600" height="600" 
                        loading="lazy">
                 </div>
 
-                <!-- Slide 4: Cheesecake -->
-                <div class="hero-slide" data-index="3" data-name="Cheesecake">
-                  <img src="assets/images/products/torta-cheesecake.jpg" 
-                       alt="Cheesecake horneado artesanal con frutos rojos de estación" 
+                <!-- Slide 4: Chocolate -->
+                <div class="hero-slide" data-index="3" data-name="Chocolate Cuchareable">
+                  <img src="assets/images/products/cuchareables-04-chocolate.jpg" 
+                       alt="Pote cuchareable de Chocolate húmedo con dulce de leche" 
                        class="hero-card-img" 
                        width="600" height="600" 
                        loading="lazy">
                 </div>
 
-                <!-- Badge flotante con el nombre del producto -->
+                <!-- Badge flotante con el nombre del gusto activo -->
                 <div class="hero-slide-badge" id="hero-slide-badge" aria-live="polite">
                   <span class="badge-dot"></span>
-                  <span class="badge-text" id="hero-badge-text">Rogel</span>
+                  <span class="badge-text" id="hero-badge-text">Los 3 Sabores (250 cc)</span>
                 </div>
+
+                <span class="hero-launch-floating-pill">¡Nuevo! 250 cc</span>
               </div>
 
               <!-- Indicadores discretos de navegación -->
-              <div class="hero-slider-bar">
-                <div class="hero-slider-dots" id="hero-slider-dots" role="tablist" aria-label="Elegir producto destacado">
-                  <button type="button" class="hero-dot active" data-index="0" role="tab" aria-selected="true" aria-label="Ver Rogel"></button>
-                  <button type="button" class="hero-dot" data-index="1" role="tab" aria-selected="false" aria-label="Ver Sablée de Almendras"></button>
-                  <button type="button" class="hero-dot" data-index="2" role="tab" aria-selected="false" aria-label="Ver Brownie"></button>
-                  <button type="button" class="hero-dot" data-index="3" role="tab" aria-selected="false" aria-label="Ver Cheesecake"></button>
+              <div class="hero-slider-bar" onclick="event.stopPropagation();">
+                <div class="hero-slider-dots" id="hero-slider-dots" role="tablist" aria-label="Elegir gusto">
+                  <button type="button" class="hero-dot active" data-index="0" role="tab" aria-selected="true" aria-label="Ver Los 3 Sabores"></button>
+                  <button type="button" class="hero-dot" data-index="1" role="tab" aria-selected="false" aria-label="Ver Chocotorta"></button>
+                  <button type="button" class="hero-dot" data-index="2" role="tab" aria-selected="false" aria-label="Ver Tiramisú"></button>
+                  <button type="button" class="hero-dot" data-index="3" role="tab" aria-selected="false" aria-label="Ver Chocolate"></button>
                 </div>
               </div>
             </div>
@@ -509,7 +519,11 @@
           <div class="filter-pills-row" role="tablist">
             <button class="filter-pill active" data-category="todos" role="tab" aria-selected="true">
               <span>Todos</span>
-              <span class="filter-pill-count">15</span>
+              <span class="filter-pill-count">16</span>
+            </button>
+            <button class="filter-pill" data-category="cuchareables" role="tab" aria-selected="false">
+              <span>Cuchareables</span>
+              <span class="filter-pill-count">1</span>
             </button>
             <button class="filter-pill" data-category="tortas" role="tab" aria-selected="false">
               <span>Tortas</span>
@@ -754,7 +768,7 @@
         
         <p class="dialog-desc" id="modal-desc">Descripción...</p>
 
-        <div class="dialog-section-block">
+        <div class="dialog-section-block" id="modal-ingredients-section">
           <h5>Ingredientes Destacados</h5>
           <ul id="modal-ingredients-list" style="padding-left: 1.2rem; font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.55;"></ul>
         </div>

@@ -98,6 +98,68 @@ const PRODUCTS = [
     badgeType: 'badge-olive'
   },
   {
+    id: 'cuchareables',
+    name: 'Potes Cuchareables (250 cc)',
+    category: 'cuchareables',
+    price: 12000,
+    priceDisplay: '$12.000',
+    shortDesc: 'Potes individuales de 250 cc en 3 sabores: Chocotorta, Tiramisú y Chocolate.',
+    longDesc: 'Llegó la nueva línea de postres cuchareables a LABRA. Pensados para tener siempre a mano.\nClásicos favoritos, ahora en formato 250cc en las siguientes presentaciones:\n\nChocotorta: El clásico que no falla.\nTiramisú: Con vainillas caseras, hechas por nosotros.\nChocolate: Receta especial Labra.',
+    ingredients: [],
+    yield: 'Formato individual de 250 cc',
+    storage: 'Conservar refrigerado en heladera hasta 4 días.',
+    image: 'assets/images/products/cuchareables-01-presentacion.jpg',
+    images: [
+      {
+        src: 'assets/images/products/cuchareables-01-presentacion.jpg',
+        label: 'Los 3 Sabores',
+        desc: 'Trío completo (250 cc c/u)',
+        flavorDesc: 'Llegó la nueva línea de postres cuchareables a LABRA. Pensados para tener siempre a mano.\nClásicos favoritos, ahora en formato 250cc en las siguientes presentaciones:\n\nChocotorta: El clásico que no falla.\nTiramisú: Con vainillas caseras, hechas por nosotros.\nChocolate: Receta especial Labra.',
+        flavorIngredients: null,
+        flavorYield: 'Formato individual de 250 cc'
+      },
+      {
+        src: 'assets/images/products/cuchareables-02-chocotorta.jpg',
+        label: 'Chocotorta',
+        desc: 'Galletitas Chocolinas y crema de DDL (250 cc)',
+        flavorDesc: 'Galletitas Chocolinas, café y crema de ddl (16x18cm).',
+        flavorIngredients: [
+          'Galletitas Chocolinas',
+          'Café',
+          'Crema de dulce de leche (ddl)'
+        ],
+        flavorYield: 'Pote individual de 250 cc · Sabor Chocotorta'
+      },
+      {
+        src: 'assets/images/products/cuchareables-03-tiramisu.jpg',
+        label: 'Tiramisú',
+        desc: 'Vainillas, queso mascarpone y cacao (250 cc)',
+        flavorDesc: 'Vainillas caseras, almíbar de café y marsala, mascarpone y choco amargo.',
+        flavorIngredients: [
+          'Vainillas caseras',
+          'Almíbar de café y marsala',
+          'Mascarpone',
+          'Chocolate amargo'
+        ],
+        flavorYield: 'Pote individual de 250 cc · Sabor Tiramisú'
+      },
+      {
+        src: 'assets/images/products/cuchareables-04-chocolate.jpg',
+        label: 'Chocolate',
+        desc: 'Bizcocho húmedo de chocolate y DDL (250 cc)',
+        flavorDesc: 'Bizcocho húmedo de choco amargo y crema de ddl.',
+        flavorIngredients: [
+          'Bizcocho húmedo de chocolate amargo',
+          'Crema de dulce de leche (ddl)',
+          'Chocolate amargo'
+        ],
+        flavorYield: 'Pote individual de 250 cc · Sabor Chocolate'
+      }
+    ],
+    badges: ['¡Nuevo!', '250 cc', '3 Sabores'],
+    badgeType: 'badge-olive'
+  },
+  {
     id: 'brownie',
     name: 'Brownie',
     category: 'tortas',
@@ -469,6 +531,9 @@ function initEventListeners() {
     productModal.addEventListener('click', (e) => {
       if (e.target === productModal) productModal.close();
     });
+    productModal.addEventListener('close', () => {
+      productModal.classList.remove('is-cuchareables');
+    });
   }
 
   // FAQ Accordion
@@ -541,6 +606,7 @@ function renderProducts() {
     // Filtro por categoría
     const matchesCategory = 
       state.activeCategory === 'todos' ||
+      (state.activeCategory === 'cuchareables' && prod.category === 'cuchareables') ||
       (state.activeCategory === 'tortas' && (prod.category === 'tortas' || prod.category === 'keto')) ||
       (state.activeCategory === 'vasitos' && prod.category === 'vasitos') ||
       (state.activeCategory === 'petitfour' && prod.category === 'petitfour') ||
@@ -563,6 +629,7 @@ function renderProducts() {
   // Sincronizar contadores en las píldoras de filtro
   const categoryCounts = {
     todos: PRODUCTS.length,
+    cuchareables: PRODUCTS.filter(p => p.category === 'cuchareables').length,
     tortas: PRODUCTS.filter(p => p.category === 'tortas' || p.category === 'keto').length,
     vasitos: PRODUCTS.filter(p => p.category === 'vasitos').length,
     petitfour: PRODUCTS.filter(p => p.category === 'petitfour').length,
@@ -596,7 +663,7 @@ function renderProducts() {
     let multiImgHtml = '';
     if (prod.images && prod.images.length > 1) {
       multiImgHtml = `
-        <span class="card-photo-count-badge"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>2 fotos</span>
+        <span class="card-photo-count-badge"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>${prod.images.length} fotos</span>
         <div class="card-multi-img-pills" onclick="event.stopPropagation();">
           ${prod.images.map((img, idx) => `
             <button type="button" class="card-img-pill ${idx === 0 ? 'active' : ''}" onclick="switchCardPhoto(event, '${prod.id}', ${idx})" title="Ver ${img.label}">${img.label}</button>
@@ -622,7 +689,7 @@ function renderProducts() {
           <p class="product-card-desc">${prod.shortDesc}</p>
 
           <div class="product-card-footer">
-            <span class="product-yield-badge">${prod.category === 'tortas' || prod.category === 'keto' ? (prod.id === 'chocotorta' ? '16 x 18 cm' : 'Diámetro 22 cm') : 'Caja x 25 un.'}</span>
+            <span class="product-yield-badge">${prod.category === 'cuchareables' ? 'Pote 250 cc' : (prod.category === 'tortas' || prod.category === 'keto' ? (prod.id === 'chocotorta' ? '16 x 18 cm' : 'Diámetro 22 cm') : 'Caja x 25 un.')}</span>
 
             <div class="product-card-actions">
               <button class="btn-card-whatsapp" onclick="orderSingleProductDirectly('${prod.id}')" title="Pedir ${prod.name} por WhatsApp" aria-label="Pedir ${prod.name} por WhatsApp">
@@ -638,7 +705,7 @@ function renderProducts() {
   }).join('');
 }
 
-// Cambiar foto activa en la tarjeta (Vasito solo / Caja x 25)
+// Cambiar foto activa en la tarjeta (Vasito solo / Caja x 25 / Cuchareables)
 function switchCardPhoto(e, productId, imgIdx) {
   if (e) e.stopPropagation();
   const prod = PRODUCTS.find(p => p.id === productId);
@@ -665,6 +732,7 @@ function switchCardPhoto(e, productId, imgIdx) {
 
 function formatCategoryName(cat) {
   switch (cat) {
+    case 'cuchareables': return 'Pote Cuchareable';
     case 'tortas': return 'Torta Artesanal';
     case 'vasitos': return 'Caja de Vasitos x 25';
     case 'petitfour': return 'Petit Four x 25';
@@ -710,6 +778,7 @@ function openProductModal(productId) {
   const titleEl = document.getElementById('modal-title');
   const priceEl = document.getElementById('modal-price');
   const descEl = document.getElementById('modal-desc');
+  const ingredientsSection = document.getElementById('modal-ingredients-section') || (document.getElementById('modal-ingredients-list') ? document.getElementById('modal-ingredients-list').closest('.dialog-section-block') : null);
   const ingredientsListEl = document.getElementById('modal-ingredients-list');
   const yieldEl = document.getElementById('modal-yield');
   const storageEl = document.getElementById('modal-storage');
@@ -717,6 +786,11 @@ function openProductModal(productId) {
   const directBtn = document.getElementById('modal-btn-direct');
   const thumbsContainer = document.getElementById('modal-gallery-thumbs');
   const imgBadge = document.getElementById('modal-img-badge');
+  let activeImageIdx = 0;
+
+  if (dialog) {
+    dialog.classList.toggle('is-cuchareables', prod.category === 'cuchareables');
+  }
 
   if (imgEl) {
     imgEl.src = prod.image;
@@ -726,20 +800,48 @@ function openProductModal(productId) {
   if (catEl) catEl.textContent = formatCategoryName(prod.category);
   if (titleEl) titleEl.textContent = prod.name;
   if (priceEl) priceEl.textContent = prod.priceDisplay;
-  if (descEl) descEl.textContent = prod.longDesc;
-  if (yieldEl) yieldEl.textContent = prod.yield;
+
+  const initialImg = (prod.images && prod.images[0]) || null;
+  if (descEl) {
+    descEl.style.opacity = '1';
+    descEl.textContent = (initialImg && initialImg.flavorDesc) ? initialImg.flavorDesc : prod.longDesc;
+  }
+  if (yieldEl) {
+    yieldEl.textContent = (initialImg && initialImg.flavorYield) ? initialImg.flavorYield : prod.yield;
+  }
   if (storageEl) storageEl.textContent = prod.storage;
+
+  const initialIngs = (initialImg && initialImg.flavorIngredients !== undefined)
+    ? initialImg.flavorIngredients
+    : prod.ingredients;
+
+  if (ingredientsSection) {
+    if (initialIngs && initialIngs.length > 0) {
+      ingredientsSection.style.display = 'block';
+      if (ingredientsListEl) {
+        ingredientsListEl.style.opacity = '1';
+        ingredientsListEl.innerHTML = initialIngs.map(ing => `<li>${ing}</li>`).join('');
+      }
+    } else {
+      ingredientsSection.style.display = 'none';
+      if (ingredientsListEl) ingredientsListEl.innerHTML = '';
+    }
+  }
 
   // Renderizado dinámico de galería si el producto tiene 2 imágenes
   if (prod.images && prod.images.length > 1) {
+    const isFlavorProduct = prod.category === 'cuchareables';
     if (imgBadge) {
       imgBadge.style.display = 'inline-block';
-      imgBadge.textContent = `Foto: ${prod.images[0].label}`;
+      imgBadge.textContent = isFlavorProduct ? `Sabor: ${prod.images[0].label}` : `Foto: ${prod.images[0].label}`;
     }
     if (thumbsContainer) {
       thumbsContainer.style.display = 'flex';
+      const labelText = isFlavorProduct
+        ? 'Elegí el gusto para ver su detalle e ingredientes:'
+        : 'Vistas disponibles (hacé click para alternar):';
       thumbsContainer.innerHTML = `
-        <span class="dialog-thumbs-label">Vistas disponibles (hacé click para alternar):</span>
+        <span class="dialog-thumbs-label">${labelText}</span>
         <div class="dialog-thumbs-row">
           ${prod.images.map((img, idx) => `
             <button type="button" class="dialog-thumb-btn ${idx === 0 ? 'active' : ''}" data-idx="${idx}">
@@ -757,18 +859,53 @@ function openProductModal(productId) {
       thumbBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           const idx = parseInt(btn.dataset.idx, 10);
+          activeImageIdx = idx;
           thumbBtns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
-          if (imgEl && prod.images[idx]) {
+
+          const imgObj = prod.images[idx];
+          if (imgEl && imgObj) {
             imgEl.style.opacity = '0.35';
             setTimeout(() => {
-              imgEl.src = prod.images[idx].src;
-              imgEl.alt = `${prod.name} - ${prod.images[idx].label}`;
+              imgEl.src = imgObj.src;
+              imgEl.alt = `${prod.name} - ${imgObj.label}`;
               imgEl.style.opacity = '1';
-            }, 100);
+            }, 90);
           }
-          if (imgBadge && prod.images[idx]) {
-            imgBadge.textContent = `Foto: ${prod.images[idx].label}`;
+          if (imgBadge && imgObj) {
+            imgBadge.textContent = isFlavorProduct ? `Sabor: ${imgObj.label}` : `Foto: ${imgObj.label}`;
+          }
+
+          // Diferenciar descripción e ingredientes al clickear cada gusto
+          if (imgObj) {
+            if (descEl) {
+              descEl.style.opacity = '0.35';
+              setTimeout(() => {
+                descEl.textContent = imgObj.flavorDesc || prod.longDesc;
+                descEl.style.opacity = '1';
+              }, 70);
+            }
+
+            const currentIngs = imgObj.flavorIngredients !== undefined ? imgObj.flavorIngredients : prod.ingredients;
+            if (ingredientsSection) {
+              if (currentIngs && currentIngs.length > 0) {
+                ingredientsSection.style.display = 'block';
+                if (ingredientsListEl) {
+                  ingredientsListEl.style.opacity = '0.35';
+                  setTimeout(() => {
+                    ingredientsListEl.innerHTML = currentIngs.map(i => `<li>${i}</li>`).join('');
+                    ingredientsListEl.style.opacity = '1';
+                  }, 70);
+                }
+              } else {
+                ingredientsSection.style.display = 'none';
+                if (ingredientsListEl) ingredientsListEl.innerHTML = '';
+              }
+            }
+
+            if (yieldEl) {
+              yieldEl.textContent = imgObj.flavorYield || prod.yield;
+            }
           }
         });
       });
@@ -776,10 +913,6 @@ function openProductModal(productId) {
   } else {
     if (imgBadge) imgBadge.style.display = 'none';
     if (thumbsContainer) thumbsContainer.style.display = 'none';
-  }
-
-  if (ingredientsListEl) {
-    ingredientsListEl.innerHTML = prod.ingredients.map(ing => `<li>${ing}</li>`).join('');
   }
 
   if (addBtn) {
@@ -791,7 +924,8 @@ function openProductModal(productId) {
 
   if (directBtn) {
     directBtn.onclick = () => {
-      orderSingleProductDirectly(prod.id);
+      const selectedFlavor = (prod.images && prod.images[activeImageIdx]) ? prod.images[activeImageIdx].label : null;
+      orderSingleProductDirectly(prod.id, selectedFlavor);
       dialog.close();
     };
   }
@@ -1091,7 +1225,7 @@ function buildWhatsAppUrl() {
 }
 
 // Pedido 1-click directo de un solo producto
-function orderSingleProductDirectly(productId) {
+function orderSingleProductDirectly(productId, flavorName = null) {
   const prod = PRODUCTS.find(p => p.id === productId);
   if (!prod) return;
 
@@ -1110,10 +1244,21 @@ function orderSingleProductDirectly(productId) {
     price: prod.price
   });
 
+  let productLine = `• 1x ${prod.name} (${prod.priceDisplay})`;
+  if (prod.category === 'cuchareables') {
+    if (flavorName && flavorName !== 'Los 3 Sabores') {
+      productLine = `• 1x ${prod.name} - Sabor ${flavorName} (${prod.priceDisplay})`;
+    } else if (flavorName === 'Los 3 Sabores') {
+      productLine = `• 1x ${prod.name} (${prod.priceDisplay})\n  (Variedades: Chocotorta, Tiramisú o Chocolate)`;
+    } else {
+      productLine = `• 1x ${prod.name} (${prod.priceDisplay})\n  (Sabor a elección: Chocotorta, Tiramisú o Chocolate)`;
+    }
+  }
+
   const msg = [
     '¡Hola LABRA Pastelería!',
     `Quisiera encargar:`,
-    `• 1x ${prod.name} (${prod.priceDisplay})`,
+    productLine,
     '',
     `Retiro por Caballito (con 48 hs de anticipación).`,
     '¿Tienen disponibilidad en estos días? ¡Muchas gracias!'
@@ -1266,6 +1411,49 @@ function initHeroSlider() {
   startAutoplay();
 }
 
+// Navegar directamente a la categoría Cuchareables desde el Hero Banner
+function goToCuchareablesCatalog() {
+  if (typeof trackAnalyticsEvent === 'function') {
+    trackAnalyticsEvent('click_hero_launch_banner', {
+      banner: 'Nuevos Postres Cuchareables',
+      action: 'ver_sabores'
+    });
+  }
+
+  const catalogEl = document.getElementById('catalogo');
+  if (catalogEl) {
+    catalogEl.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Activar filtro de categoría cuchareables
+  state.activeCategory = 'cuchareables';
+  state.searchQuery = '';
+  const searchInput = document.getElementById('catalog-search-input');
+  if (searchInput) searchInput.value = '';
+
+  const filterPills = document.querySelectorAll('.filter-pill');
+  filterPills.forEach(p => {
+    p.classList.toggle('active', p.dataset.category === 'cuchareables');
+  });
+
+  renderProducts();
+
+  // Enfocar suavemente la tarjeta de cuchareables
+  setTimeout(() => {
+    const card = document.querySelector('.product-card[data-product-id="cuchareables"]');
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.style.transition = 'box-shadow 0.35s ease, transform 0.35s ease';
+      card.style.boxShadow = '0 0 0 3px var(--color-olive), 0 8px 24px rgba(70, 84, 61, 0.2)';
+      card.style.transform = 'translateY(-3px)';
+      setTimeout(() => {
+        card.style.boxShadow = '';
+        card.style.transform = '';
+      }, 1500);
+    }
+  }, 450);
+}
+
 // Exponer funciones en el ámbito global para eventos en línea
 window.openProductModal = openProductModal;
 window.orderSingleProductDirectly = orderSingleProductDirectly;
@@ -1275,4 +1463,5 @@ window.removeOrderItem = removeOrderItem;
 window.openOrderDrawer = openOrderDrawer;
 window.closeOrderDrawer = closeOrderDrawer;
 window.resetFilters = resetFilters;
+window.goToCuchareablesCatalog = goToCuchareablesCatalog;
 
