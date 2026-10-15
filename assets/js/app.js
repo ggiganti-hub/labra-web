@@ -358,6 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
   updateOrderBadge();
   setupMinDate();
   initHeroSlider();
+  initGoogleReviewsSlider();
 });
 
 // Guardar / Cargar pedido en localStorage
@@ -1454,6 +1455,351 @@ function goToCuchareablesCatalog() {
   }, 450);
 }
 
+// ==========================================================================
+// Componente Oficial de Reseñas de Google (10 Mejores Reseñas Alternadas)
+// ==========================================================================
+const GOOGLE_REVIEWS = [
+  {
+    id: 'carolina-pla',
+    name: 'Carolina Pla',
+    initial: 'C',
+    avatarBg: '#1E88E5',
+    date: 'hace 3 semanas',
+    stars: 5,
+    text: 'Excelente sabor y muy linda presentación de todas las tortas. El lemon pie mi favorito, pero muy recomendables todas. Los vuelvo a elegir sin dudas!'
+  },
+  {
+    id: 'laureano-albers',
+    name: 'Laureano Albers',
+    initial: 'L',
+    avatarBg: '#00897B',
+    date: 'hace 1 mes',
+    stars: 5,
+    text: 'Delicioso todo!!! Pedimos una variedad para el cumple de mí papá y nos quedamos fascinados con la calidad, el sabor y la prolijidad en cada preparación! Muchas Gracias! Recomendamos sin ninguna duda.'
+  },
+  {
+    id: 'sandra-bootz',
+    name: 'Sandra Bootz',
+    initial: 'S',
+    avatarBg: '#E65100',
+    date: 'hace 1 mes',
+    stars: 5,
+    text: 'Super recomendable ! Espectacular presentación y sabores de Shots !!! Riquísimos!!! Muy amorosa Ayelen y su Marido cumplen en los pedidos y mercadería casera y fresca .Altamente recomendable\nGracias chicos'
+  },
+  {
+    id: 'antonella-di-giacomo',
+    name: 'Antonella Di Giacomo',
+    initial: 'A',
+    avatarBg: '#D81B60',
+    date: 'hace 2 meses',
+    stars: 5,
+    text: 'Riquísimo todo! Súper recomendable! Encargué 2 tortas para mi cumple (cheesecake y chocotorta) y estaban increíbles! Todos repitieron y coincidían en lo ricas que eran! Y la atención mención aparte 1000 puntos!!!'
+  },
+  {
+    id: 'milagros-perez-capristo',
+    name: 'Milagros Pérez Capristo',
+    initial: 'M',
+    avatarBg: '#7E57C2',
+    date: 'hace 2 semanas',
+    stars: 5,
+    text: 'Excelente. Riquísimo. No falla! Probé las tortas, son espectaculares, rendidoras y probé los postres individuales y realmente son muy muy ricos. Buenísima la calidad de los productos, se nota lo artesanal, lo fresco. Recomiendo!! Quedas re bien con los postres individuales para llevar a una cena o un almuerzo.'
+  },
+  {
+    id: 'laura-bettina-yoghurtchian',
+    name: 'Laura Bettina Yoghurtchian',
+    initial: 'L',
+    avatarBg: '#C2410C',
+    date: 'hace 1 mes',
+    stars: 5,
+    text: 'La verdad que es la primera vez que los pedía y me sorprendieron ! Excelente producto rico, prolijo un toque dulce y elegante para compartir . 100% recomendable !\nGRACIAS LABRA ❤️'
+  },
+  {
+    id: 'natalia-vilanova',
+    name: 'Natalia Vilanova',
+    initial: 'N',
+    avatarBg: '#43A047',
+    date: 'hace 1 mes',
+    stars: 5,
+    text: 'Ya van dos veces que encargo, todo excelente. La de Maracuyá es espectacular! La caja de petit four también buenísima y super rendidora. Recomiendo 100%'
+  },
+  {
+    id: 'natali-simone',
+    name: 'Natali Simone',
+    initial: 'N',
+    avatarBg: '#D97706',
+    date: 'hace 3 semanas',
+    stars: 5,
+    text: 'Segunda prueba y no defrauda!! Probé los vasitos en un evento y me encantaron! Al tiempo encargué un Cheesecake y un Lemon Pie riquísimos!! Super fresco todo y de calidad, además la presentación impecable super prolija y estética. Super recomiendo! Gracias chicos, sigan así!'
+  },
+  {
+    id: 'leticia-moralejo',
+    name: 'Leticia Moralejo',
+    initial: 'L',
+    avatarBg: '#3949AB',
+    date: 'hace 2 meses',
+    stars: 5,
+    text: 'Recomiendo especialmente la tarta de manzana. Se nota que los ingredientes son de primera calidad. La chocotorta también un 10. Y encima la atención de Aye y Germán hacen que la experiencia termine de ser perfecta! 100% recomendable!'
+  },
+  {
+    id: 'marina-gando',
+    name: 'Marina Gando',
+    initial: 'M',
+    avatarBg: '#AD1457',
+    date: 'hace 2 meses',
+    stars: 5,
+    text: 'El mejor Rogel que comí en mi vida!!!! Un éxito. Hasta los que no comen torta, pidieron repetir!'
+  }
+];
+
+// Barajado Fisher-Yates para alternar el orden de aparición dinámicamente
+function shuffleReviewsList(list) {
+  const arr = [...list];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Expandir / contraer reseña con "Leer más"
+function toggleReviewExpand(btn) {
+  const card = btn.closest('.elf-card');
+  if (!card) return;
+  const isExpanded = card.classList.toggle('expanded');
+  btn.textContent = isExpanded ? 'Leer menos' : 'Leer más';
+  if (typeof window.onReviewExpandToggle === 'function') {
+    window.onReviewExpandToggle(isExpanded);
+  }
+}
+
+function initGoogleReviewsSlider() {
+  const sliderWrap = document.getElementById('elf-reviews-slider');
+  const track = document.getElementById('elf-slider-track');
+  const viewport = document.getElementById('elf-slider-viewport');
+  const dotsContainer = document.getElementById('elf-dots-row');
+  const btnPrev = document.getElementById('elf-btn-prev');
+  const btnNext = document.getElementById('elf-btn-next');
+
+  if (!sliderWrap || !track || !viewport) return;
+
+  // Barajar las 10 reseñas para que alternen dinámicamente en cada carga
+  const activeReviews = shuffleReviewsList(GOOGLE_REVIEWS);
+
+  const starIconSvg = '<svg viewBox="0 0 24 24" class="elf-star-icon" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
+  const verifiedBadgeSvg = '<svg class="elf-verified-badge" viewBox="0 0 24 24" aria-label="Verificada" title="Reseña verificada en Google Maps"><circle cx="12" cy="12" r="10" fill="#2E6B3E"/><path d="M9 12l2 2 4-4" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>';
+
+  // Renderizar las 10 tarjetas de reseñas
+  track.innerHTML = activeReviews.map(r => {
+    const starsHtml = starIconSvg.repeat(r.stars);
+    const hasReadMore = r.text.length > 95;
+    const readMoreHtml = hasReadMore 
+      ? '<button type="button" class="elf-read-more" onclick="toggleReviewExpand(this)">Leer más</button>' 
+      : '';
+
+    return `
+      <div class="elf-card" data-review-id="${r.id}">
+        <div class="elf-card-header">
+          <div class="elf-avatar" style="background-color: ${r.avatarBg};">${r.initial}</div>
+          <div class="elf-author-info">
+            <div class="elf-author-name-row">
+              <span class="elf-author-name">${r.name}</span>
+              ${verifiedBadgeSvg}
+            </div>
+            <span class="elf-card-date">${r.date}</span>
+          </div>
+        </div>
+        <div class="elf-card-stars">
+          ${starsHtml}
+        </div>
+        <p class="elf-card-text">${r.text}</p>
+        ${readMoreHtml}
+      </div>
+    `;
+  }).join('');
+
+  let currentIndex = 0;
+  const totalItems = activeReviews.length;
+  let autoPlayTimer = null;
+  const AUTOPLAY_INTERVAL = 3800; // Desplazamiento automático suave cada 3.8s
+  let isPaused = false;
+
+  function getVisibleCount() {
+    if (window.innerWidth >= 1024) return 4;
+    if (window.innerWidth >= 640) return 2;
+    return 1;
+  }
+
+  function getMaxIndex() {
+    return Math.max(0, totalItems - getVisibleCount());
+  }
+
+  function renderDots() {
+    if (!dotsContainer) return;
+    const maxIdx = getMaxIndex();
+    const count = maxIdx + 1;
+    let dotsHtml = '';
+    for (let i = 0; i < count; i++) {
+      const activeClass = i === currentIndex ? ' active' : '';
+      dotsHtml += `<button type="button" class="elf-dot${activeClass}" data-index="${i}" aria-label="Ir a grupo de reseñas ${i + 1}"></button>`;
+    }
+    dotsContainer.innerHTML = dotsHtml;
+
+    dotsContainer.querySelectorAll('.elf-dot').forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        const idx = parseInt(e.currentTarget.dataset.index, 10);
+        goToSlide(idx);
+        restartAutoPlay();
+      });
+    });
+  }
+
+  function updateDots() {
+    if (!dotsContainer) return;
+    const dots = dotsContainer.querySelectorAll('.elf-dot');
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === currentIndex);
+    });
+  }
+
+  function goToSlide(index) {
+    const maxIdx = getMaxIndex();
+    currentIndex = Math.max(0, Math.min(index, maxIdx));
+
+    const card = track.querySelector('.elf-card');
+    if (card) {
+      const gap = 16;
+      const step = card.offsetWidth + gap;
+      track.style.transform = `translateX(-${currentIndex * step}px)`;
+    }
+    updateDots();
+  }
+
+  function nextSlide() {
+    const maxIdx = getMaxIndex();
+    if (currentIndex >= maxIdx) {
+      goToSlide(0);
+    } else {
+      goToSlide(currentIndex + 1);
+    }
+  }
+
+  function prevSlide() {
+    const maxIdx = getMaxIndex();
+    if (currentIndex <= 0) {
+      goToSlide(maxIdx);
+    } else {
+      goToSlide(currentIndex - 1);
+    }
+  }
+
+  // Lógica de Autoplay continuo y suave
+  function startAutoPlay() {
+    stopAutoPlay();
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    autoPlayTimer = setInterval(() => {
+      if (!isPaused && !document.hidden) {
+        nextSlide();
+      }
+    }, AUTOPLAY_INTERVAL);
+  }
+
+  function stopAutoPlay() {
+    if (autoPlayTimer) {
+      clearInterval(autoPlayTimer);
+      autoPlayTimer = null;
+    }
+  }
+
+  function restartAutoPlay() {
+    stopAutoPlay();
+    startAutoPlay();
+  }
+
+  if (btnPrev) {
+    btnPrev.addEventListener('click', () => {
+      prevSlide();
+      restartAutoPlay();
+    });
+  }
+
+  if (btnNext) {
+    btnNext.addEventListener('click', () => {
+      nextSlide();
+      restartAutoPlay();
+    });
+  }
+
+  // Pausa cuando el cursor está sobre las reseñas para facilitar la lectura
+  sliderWrap.addEventListener('mouseenter', () => {
+    isPaused = true;
+  });
+
+  sliderWrap.addEventListener('mouseleave', () => {
+    isPaused = false;
+  });
+
+  // Pausa si el usuario expande una reseña con "Leer más"
+  window.onReviewExpandToggle = function(isExpanded) {
+    isPaused = isExpanded;
+    if (!isExpanded) {
+      restartAutoPlay();
+    }
+  };
+
+  // Pausar si la pestaña pasa a segundo plano
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAutoPlay();
+    } else {
+      startAutoPlay();
+    }
+  });
+
+  // Soporte táctil / swipe para móviles
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  viewport.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    isPaused = true;
+  }, { passive: true });
+
+  viewport.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        // Deslizar izquierda -> siguiente
+        nextSlide();
+      } else {
+        // Deslizar derecha -> anterior
+        prevSlide();
+      }
+    }
+    setTimeout(() => {
+      isPaused = false;
+      restartAutoPlay();
+    }, 1200);
+  }, { passive: true });
+
+  // Reajustar en cambio de tamaño de pantalla
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      renderDots();
+      goToSlide(currentIndex);
+    }, 120);
+  });
+
+  // Renderizar indicadores iniciales, posicionar e iniciar auto-slide
+  renderDots();
+  goToSlide(0);
+  startAutoPlay();
+}
+
 // Exponer funciones en el ámbito global para eventos en línea
 window.openProductModal = openProductModal;
 window.orderSingleProductDirectly = orderSingleProductDirectly;
@@ -1464,4 +1810,6 @@ window.openOrderDrawer = openOrderDrawer;
 window.closeOrderDrawer = closeOrderDrawer;
 window.resetFilters = resetFilters;
 window.goToCuchareablesCatalog = goToCuchareablesCatalog;
+window.toggleReviewExpand = toggleReviewExpand;
+
 

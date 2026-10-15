@@ -608,7 +608,7 @@
          Opiniones de Clientes en Google (Minimalista & Rotativo)
          ====================================================================== -->
     <section class="reviews-section" id="opiniones">
-      <div class="container" style="max-width: 860px;">
+      <div class="container" style="max-width: 1160px;">
         <div class="reviews-header">
           <h2 class="section-title">Lo que dicen quienes nos eligen</h2>
           <p class="section-subtitle">
@@ -616,26 +616,71 @@
           </p>
         </div>
 
-        <!-- Widget Oficial de Reseñas Reales de Google Maps -->
-        <div class="reviews-widget-wrap" style="margin: 1.75rem 0; min-height: 200px;">
-          <!-- Elfsight Google Reviews | Untitled Google Reviews -->
-          <script src="https://elfsightcdn.com/platform.js" async></script>
-          <div class="elfsight-app-ed62a6c3-2c53-4bc0-b3e6-136fe5769eb4" data-elfsight-app-lazy></div>
+        <!-- Componente Oficial de Reseñas de Google (Diseño Réplica) -->
+        <div class="elf-reviews-container">
+          <!-- Tarjeta Superior de Resumen y Calificación -->
+          <div class="elf-header-card">
+            <div class="elf-header-left">
+              <div class="elf-google-brand">
+                <span class="elf-g-letter elf-g-blue">G</span><span class="elf-g-letter elf-g-red">o</span><span class="elf-g-letter elf-g-yellow">o</span><span class="elf-g-letter elf-g-blue">g</span><span class="elf-g-letter elf-g-green">l</span><span class="elf-g-letter elf-g-red">e</span>
+                <span class="elf-brand-text">Reseñas</span>
+              </div>
+              <div class="elf-rating-row">
+                <span class="elf-score">5,0</span>
+                <div class="elf-stars" aria-label="Calificación 5 de 5 estrellas">
+                  <svg viewBox="0 0 24 24" class="elf-star-icon" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" class="elf-star-icon" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" class="elf-star-icon" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" class="elf-star-icon" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  <svg viewBox="0 0 24 24" class="elf-star-icon" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <span class="elf-count">(71)</span>
+              </div>
+            </div>
+            <div class="elf-header-right">
+              <a href="https://www.google.com/maps/place/Labra+Pasteleria/@-34.6166382,-58.4550514,15z/data=!4m6!3m5!1s0xabc00bbd0a59c733:0xdda0d5d54fcad09f!8m2!3d-34.6166562!4d-58.4447302!16s%2Fg%2F11mzwlhvkn!5m1!1e4?entry=ttu" 
+                 target="_blank" 
+                 rel="noopener" 
+                 class="elf-btn-leave-review"
+                 title="Dejanos tu opinión en Google Maps">
+                Dejanos una reseña en Google
+              </a>
+            </div>
+          </div>
+
+          <!-- Slider de Reseñas de Google (10 Mejores Reseñas con Orden Dinámico) -->
+          <div class="elf-slider-wrap" id="elf-reviews-slider">
+            <button class="elf-nav-btn elf-nav-prev" id="elf-btn-prev" aria-label="Reseñas anteriores" title="Anterior">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="elf-slider-viewport" id="elf-slider-viewport">
+              <div class="elf-slider-track" id="elf-slider-track">
+                <!-- Se inyectan dinámicamente con JavaScript -->
+              </div>
+            </div>
+            <button class="elf-nav-btn elf-nav-next" id="elf-btn-next" aria-label="Siguientes reseñas" title="Siguiente">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+
+          <!-- Puntos de paginación del slider -->
+          <div class="elf-dots-container" id="elf-dots-row" aria-label="Indicadores de reseñas"></div>
         </div>
 
-        <div class="reviews-google-link-wrap" style="margin-top: 1.5rem; display: flex; justify-content: center;">
+        <!-- Enlace Directo a Todas las Reseñas en Google Maps -->
+        <div class="reviews-google-link-wrap" style="margin-top: 2rem; display: flex; justify-content: center;">
           <a href="https://www.google.com/maps/place/Labra+Pasteleria/@-34.6166382,-58.4550514,15z/data=!4m6!3m5!1s0xabc00bbd0a59c733:0xdda0d5d54fcad09f!8m2!3d-34.6166562!4d-58.4447302!16s%2Fg%2F11mzwlhvkn!5m1!1e4?entry=ttu" 
              target="_blank" 
              rel="noopener" 
              class="google-maps-badge-link"
              title="Ver todas las reseñas en Google Maps">
-            <svg class="google-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <svg class="google-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
               <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
               <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
               <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
               <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
             </svg>
-            <span><strong>5.0</strong> en Google Maps · Ver perfil y reseñas</span>
+            <span>Ver todas las reseñas en Google</span>
             <span class="external-arrow">↗</span>
           </a>
         </div>
