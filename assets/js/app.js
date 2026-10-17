@@ -323,7 +323,8 @@ const LABRA_CONFIG = {
   instagram: 'labrapasteleria',
   instagramUrl: 'https://instagram.com/labrapasteleria',
   location: 'Caballito, CABA',
-  leadTimeHours: 48
+  leadTimeHours: 48,
+  siteUrl: 'https://www.labra.com.ar'
 };
 
 // ==========================================================================
@@ -359,6 +360,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setupMinDate();
   initHeroSlider();
   initGoogleReviewsSlider();
+  initMesaDulceSimulator();
+  checkSharedProposalUrlOnLoad();
 });
 
 // Guardar / Cargar pedido en localStorage
@@ -1800,6 +1803,979 @@ function initGoogleReviewsSlider() {
   startAutoPlay();
 }
 
+// ============================================================================
+// SIMULADOR INTERACTIVO DE PRESUPUESTOS: "ARMÁ TU MESA DULCE"
+// ============================================================================
+
+const SIM_PRODUCTS_CONFIG = {
+  tortas: {
+    key: 'tortas',
+    name: 'Tortas Enteras',
+    singularLabel: 'Torta artesanal grande (22 cm)',
+    pluralLabel: 'Tortas artesanales grandes (22 cm)',
+    unitPrice: 60000,
+    slicesPerUnitMin: 12,
+    slicesPerUnitMax: 16,
+    avgPortions: 14,
+    image: 'assets/images/products/torta-rogel.jpg',
+    clientDescription: 'Rinde de 12 a 16 porciones abundantes c/u. Sabores a elección (Rogel, Chocotorta, Red Velvet, Lemon Pie, Maracuyá, Cheesecake, Brownie, etc.).'
+  },
+  shots: {
+    key: 'shots',
+    name: 'Cajas de Shots / Vasitos x 25',
+    singularLabel: 'Caja de 25 Shots / Vasitos dulces',
+    pluralLabel: 'Cajas de 25 Shots / Vasitos dulces',
+    unitPrice: 60000,
+    unitsPerBox: 25,
+    image: 'assets/images/products/vasito-chocotorta-solo.jpg',
+    clientDescription: 'Cada caja cerrada incluye 25 vasitos individuales listos para servir (Chocotorta, Tiramisú, Lemon Pie, Mousse de Chocolate o Maracuyá).'
+  },
+  petit: {
+    key: 'petit',
+    name: 'Cajas de Petit Fours x 25',
+    singularLabel: 'Caja de 25 Petit Fours',
+    pluralLabel: 'Cajas de 25 Petit Fours',
+    unitPrice: 60000,
+    unitsPerBox: 25,
+    image: 'assets/images/products/petit-four-01.jpg',
+    clientDescription: 'Cada caja cerrada incluye 25 bocados de mini pastelería artesanal surtida (mini brownies, mini lemon pie, mini rogel, tartitas).'
+  }
+};
+
+const SIM_TIERS_META = {
+  justo: {
+    key: 'justo',
+    title: 'Mesa Justa y Necesaria',
+    badge: 'Cálculo conservador',
+    subtitle: 'Pensada para cumplir muy bien con tus invitados cuidando el presupuesto.'
+  },
+  clasico: {
+    key: 'clasico',
+    title: 'Mesa Clásica',
+    badge: 'Equilibrio ideal',
+    subtitle: 'El cálculo normal y más elegido: porciones generosas y variedad para que todos disfruten cómodos.'
+  },
+  abundante: {
+    key: 'abundante',
+    title: 'Mesa Abundante',
+    badge: 'Generoso',
+    subtitle: 'Para anfitriones que quieren estar 100% tranquilos y que todos los invitados puedan repetir de todo.'
+  }
+};
+
+const simState = {
+  guests: 30,
+  selectedProducts: {
+    tortas: true,
+    shots: true,
+    petit: true
+  },
+  activeStyle: 'clasico', // 'justo' | 'clasico' | 'abundante'
+  overrides: {
+    justo: null,
+    clasico: null,
+    abundante: null
+  },
+  activeShareProposal: null
+};
+
+// Calcula las cantidades sugeridas para los 3 niveles según invitados y productos marcados
+function calculateSuggestedQuantities(guests, selectedProducts) {
+  const g = Math.max(1, Math.min(500, parseInt(guests, 10) || 30));
+  const hasTortas = !!selectedProducts.tortas;
+  const hasShots = !!selectedProducts.shots;
+  const hasPetit = !!selectedProducts.petit;
+
+  const activeCount = (hasTortas ? 1 : 0) + (hasShots ? 1 : 0) + (hasPetit ? 1 : 0);
+
+  // Multiplicador de cobertura por categoría según cuántos tipos de producto se combinan:
+  // Si eligen los 3 formatos se reparten el protagonismo; si eligen 1 o 2, cada formato cubre más porciones por persona.
+  let categoryWeight = 1.0;
+  if (activeCount === 1) {
+    categoryWeight = 1.70;
+  } else if (activeCount === 2) {
+    categoryWeight = 1.35;
+  }
+
+  function computeRawTier( cakeFactor, shotsFactor, petitFactor ) {
+    let tortas = 0;
+    let shots = 0;
+    let petit = 0;
+
+    if (hasTortas) {
+      tortas = Math.max(1, Math.round((g * cakeFactor * categoryWeight) / 14));
+    }
+    if (hasShots) {
+      shots = Math.max(1, Math.ceil((g * shotsFactor * categoryWeight) / 25));
+    }
+    if (hasPetit) {
+      petit = Math.max(1, Math.ceil((g * petitFactor * categoryWeight) / 25));
+    }
+
+    return { tortas, shots, petit };
+  }
+
+  // Factores base por invitado cuando se eligen los 3 productos:
+  // 1) Lo Justo y Necesario (Conservador: ~2 bocados totales por persona)
+  const justo = computeRawTier(0.60, 0.65, 0.65);
+
+  // 2) Clásico (Normal / Equilibrado: ~3 a 3.5 bocados totales por persona)
+  const clasico = computeRawTier(0.85, 0.80, 1.30);
+
+  // 3) Abundante (Generoso: ~4 a 4.5 bocados totales por persona)
+  const abundante = computeRawTier(1.15, 1.35, 1.45);
+
+  // Garantizar que las 3 propuestas comparativas sean siempre progresivas y distintas entre sí
+  // (ej: en eventos chicos de 15 o 20 personas donde el redondeo de cajas x25 podría igualar dos niveles)
+  const totalJusto = justo.tortas + justo.shots + justo.petit;
+  let totalClasico = clasico.tortas + clasico.shots + clasico.petit;
+
+  if (totalClasico <= totalJusto) {
+    if (hasPetit) {
+      clasico.petit = justo.petit + 1;
+    } else if (hasTortas) {
+      clasico.tortas = justo.tortas + 1;
+    } else if (hasShots) {
+      clasico.shots = justo.shots + 1;
+    }
+    totalClasico = clasico.tortas + clasico.shots + clasico.petit;
+  }
+
+  // Asegurar que Clásico nunca tenga menos de ningún ítem que Justo
+  if (clasico.tortas < justo.tortas) clasico.tortas = justo.tortas;
+  if (clasico.shots < justo.shots) clasico.shots = justo.shots;
+  if (clasico.petit < justo.petit) clasico.petit = justo.petit;
+  totalClasico = clasico.tortas + clasico.shots + clasico.petit;
+
+  // Asegurar que Abundante nunca tenga menos de ningún ítem que Clásico y supere el total de Clásico
+  if (abundante.tortas < clasico.tortas) abundante.tortas = clasico.tortas;
+  if (abundante.shots < clasico.shots) abundante.shots = clasico.shots;
+  if (abundante.petit < clasico.petit) abundante.petit = clasico.petit;
+
+  let totalAbundante = abundante.tortas + abundante.shots + abundante.petit;
+  if (totalAbundante <= totalClasico) {
+    if (hasShots && abundante.shots === clasico.shots) {
+      abundante.shots = clasico.shots + 1;
+    } else if (hasTortas) {
+      abundante.tortas = clasico.tortas + 1;
+    } else if (hasPetit) {
+      abundante.petit = clasico.petit + 1;
+    }
+  }
+
+  return { justo, clasico, abundante };
+}
+
+function getEffectiveTierQuantities(tierKey) {
+  const suggestedAll = calculateSuggestedQuantities(simState.guests, simState.selectedProducts);
+  const base = suggestedAll[tierKey] || { tortas: 0, shots: 0, petit: 0 };
+  const override = simState.overrides[tierKey];
+  if (override) {
+    return {
+      tortas: override.tortas,
+      shots: override.shots,
+      petit: override.petit,
+      isEdited: (override.tortas !== base.tortas || override.shots !== base.shots || override.petit !== base.petit)
+    };
+  }
+  return {
+    tortas: base.tortas,
+    shots: base.shots,
+    petit: base.petit,
+    isEdited: false
+  };
+}
+
+function formatYieldSummary(tortasQty, shotsQty, petitQty) {
+  const parts = [];
+  if (tortasQty > 0) {
+    const minSlices = tortasQty * 12;
+    const maxSlices = tortasQty * 16;
+    parts.push(`${minSlices}-${maxSlices} porc. de torta`);
+  }
+  const bocados = (shotsQty * 25) + (petitQty * 25);
+  if (bocados > 0) {
+    parts.push(`${bocados} bocados individuales`);
+  }
+  if (parts.length === 0) {
+    return 'Sin productos seleccionados (usá + para sumar)';
+  }
+  return `Rinde aprox: ${parts.join(' + ')}`;
+}
+
+function formatProductQuantityLine(productKey, qty) {
+  if (productKey === 'tortas') {
+    if (qty === 0) return '0 Tortas · No incluido';
+    const minS = qty * 12;
+    const maxS = qty * 16;
+    return `${qty} ${qty === 1 ? 'Torta entera' : 'Tortas enteras'} (${minS} a ${maxS} porciones)`;
+  }
+  if (productKey === 'shots') {
+    if (qty === 0) return '0 Cajas · No incluido';
+    const units = qty * 25;
+    return `${qty} ${qty === 1 ? 'Caja cerrada' : 'Cajas cerradas'} (${units} shots de 250cc/vasitos)`;
+  }
+  if (productKey === 'petit') {
+    if (qty === 0) return '0 Cajas · No incluido';
+    const units = qty * 25;
+    return `${qty} ${qty === 1 ? 'Caja cerrada' : 'Cajas cerradas'} (${units} petit fours)`;
+  }
+  return '';
+}
+
+function buildSimulatorWhatsAppUrl(tierKey) {
+  const meta = SIM_TIERS_META[tierKey];
+  const q = getEffectiveTierQuantities(tierKey);
+  const totalPrice =
+    (q.tortas * SIM_PRODUCTS_CONFIG.tortas.unitPrice) +
+    (q.shots * SIM_PRODUCTS_CONFIG.shots.unitPrice) +
+    (q.petit * SIM_PRODUCTS_CONFIG.petit.unitPrice);
+
+  const lines = [
+    `¡Hola LABRA! 👋 Estuve armando una propuesta de Mesa Dulce en la web y quiero consultar por este presupuesto:`,
+    ``,
+    `👥 *Cantidad de invitados:* ${simState.guests} personas`,
+    `✨ *Propuesta elegida:* ${meta.title}${q.isEdited ? ' (con cantidades personalizadas)' : ''}`,
+    ``,
+    `🍰 *Detalle de la mesa dulce:*`
+  ];
+
+  if (q.tortas > 0) {
+    const minS = q.tortas * 12;
+    const maxS = q.tortas * 16;
+    lines.push(`• *${q.tortas}x ${q.tortas === 1 ? 'Torta artesanal grande' : 'Tortas artesanales grandes'}* (${minS} a ${maxS} porciones) — ${formatCurrency(q.tortas * SIM_PRODUCTS_CONFIG.tortas.unitPrice)}`);
+  }
+  if (q.shots > 0) {
+    const units = q.shots * 25;
+    lines.push(`• *${q.shots}x ${q.shots === 1 ? 'Caja de Shots dulces x 25 u.' : 'Cajas de Shots dulces x 25 u.'}* (${units} vasitos individuales) — ${formatCurrency(q.shots * SIM_PRODUCTS_CONFIG.shots.unitPrice)}`);
+  }
+  if (q.petit > 0) {
+    const units = q.petit * 25;
+    lines.push(`• *${q.petit}x ${q.petit === 1 ? 'Caja de Petit Fours x 25 u.' : 'Cajas de Petit Fours x 25 u.'}* (${units} bocados dulces) — ${formatCurrency(q.petit * SIM_PRODUCTS_CONFIG.petit.unitPrice)}`);
+  }
+
+  lines.push(``);
+  lines.push(`💰 *Total estimado:* ${formatCurrency(totalPrice)}`);
+  lines.push(`🔒 *Seña 50% para reservar:* ${formatCurrency(Math.round(totalPrice / 2))}`);
+  lines.push(``);
+  lines.push(`¿Tienen disponibilidad para mi fecha? ¡Muchas gracias!`);
+
+  return `https://wa.me/${LABRA_CONFIG.phone}?text=${encodeURIComponent(lines.join('\n'))}`;
+}
+
+function renderSimulatorProposals() {
+  const grid = document.getElementById('sim-proposals-grid');
+  if (!grid) return;
+
+  const guestsSummaryEl = document.getElementById('sim-summary-guests');
+  if (guestsSummaryEl) {
+    guestsSummaryEl.textContent = simState.guests;
+  }
+
+  const tierOrder = ['justo', 'clasico', 'abundante'];
+  let anyEdited = false;
+
+  const cardsHtml = tierOrder.map((tierKey) => {
+    const meta = SIM_TIERS_META[tierKey];
+    const q = getEffectiveTierQuantities(tierKey);
+    if (q.isEdited) anyEdited = true;
+
+    const isSelected = simState.activeStyle === tierKey;
+    const totalPrice =
+      (q.tortas * SIM_PRODUCTS_CONFIG.tortas.unitPrice) +
+      (q.shots * SIM_PRODUCTS_CONFIG.shots.unitPrice) +
+      (q.petit * SIM_PRODUCTS_CONFIG.petit.unitPrice);
+
+    const depositPrice = Math.round(totalPrice / 2);
+    const perGuestPrice = simState.guests > 0 ? Math.round(totalPrice / simState.guests) : 0;
+    const yieldText = formatYieldSummary(q.tortas, q.shots, q.petit);
+    const waUrl = buildSimulatorWhatsAppUrl(tierKey);
+    const isEmpty = (q.tortas + q.shots + q.petit) === 0;
+
+    const itemKeys = ['tortas', 'shots', 'petit'];
+    const itemsRowsHtml = itemKeys.map((prodKey) => {
+      const prodCfg = SIM_PRODUCTS_CONFIG[prodKey];
+      const qty = q[prodKey];
+      const detailLine = formatProductQuantityLine(prodKey, qty);
+
+      return `
+        <div class="sim-item-row ${qty === 0 ? 'is-zero' : ''}">
+          <div class="sim-item-info">
+            <img src="${prodCfg.image}" alt="${prodCfg.name}" class="sim-item-thumb" loading="lazy">
+            <div class="sim-item-text">
+              <span class="sim-item-name">${prodCfg.name}</span>
+              <span class="sim-item-detail">${detailLine}</span>
+            </div>
+          </div>
+          <div class="sim-item-stepper" aria-label="Ajustar cantidad de ${prodCfg.name}">
+            <button type="button" class="sim-qty-btn" onclick="adjustProposalQty('${tierKey}', '${prodKey}', -1)" ${qty <= 0 ? 'disabled' : ''} aria-label="Restar ${prodCfg.name}">−</button>
+            <span class="sim-qty-val">${qty}</span>
+            <button type="button" class="sim-qty-btn" onclick="adjustProposalQty('${tierKey}', '${prodKey}', 1)" aria-label="Sumar ${prodCfg.name}">+</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    return `
+      <article class="sim-proposal-card ${isSelected ? 'is-selected' : ''}" data-tier="${tierKey}">
+        ${isSelected ? `<div class="sim-card-ribbon">★ Tu Estilo Seleccionado</div>` : ''}
+        
+        <div class="sim-card-header">
+          <div class="sim-card-top-row">
+            <h4 class="sim-card-title">${meta.title}</h4>
+            <span class="sim-card-badge">${meta.badge}</span>
+          </div>
+          <p class="sim-card-subtitle">${meta.subtitle}</p>
+          <div class="sim-card-yield-pill">
+            <span>🍽️ ${yieldText}</span>
+          </div>
+        </div>
+
+        <div class="sim-card-items">
+          ${itemsRowsHtml}
+        </div>
+
+        ${q.isEdited ? `
+          <button type="button" class="sim-edited-tag" onclick="resetSingleTierOverride('${tierKey}')">
+            ↺ Cantidades editadas manualmente · Volver al cálculo sugerido
+          </button>
+        ` : ''}
+
+        <div class="sim-price-box">
+          <div class="sim-price-top">
+            <span class="sim-price-label">Total Estimado</span>
+            <span class="sim-price-total">${formatCurrency(totalPrice)}</span>
+          </div>
+          <div class="sim-price-meta">
+            <span>Seña 50%: <strong>${formatCurrency(depositPrice)}</strong></span>
+            <span>~${formatCurrency(perGuestPrice)} / invitado</span>
+          </div>
+        </div>
+
+        <div class="sim-card-actions">
+          <a href="${waUrl}" target="_blank" rel="noopener" class="btn-sim-whatsapp ${isEmpty ? 'is-disabled' : ''}" onclick="trackSimulatorWhatsApp('${tierKey}', ${totalPrice})">
+            <svg viewBox="0 0 24 24" width="19" height="19"><path fill="currentColor" d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.676.15-.2.301-.776.98-1.002 1.23-.226.25-.452.276-.753.125-.301-.15-1.272-.469-2.424-1.498-.897-.8-1.503-1.789-1.68-2.09-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.175.2-.301.301-.501.1-.2.05-.376-.025-.526-.075-.15-.677-1.631-.928-2.235-.245-.589-.494-.509-.677-.518-.175-.008-.376-.01-.577-.01-.2 0-.527.075-.803.376s-1.054 1.03-1.054 2.511 1.079 2.912 1.23 3.113c.15.2 2.124 3.243 5.144 4.549.718.31 1.279.496 1.716.634.721.23 1.378.197 1.898.12.58-.087 1.78-.727 2.03-1.43.25-.702.25-1.303.175-1.43-.075-.126-.275-.201-.576-.351zM12.004 2C6.48 2 2 6.48 2 12c0 1.84.5 3.565 1.372 5.044L2.05 22l5.12-1.342A9.957 9.957 0 0 0 12.004 22c5.523 0 10.004-4.48 10.004-10s-4.481-10-10.004-10zm0 18.257c-1.606 0-3.1-.476-4.364-1.3l-.313-.205-3.057.802.816-2.98-.225-.327a8.21 8.21 0 0 1-1.36-4.447c0-4.557 3.708-8.265 8.265-8.265 4.557 0 8.265 3.708 8.265 8.265 0 4.558-3.708 8.266-8.265 8.266z"/></svg>
+            <span>Enviar pedido por WhatsApp</span>
+          </a>
+
+          <button type="button" class="btn-sim-copy-proposal" onclick="copyProposalTextToClipboard('${tierKey}', this)" title="Copiar presupuesto en texto para WhatsApp" ${isEmpty ? 'disabled' : ''}>
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            <span>Copiar propuesta</span>
+          </button>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  grid.innerHTML = cardsHtml;
+
+  const resetAllBtn = document.getElementById('sim-reset-all-btn');
+  if (resetAllBtn) {
+    resetAllBtn.style.display = anyEdited ? 'inline-block' : 'none';
+  }
+}
+
+function copyProposalTextToClipboard(tierKey, btnElement) {
+  const q = getEffectiveTierQuantities(tierKey);
+  const totalPrice =
+    (q.tortas * SIM_PRODUCTS_CONFIG.tortas.unitPrice) +
+    (q.shots * SIM_PRODUCTS_CONFIG.shots.unitPrice) +
+    (q.petit * SIM_PRODUCTS_CONFIG.petit.unitPrice);
+  const depositPrice = Math.round(totalPrice / 2);
+
+  const lines = [
+    `👥 Cantidad de invitados: ${simState.guests} personas`,
+    ``,
+    `✨ Detalle de la mesa dulce:`,
+    ``
+  ];
+
+  if (q.tortas > 0) {
+    const minS = q.tortas * 12;
+    const maxS = q.tortas * 16;
+    const label = q.tortas === 1 ? 'Torta Artesanal Grande' : 'Tortas Artesanales Grandes';
+    lines.push(`🎂 ${q.tortas}x ${label} (${minS} a ${maxS} porciones) — ${formatCurrency(q.tortas * SIM_PRODUCTS_CONFIG.tortas.unitPrice)}`);
+  }
+  if (q.shots > 0) {
+    const units = q.shots * 25;
+    const label = q.shots === 1 ? 'Caja de Shots / Vasitos x 25 u.' : 'Cajas de Shots / Vasitos x 25 u.';
+    lines.push(`🍨 ${q.shots}x ${label} (${units} unidades) — ${formatCurrency(q.shots * SIM_PRODUCTS_CONFIG.shots.unitPrice)}`);
+  }
+  if (q.petit > 0) {
+    const units = q.petit * 25;
+    const label = q.petit === 1 ? 'Caja de Petit Fours x 25 u.' : 'Cajas de Petit Fours x 25 u.';
+    lines.push(`🧁 ${q.petit}x ${label} (${units} unidades) — ${formatCurrency(q.petit * SIM_PRODUCTS_CONFIG.petit.unitPrice)}`);
+  }
+
+  lines.push(``);
+  lines.push(`💳 Total estimado: ${formatCurrency(totalPrice)}`);
+  lines.push(`🔒 Seña 50% para reservar: ${formatCurrency(depositPrice)}`);
+  lines.push(``);
+  lines.push(`¡Cualquier duda, avisame! 😊`);
+
+  const textToCopy = lines.join('\n');
+
+  function notifySuccess() {
+    showToast('¡Propuesta copiada al portapapeles! Lista para pegar en WhatsApp');
+    if (btnElement) {
+      const origHtml = btnElement.innerHTML;
+      btnElement.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span>¡Copiado!</span>`;
+      btnElement.style.color = '#1EBE5B';
+      btnElement.style.borderColor = '#1EBE5B';
+      setTimeout(() => {
+        btnElement.innerHTML = origHtml;
+        btnElement.style.color = '';
+        btnElement.style.borderColor = '';
+      }, 2000);
+    }
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(textToCopy).then(notifySuccess).catch(() => {
+      fallbackCopyToClipboard(textToCopy, notifySuccess);
+    });
+  } else {
+    fallbackCopyToClipboard(textToCopy, notifySuccess);
+  }
+}
+
+function fallbackCopyToClipboard(text, onSuccess) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  ta.style.top = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    if (onSuccess) onSuccess();
+  } catch (e) {
+    showToast('No se pudo copiar automáticamente');
+  }
+  document.body.removeChild(ta);
+}
+
+function adjustProposalQty(tierKey, productKey, delta) {
+  const current = getEffectiveTierQuantities(tierKey);
+  const nextVal = Math.max(0, Math.min(40, (current[productKey] || 0) + delta));
+
+  simState.overrides[tierKey] = {
+    tortas: current.tortas,
+    shots: current.shots,
+    petit: current.petit,
+    [productKey]: nextVal
+  };
+
+  renderSimulatorProposals();
+}
+
+function resetSingleTierOverride(tierKey) {
+  simState.overrides[tierKey] = null;
+  renderSimulatorProposals();
+  showToast('Cantidades sugeridas restauradas');
+}
+
+function resetAllSimulatorOverrides() {
+  simState.overrides = { justo: null, clasico: null, abundante: null };
+  renderSimulatorProposals();
+  showToast('Todas las propuestas volvieron al cálculo sugerido');
+}
+
+function trackSimulatorWhatsApp(tierKey, totalPrice) {
+  trackAnalyticsEvent('generate_lead', {
+    currency: 'ARS',
+    value: totalPrice,
+    lead_type: 'whatsapp_mesa_dulce_simulator',
+    proposal_tier: tierKey,
+    guests: simState.guests
+  });
+}
+
+// ============================================================================
+// GENERADOR Y LECTOR DE PROPUESTA COMPARTIBLE PARA CLIENTES
+// ============================================================================
+
+function buildShareableProposalUrl(proposalData) {
+  let baseUrl;
+  // Si se está probando de forma local (protocolo file:) o sin origen web, usar el dominio oficial de la web
+  if (!window.location.origin || window.location.origin === 'null' || window.location.protocol === 'file:') {
+    baseUrl = (typeof LABRA_CONFIG !== 'undefined' && LABRA_CONFIG.siteUrl) ? LABRA_CONFIG.siteUrl : 'https://www.labra.com.ar';
+  } else {
+    // Si estamos en la web real, quitar /index.html para que el link quede limpio y corto
+    baseUrl = window.location.origin + window.location.pathname.replace(/\/index\.html$/, '');
+  }
+
+  const cleanBase = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
+  const params = new URLSearchParams();
+  params.set('propuesta', '1');
+  params.set('inv', String(proposalData.guests));
+  params.set('estilo', proposalData.tierKey);
+  params.set('t', String(proposalData.tortas));
+  params.set('s', String(proposalData.shots));
+  params.set('p', String(proposalData.petit));
+  if (proposalData.clientName && proposalData.clientName.trim() !== '') {
+    params.set('cliente', proposalData.clientName.trim());
+  }
+  return `${cleanBase}?${params.toString()}`;
+}
+
+function openShareProposalModal(tierKey) {
+  const q = getEffectiveTierQuantities(tierKey);
+  const meta = SIM_TIERS_META[tierKey];
+  const totalPrice =
+    (q.tortas * SIM_PRODUCTS_CONFIG.tortas.unitPrice) +
+    (q.shots * SIM_PRODUCTS_CONFIG.shots.unitPrice) +
+    (q.petit * SIM_PRODUCTS_CONFIG.petit.unitPrice);
+
+  simState.activeShareProposal = {
+    tierKey,
+    title: meta.title,
+    guests: simState.guests,
+    tortas: q.tortas,
+    shots: q.shots,
+    petit: q.petit,
+    totalPrice,
+    clientName: ''
+  };
+
+  const modal = document.getElementById('share-proposal-modal');
+  const summaryPill = document.getElementById('share-modal-summary-pill');
+  const clientInput = document.getElementById('share-client-name-input');
+  const urlInput = document.getElementById('share-generated-url');
+
+  if (clientInput) {
+    clientInput.value = '';
+  }
+
+  if (summaryPill) {
+    const parts = [];
+    if (q.tortas > 0) parts.push(`${q.tortas} ${q.tortas === 1 ? 'Torta' : 'Tortas'}`);
+    if (q.shots > 0) parts.push(`${q.shots} ${q.shots === 1 ? 'Caja Shots x25' : 'Cajas Shots x25'}`);
+    if (q.petit > 0) parts.push(`${q.petit} ${q.petit === 1 ? 'Caja Petit Fours x25' : 'Cajas Petit Fours x25'}`);
+
+    summaryPill.innerHTML = `
+      <strong>${meta.title} (${simState.guests} invitados)</strong><br>
+      Incluye: ${parts.join(' + ')} · <strong>Total: ${formatCurrency(totalPrice)}</strong>
+    `;
+  }
+
+  if (urlInput) {
+    urlInput.value = buildShareableProposalUrl(simState.activeShareProposal);
+  }
+
+  if (modal && typeof modal.showModal === 'function') {
+    modal.showModal();
+  }
+}
+
+function renderClientProposalView(proposalData) {
+  const bodyEl = document.getElementById('client-proposal-body');
+  if (!bodyEl) return;
+
+  const meta = SIM_TIERS_META[proposalData.tierKey] || SIM_TIERS_META.clasico;
+  const totalPrice =
+    (proposalData.tortas * SIM_PRODUCTS_CONFIG.tortas.unitPrice) +
+    (proposalData.shots * SIM_PRODUCTS_CONFIG.shots.unitPrice) +
+    (proposalData.petit * SIM_PRODUCTS_CONFIG.petit.unitPrice);
+  const depositPrice = Math.round(totalPrice / 2);
+
+  const greetingText = proposalData.clientName
+    ? `Propuesta preparada para ${escapeHtml(proposalData.clientName)}`
+    : `Presupuesto de Mesa Dulce · LABRA`;
+
+  const itemsCards = [];
+
+  if (proposalData.tortas > 0) {
+    const cfg = SIM_PRODUCTS_CONFIG.tortas;
+    const minS = proposalData.tortas * 12;
+    const maxS = proposalData.tortas * 16;
+    itemsCards.push(`
+      <div class="cp-item-card">
+        <img src="${cfg.image}" alt="${cfg.name}" class="cp-item-img">
+        <div class="cp-item-content">
+          <div class="cp-item-qty-title">${proposalData.tortas} ${proposalData.tortas === 1 ? cfg.singularLabel : cfg.pluralLabel}</div>
+          <div class="cp-item-desc">
+            <strong>Rinde ${minS} a ${maxS} porciones en total.</strong><br>
+            ${cfg.clientDescription}
+          </div>
+        </div>
+        <div class="cp-item-subtotal">${formatCurrency(proposalData.tortas * cfg.unitPrice)}</div>
+      </div>
+    `);
+  }
+
+  if (proposalData.shots > 0) {
+    const cfg = SIM_PRODUCTS_CONFIG.shots;
+    const units = proposalData.shots * 25;
+    itemsCards.push(`
+      <div class="cp-item-card">
+        <img src="${cfg.image}" alt="${cfg.name}" class="cp-item-img">
+        <div class="cp-item-content">
+          <div class="cp-item-qty-title">${proposalData.shots} ${proposalData.shots === 1 ? cfg.singularLabel : cfg.pluralLabel}</div>
+          <div class="cp-item-desc">
+            <strong>Son ${units} vasitos individuales en total.</strong><br>
+            ${cfg.clientDescription}
+          </div>
+        </div>
+        <div class="cp-item-subtotal">${formatCurrency(proposalData.shots * cfg.unitPrice)}</div>
+      </div>
+    `);
+  }
+
+  if (proposalData.petit > 0) {
+    const cfg = SIM_PRODUCTS_CONFIG.petit;
+    const units = proposalData.petit * 25;
+    itemsCards.push(`
+      <div class="cp-item-card">
+        <img src="${cfg.image}" alt="${cfg.name}" class="cp-item-img">
+        <div class="cp-item-content">
+          <div class="cp-item-qty-title">${proposalData.petit} ${proposalData.petit === 1 ? cfg.singularLabel : cfg.pluralLabel}</div>
+          <div class="cp-item-desc">
+            <strong>Son ${units} bocados dulces en total.</strong><br>
+            ${cfg.clientDescription}
+          </div>
+        </div>
+        <div class="cp-item-subtotal">${formatCurrency(proposalData.petit * cfg.unitPrice)}</div>
+      </div>
+    `);
+  }
+
+  // Construir link de WhatsApp de confirmación para el cliente
+  const waLines = [
+    `¡Hola LABRA! 👋 Vi la propuesta de Mesa Dulce que me armaron para *${proposalData.guests} invitados* (${meta.title}):`,
+    ``
+  ];
+  if (proposalData.tortas > 0) {
+    waLines.push(`• ${proposalData.tortas}x ${proposalData.tortas === 1 ? 'Torta Artesanal Grande' : 'Tortas Artesanales Grandes'} (${proposalData.tortas * 12}-${proposalData.tortas * 16} porciones)`);
+  }
+  if (proposalData.shots > 0) {
+    waLines.push(`• ${proposalData.shots}x ${proposalData.shots === 1 ? 'Caja de 25 Shots / Vasitos' : 'Cajas de 25 Shots / Vasitos'} (${proposalData.shots * 25} u.)`);
+  }
+  if (proposalData.petit > 0) {
+    waLines.push(`• ${proposalData.petit}x ${proposalData.petit === 1 ? 'Caja de 25 Petit Fours' : 'Cajas de 25 Petit Fours'} (${proposalData.petit * 25} u.)`);
+  }
+  waLines.push(``);
+  waLines.push(`💰 *Total del presupuesto:* ${formatCurrency(totalPrice)}`);
+  waLines.push(`Quiero avanzar con el pedido y elegir los sabores. ¡Gracias!`);
+
+  const confirmWaUrl = `https://wa.me/${LABRA_CONFIG.phone}?text=${encodeURIComponent(waLines.join('\n'))}`;
+
+  bodyEl.innerHTML = `
+    <span class="cp-greeting-badge">✨ ${greetingText}</span>
+    <h2 class="cp-main-title" id="client-proposal-title">
+      Propuesta para ${proposalData.guests} invitados · ${meta.title}
+    </h2>
+    <p class="cp-intro-text">
+      Armamos esta combinación pensada para que en tu evento de <strong>${proposalData.guests} personas</strong> todos disfruten de nuestra pastelería recién horneada.
+    </p>
+
+    <div class="cp-items-title">¿Qué incluye esta propuesta?</div>
+    <div class="cp-items-list">
+      ${itemsCards.join('')}
+    </div>
+
+    <div class="cp-total-box">
+      <div class="cp-total-row">
+        <span class="cp-total-label">Total del Presupuesto</span>
+        <span class="cp-total-amount">${formatCurrency(totalPrice)}</span>
+      </div>
+      <div class="cp-total-details">
+        <span>✅ <strong>Reserva:</strong> Se confirma con una seña del 50% (${formatCurrency(depositPrice)}) por transferencia.</span>
+        <span>📍 <strong>Entrega:</strong> Retiro por Caballito (CABA) o envío coordinado a domicilio.</span>
+        <span>🍰 <strong>Sabores a tu gusto:</strong> Elegís los gustos de las tortas y vasitos al confirmar por WhatsApp.</span>
+      </div>
+    </div>
+
+    <a href="${confirmWaUrl}" target="_blank" rel="noopener" class="cp-cta-whatsapp">
+      <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.676.15-.2.301-.776.98-1.002 1.23-.226.25-.452.276-.753.125-.301-.15-1.272-.469-2.424-1.498-.897-.8-1.503-1.789-1.68-2.09-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.175.2-.301.301-.501.1-.2.05-.376-.025-.526-.075-.15-.677-1.631-.928-2.235-.245-.589-.494-.509-.677-.518-.175-.008-.376-.01-.577-.01-.2 0-.527.075-.803.376s-1.054 1.03-1.054 2.511 1.079 2.912 1.23 3.113c.15.2 2.124 3.243 5.144 4.549.718.31 1.279.496 1.716.634.721.23 1.378.197 1.898.12.58-.087 1.78-.727 2.03-1.43.25-.702.25-1.303.175-1.43-.075-.126-.275-.201-.576-.351zM12.004 2C6.48 2 2 6.48 2 12c0 1.84.5 3.565 1.372 5.044L2.05 22l5.12-1.342A9.957 9.957 0 0 0 12.004 22c5.523 0 10.004-4.48 10.004-10s-4.481-10-10.004-10zm0 18.257c-1.606 0-3.1-.476-4.364-1.3l-.313-.205-3.057.802.816-2.98-.225-.327a8.21 8.21 0 0 1-1.36-4.447c0-4.557 3.708-8.265 8.265-8.265 4.557 0 8.265 3.708 8.265 8.265 0 4.558-3.708 8.266-8.265 8.266z"/></svg>
+      <span>Confirmar esta propuesta por WhatsApp</span>
+    </a>
+
+    <button type="button" class="cp-secondary-btn" onclick="closeClientProposalAndGoToSimulator()">
+      Quiero modificar cantidades o ver otras opciones
+    </button>
+  `;
+}
+
+function closeClientProposalAndGoToSimulator() {
+  const clientModal = document.getElementById('client-proposal-modal');
+  if (clientModal && clientModal.open) {
+    clientModal.close();
+  }
+  const section = document.getElementById('mesa-dulce');
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function checkSharedProposalUrlOnLoad() {
+  let searchStr = window.location.search;
+  if (!searchStr && window.location.hash.includes('?')) {
+    searchStr = window.location.hash.substring(window.location.hash.indexOf('?'));
+  } else if (!searchStr && window.location.hash.includes('propuesta=')) {
+    searchStr = '?' + window.location.hash.replace(/^#/, '');
+  }
+
+  const params = new URLSearchParams(searchStr);
+  if (params.get('propuesta') !== '1') return;
+
+  const guests = Math.max(1, Math.min(500, parseInt(params.get('inv'), 10) || 30));
+  const rawTier = params.get('estilo') || 'clasico';
+  const tierKey = ['justo', 'clasico', 'abundante'].includes(rawTier) ? rawTier : 'clasico';
+  const tortas = Math.max(0, Math.min(50, parseInt(params.get('t'), 10) || 0));
+  const shots = Math.max(0, Math.min(50, parseInt(params.get('s'), 10) || 0));
+  const petit = Math.max(0, Math.min(50, parseInt(params.get('p'), 10) || 0));
+  const clientName = params.get('cliente') || '';
+
+  if (tortas + shots + petit === 0) return;
+
+  // Sincronizar también el simulador de fondo con los datos del link
+  simState.guests = guests;
+  simState.activeStyle = tierKey;
+  simState.selectedProducts = {
+    tortas: tortas > 0,
+    shots: shots > 0,
+    petit: petit > 0
+  };
+  simState.overrides[tierKey] = { tortas, shots, petit };
+
+  const guestsInput = document.getElementById('sim-guests-input');
+  if (guestsInput) guestsInput.value = guests;
+
+  renderSimulatorProposals();
+
+  const proposalData = {
+    tierKey,
+    guests,
+    tortas,
+    shots,
+    petit,
+    clientName
+  };
+
+  renderClientProposalView(proposalData);
+  const clientModal = document.getElementById('client-proposal-modal');
+  if (clientModal) {
+    setTimeout(() => {
+      try {
+        if (typeof clientModal.showModal === 'function') {
+          if (!clientModal.open) clientModal.showModal();
+        } else {
+          clientModal.setAttribute('open', '');
+        }
+      } catch (err) {
+        clientModal.setAttribute('open', '');
+      }
+    }, 60);
+  }
+}
+
+function initMesaDulceSimulator() {
+  const guestsInput = document.getElementById('sim-guests-input');
+  const minusBtn = document.getElementById('sim-guests-minus');
+  const plusBtn = document.getElementById('sim-guests-plus');
+  const presetChips = document.querySelectorAll('.sim-preset-chip');
+  const productCheckboxes = document.querySelectorAll('.sim-product-checkbox');
+  const styleBtns = document.querySelectorAll('.sim-style-btn');
+
+  if (!guestsInput) return;
+
+  function syncPresetChips(guestsVal) {
+    presetChips.forEach(chip => {
+      const chipVal = parseInt(chip.dataset.guests, 10);
+      chip.classList.toggle('active', chipVal === guestsVal);
+    });
+  }
+
+  function updateGuestsValue(newVal) {
+    const raw = parseInt(newVal, 10);
+    const clamped = Math.max(1, Math.min(500, isNaN(raw) ? 30 : raw));
+    simState.guests = clamped;
+    guestsInput.value = clamped;
+    simState.overrides = { justo: null, clasico: null, abundante: null };
+    syncPresetChips(clamped);
+    renderSimulatorProposals();
+  }
+
+  guestsInput.addEventListener('input', (e) => {
+    const raw = parseInt(e.target.value, 10);
+    if (!isNaN(raw) && raw >= 1) {
+      simState.guests = Math.min(500, raw);
+      simState.overrides = { justo: null, clasico: null, abundante: null };
+      syncPresetChips(simState.guests);
+      renderSimulatorProposals();
+    }
+  });
+
+  guestsInput.addEventListener('change', (e) => {
+    updateGuestsValue(e.target.value);
+  });
+
+  guestsInput.addEventListener('blur', (e) => {
+    updateGuestsValue(e.target.value);
+  });
+
+  if (minusBtn) {
+    minusBtn.addEventListener('click', () => {
+      updateGuestsValue(simState.guests - 1);
+    });
+  }
+
+  if (plusBtn) {
+    plusBtn.addEventListener('click', () => {
+      updateGuestsValue(simState.guests + 1);
+    });
+  }
+
+  presetChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      updateGuestsValue(chip.dataset.guests);
+    });
+  });
+
+  productCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', (e) => {
+      const val = e.target.value;
+      const isChecked = e.target.checked;
+
+      // Evitar que queden los 3 desmarcados al mismo tiempo
+      const nextState = { ...simState.selectedProducts, [val]: isChecked };
+      if (!nextState.tortas && !nextState.shots && !nextState.petit) {
+        e.target.checked = true;
+        showToast('Elegí al menos un producto para cotizar la mesa dulce');
+        return;
+      }
+
+      simState.selectedProducts[val] = isChecked;
+      const cardLabel = e.target.closest('.sim-product-check-card');
+      if (cardLabel) {
+        cardLabel.classList.toggle('checked', isChecked);
+      }
+
+      simState.overrides = { justo: null, clasico: null, abundante: null };
+      renderSimulatorProposals();
+    });
+  });
+
+  styleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const styleKey = btn.dataset.style || 'clasico';
+      simState.activeStyle = styleKey;
+
+      styleBtns.forEach(b => {
+        const active = b.dataset.style === styleKey;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-checked', active ? 'true' : 'false');
+      });
+
+      renderSimulatorProposals();
+
+      // En pantallas móviles hacer scroll suave hacia la tarjeta elegida
+      if (window.innerWidth <= 992) {
+        const selectedCard = document.querySelector(`.sim-proposal-card[data-tier="${styleKey}"]`);
+        if (selectedCard) {
+          selectedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+    });
+  });
+
+  // Eventos de los modales de Compartir Propuesta y Vista Cliente
+  const shareModal = document.getElementById('share-proposal-modal');
+  const shareCloseBtn = document.getElementById('share-modal-close-btn');
+  const shareClientInput = document.getElementById('share-client-name-input');
+  const shareUrlInput = document.getElementById('share-generated-url');
+  const copyUrlBtn = document.getElementById('btn-copy-proposal-url');
+  const copyWaTextBtn = document.getElementById('btn-copy-whatsapp-text');
+  const previewClientBtn = document.getElementById('btn-preview-client-view');
+
+  if (shareCloseBtn && shareModal) {
+    shareCloseBtn.addEventListener('click', () => shareModal.close());
+    shareModal.addEventListener('click', (e) => {
+      if (e.target === shareModal) shareModal.close();
+    });
+  }
+
+  if (shareClientInput && shareUrlInput) {
+    shareClientInput.addEventListener('input', (e) => {
+      if (!simState.activeShareProposal) return;
+      simState.activeShareProposal.clientName = e.target.value;
+      shareUrlInput.value = buildShareableProposalUrl(simState.activeShareProposal);
+    });
+  }
+
+  if (copyUrlBtn && shareUrlInput) {
+    copyUrlBtn.addEventListener('click', () => {
+      const urlToCopy = shareUrlInput.value;
+      navigator.clipboard.writeText(urlToCopy).then(() => {
+        showToast('¡Link de propuesta copiado al portapapeles!');
+        copyUrlBtn.textContent = '¡Copiado! ✓';
+        setTimeout(() => { copyUrlBtn.textContent = 'Copiar Link'; }, 2200);
+      }).catch(() => {
+        shareUrlInput.select();
+        document.execCommand('copy');
+        showToast('¡Link copiado!');
+      });
+    });
+  }
+
+  if (copyWaTextBtn && shareUrlInput) {
+    copyWaTextBtn.addEventListener('click', () => {
+      if (!simState.activeShareProposal) return;
+      const p = simState.activeShareProposal;
+      const url = shareUrlInput.value;
+      const saludo = p.clientName ? `¡Hola ${p.clientName}!` : `¡Hola!`;
+
+      const details = [];
+      if (p.tortas > 0) details.push(`• ${p.tortas} ${p.tortas === 1 ? 'Torta grande (12-16 porc.)' : 'Tortas grandes (' + (p.tortas * 12) + '-' + (p.tortas * 16) + ' porc.)'}`);
+      if (p.shots > 0) details.push(`• ${p.shots} ${p.shots === 1 ? 'Caja de 25 Shots dulces' : 'Cajas de 25 Shots dulces'} (${p.shots * 25} u.)`);
+      if (p.petit > 0) details.push(`• ${p.petit} ${p.petit === 1 ? 'Caja de 25 Petit Fours' : 'Cajas de 25 Petit Fours'} (${p.petit * 25} u.)`);
+
+      const msg = [
+        `${saludo} 😊 Te armé esta propuesta de Mesa Dulce de *LABRA Pastelería* para *${p.guests} invitados* (${p.title}):`,
+        ``,
+        ...details,
+        ``,
+        `💰 *Total:* ${formatCurrency(p.totalPrice)}`,
+        ``,
+        `👉 Tocá este link para ver el presupuesto completo con fotos y detalles de forma súper clara:`,
+        url
+      ].join('\n');
+
+      navigator.clipboard.writeText(msg).then(() => {
+        showToast('¡Mensaje + Link copiado! Ya podés pegarlo en el WhatsApp del cliente');
+      }).catch(() => {
+        showToast('Copiá el link de arriba para enviarlo');
+      });
+    });
+  }
+
+  if (previewClientBtn) {
+    previewClientBtn.addEventListener('click', () => {
+      if (!simState.activeShareProposal) return;
+      if (shareModal && shareModal.open) shareModal.close();
+      renderClientProposalView(simState.activeShareProposal);
+      const clientModal = document.getElementById('client-proposal-modal');
+      if (clientModal && typeof clientModal.showModal === 'function') {
+        clientModal.showModal();
+      }
+    });
+  }
+
+  const clientModal = document.getElementById('client-proposal-modal');
+  const clientCloseBtn = document.getElementById('client-proposal-close-btn');
+  if (clientCloseBtn && clientModal) {
+    clientCloseBtn.addEventListener('click', () => clientModal.close());
+    clientModal.addEventListener('click', (e) => {
+      if (e.target === clientModal) clientModal.close();
+    });
+  }
+
+  // Render inicial de las 3 propuestas
+  renderSimulatorProposals();
+}
+
 // Exponer funciones en el ámbito global para eventos en línea
 window.openProductModal = openProductModal;
 window.orderSingleProductDirectly = orderSingleProductDirectly;
@@ -1811,5 +2787,10 @@ window.closeOrderDrawer = closeOrderDrawer;
 window.resetFilters = resetFilters;
 window.goToCuchareablesCatalog = goToCuchareablesCatalog;
 window.toggleReviewExpand = toggleReviewExpand;
-
-
+window.adjustProposalQty = adjustProposalQty;
+window.resetSingleTierOverride = resetSingleTierOverride;
+window.resetAllSimulatorOverrides = resetAllSimulatorOverrides;
+window.openShareProposalModal = openShareProposalModal;
+window.closeClientProposalAndGoToSimulator = closeClientProposalAndGoToSimulator;
+window.trackSimulatorWhatsApp = trackSimulatorWhatsApp;
+window.copyProposalTextToClipboard = copyProposalTextToClipboard;

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <!-- LABRA Pastelería Artesanal · Portada Historia Destacada: Vasitos x 25 -->
+  <!-- Estilo: Verde Oliva Signature -->
+  <defs>
+    <style>
+      .icon-element { vector-effect: non-scaling-stroke; }
+    </style>
+  </defs>
+  
+  <circle cx="250" cy="250" r="235" fill="#46543D" />
+  <circle cx="250" cy="250" r="218" fill="none" stroke="rgba(243, 205, 196, 0.35)" stroke-width="1.8" stroke-dasharray="5 5" />
+  
+  <g class="icon-element">
+
+            <!-- Vasito Izquierdo -->
+            <g transform="translate(-50, 20)">
+                <path d="M 215 220 L 222 310 C 222 310 236 316 250 316 C 264 316 278 310 278 310 L 285 220" fill="rgba(243, 205, 196, 0.15)" stroke="#FAF7F2" stroke-width="4.5" stroke-linecap="round"/>
+                <ellipse cx="250" cy="220" rx="35" ry="8" fill="none" stroke="#FAF7F2" stroke-width="4.5"/>
+                <path d="M 219 252 Q 250 258 281 252" stroke="#F3CDC4" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 221 282 Q 250 288 279 282" stroke="#F3CDC4" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="250" cy="216" r="5" fill="#F3CDC4"/>
+            </g>
+            
+            <!-- Vasito Derecho -->
+            <g transform="translate(50, 20)">
+                <path d="M 215 220 L 222 310 C 222 310 236 316 250 316 C 264 316 278 310 278 310 L 285 220" fill="rgba(243, 205, 196, 0.15)" stroke="#FAF7F2" stroke-width="4.5" stroke-linecap="round"/>
+                <ellipse cx="250" cy="220" rx="35" ry="8" fill="none" stroke="#FAF7F2" stroke-width="4.5"/>
+                <path d="M 219 252 Q 250 258 281 252" stroke="#F3CDC4" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 221 282 Q 250 288 279 282" stroke="#F3CDC4" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="250" cy="216" r="5" fill="#F3CDC4"/>
+            </g>
+            
+            <!-- Vasito Central Protagonista (elevado al frente) -->
+            <g transform="translate(0, -10)">
+                <path d="M 210 210 L 218 325 C 218 325 234 334 250 334 C 266 334 282 325 282 325 L 290 210" fill="#46543D" stroke="#FAF7F2" stroke-width="5.5" stroke-linecap="round"/>
+                <ellipse cx="250" cy="210" rx="40" ry="10" fill="rgba(243, 205, 196, 0.15)" stroke="#FAF7F2" stroke-width="5.5"/>
+                <!-- Capas de Chocotorta / Rogelito -->
+                <path d="M 213 245 Q 250 253 287 245" stroke="#F3CDC4" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M 215 275 Q 250 283 285 275" stroke="#F3CDC4" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M 217 302 Q 250 310 283 302" stroke="#F3CDC4" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- Cucharita o frambuesa en la cima -->
+                <path d="M 244 195 L 260 148 C 262 142 270 144 268 150 L 254 198" fill="#F3CDC4" stroke="#FAF7F2" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            
+            <!-- Destellos -->
+            <path d="M 135 185 Q 135 194 142 194 Q 135 194 135 203 Q 135 194 128 194 Q 135 194 135 185 Z" fill="#F3CDC4"/>
+            <path d="M 365 185 Q 365 193 371 193 Q 365 193 365 201 Q 365 193 359 193 Q 365 193 365 185 Z" fill="#F3CDC4"/>
+        
+  </g>
+</svg>

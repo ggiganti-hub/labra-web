@@ -341,6 +341,7 @@
       <!-- Navegación -->
       <nav class="nav-desktop" aria-label="Navegación principal">
         <a href="#catalogo" class="nav-link">Catálogo</a>
+        <a href="#mesa-dulce" class="nav-link nav-link-highlight">Armá tu Mesa Dulce</a>
         <a href="#como-pedir" class="nav-link">Cómo Pedir</a>
         <a href="#opiniones" class="nav-link">Opiniones</a>
         <a href="#faq" class="nav-link">Preguntas</a>
@@ -369,6 +370,7 @@
     <!-- Menú móvil -->
     <div class="mobile-nav-panel" id="mobile-nav-panel">
       <a href="#catalogo" class="mobile-nav-link">Catálogo</a>
+      <a href="#mesa-dulce" class="mobile-nav-link">✨ Armá tu Mesa Dulce (Cotizador)</a>
       <a href="#como-pedir" class="mobile-nav-link">Cómo Pedir</a>
       <a href="#opiniones" class="mobile-nav-link">Opiniones</a>
       <a href="#faq" class="mobile-nav-link">Preguntas Frecuentes</a>
@@ -503,16 +505,41 @@
     </section>
 
     <!-- ======================================================================
+         Banner Promocional Destacado: "Armá tu Mesa Dulce"
+         Centrado y destacado entre la sección Hero y el Catálogo
+         ====================================================================== -->
+    <section class="mesa-dulce-promo-strip" aria-label="Cotizador de Mesa Dulce para Eventos">
+      <div class="container">
+        <div class="event-promo-card">
+          <div class="event-promo-badge">
+            <span class="event-promo-badge-dot" aria-hidden="true"></span>
+            <span>🎉 ¿Tenés un festejo o evento?</span>
+          </div>
+
+          <h2 class="event-promo-title">
+            Calculá la cantidad de tortas, shots y petits para tus invitados
+          </h2>
+
+          <p class="event-promo-subtitle">
+            Elegí cuántos son, qué delicias te gustan y armá tu presupuesto ideal en segundos con nuestro simulador interactivo.
+          </p>
+
+          <div class="event-promo-action">
+            <a href="#mesa-dulce" class="btn-event-promo-cta" title="Ir al cotizador interactivo de Mesa Dulce">
+              <span>✨ Armá tu Mesa Dulce</span>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
          Catálogo de Productos
          ====================================================================== -->
     <section class="catalog-section" id="catalogo">
       <div class="container">
-        <div class="catalog-header">
-          <h2 class="section-title">Pastelería Artesanal en Caballito</h2>
-          <p class="section-subtitle">
-            Hacé click en <strong>"Pedir"</strong> para encargar directamente por WhatsApp, o sumá varias delicias a tu lista para enviar un pedido organizado.
-          </p>
-        </div>
+        <h2 class="sr-only">Catálogo de Pastelería Artesanal en Caballito</h2>
 
         <!-- Barra de Filtros y Búsqueda limpia -->
         <div class="catalog-toolbar">
@@ -569,6 +596,173 @@
         <!-- Grilla de Productos -->
         <div class="products-grid" id="products-grid">
           <!-- Renderizado desde app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Simulador Interactivo de Presupuestos: "Armá tu Mesa Dulce"
+         ====================================================================== -->
+    <section class="mesa-dulce-section" id="mesa-dulce" aria-labelledby="mesa-dulce-title">
+      <div class="container">
+        <div class="mesa-dulce-header">
+          <span class="mesa-dulce-badge">✨ Cotizador Automático para Eventos</span>
+          <h2 class="section-title" id="mesa-dulce-title">Armá tu Mesa Dulce</h2>
+          <p class="section-subtitle">
+            Calculá en segundos la cantidad ideal para tu cumpleaños, reunión o festejo. Elegí cuántos invitados son, qué delicias te gustan y ajustá las cantidades en tiempo real.
+          </p>
+        </div>
+
+        <!-- Panel de Configuración del Simulador -->
+        <div class="sim-controls-card">
+          <div class="sim-controls-grid">
+            
+            <!-- 1. Input numérico: ¿Cuántos invitados son? -->
+            <div class="sim-control-block">
+              <label for="sim-guests-input" class="sim-step-label">
+                <span class="sim-step-num">1</span>
+                <span>¿Cuántos invitados son?</span>
+              </label>
+              <p class="sim-step-helper">Indicá la cantidad aproximada de personas en tu evento.</p>
+              
+              <div class="sim-guests-stepper-wrap">
+                <button type="button" class="sim-guest-step-btn" id="sim-guests-minus" aria-label="Restar un invitado">−</button>
+                <div class="sim-guests-input-box">
+                  <input 
+                    type="number" 
+                    id="sim-guests-input" 
+                    class="sim-guests-input" 
+                    value="30" 
+                    min="1" 
+                    max="500" 
+                    step="1"
+                    aria-label="Cantidad de invitados"
+                  >
+                  <span class="sim-guests-unit">invitados</span>
+                </div>
+                <button type="button" class="sim-guest-step-btn" id="sim-guests-plus" aria-label="Sumar un invitado">+</button>
+              </div>
+
+              <div class="sim-guests-presets" role="group" aria-label="Cantidades frecuentes de invitados">
+                <button type="button" class="sim-preset-chip" data-guests="10">10 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="20">20 pers.</button>
+                <button type="button" class="sim-preset-chip active" data-guests="30">30 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="40">40 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="50">50 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="60">60 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="70">70 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="80">80 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="90">90 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="100">100 pers.</button>
+              </div>
+            </div>
+
+            <!-- 2. Checkboxes de productos deseados (selección múltiple) -->
+            <div class="sim-control-block">
+              <div class="sim-step-label">
+                <span class="sim-step-num">2</span>
+                <span>¿Qué productos querés incluir?</span>
+              </div>
+              <p class="sim-step-helper">Podés marcar uno, dos o combinar los tres formatos.</p>
+
+              <div class="sim-products-checks" role="group" aria-label="Productos deseados para la mesa dulce">
+                <!-- Tortas -->
+                <label class="sim-product-check-card checked" id="sim-check-label-tortas">
+                  <input type="checkbox" class="sim-product-checkbox" value="tortas" id="sim-check-tortas" checked>
+                  <img src="assets/images/products/torta-rogel.jpg" alt="Tortas Artesanales" class="sim-check-thumb" loading="lazy">
+                  <div class="sim-check-info">
+                    <span class="sim-check-title">Tortas Enteras</span>
+                    <span class="sim-check-meta">Rinden 12 a 16 porciones c/u · $60.000</span>
+                  </div>
+                  <span class="sim-check-indicator" aria-hidden="true">✓</span>
+                </label>
+
+                <!-- Shots / Vasitos -->
+                <label class="sim-product-check-card checked" id="sim-check-label-shots">
+                  <input type="checkbox" class="sim-product-checkbox" value="shots" id="sim-check-shots" checked>
+                  <img src="assets/images/products/vasito-chocotorta-solo.jpg" alt="Caja de Shots / Vasitos" class="sim-check-thumb" loading="lazy">
+                  <div class="sim-check-info">
+                    <span class="sim-check-title">Shots / Vasitos Dulces</span>
+                    <span class="sim-check-meta">Caja cerrada x 25 unidades · $60.000</span>
+                  </div>
+                  <span class="sim-check-indicator" aria-hidden="true">✓</span>
+                </label>
+
+                <!-- Petit Fours -->
+                <label class="sim-product-check-card checked" id="sim-check-label-petit">
+                  <input type="checkbox" class="sim-product-checkbox" value="petit" id="sim-check-petit" checked>
+                  <img src="assets/images/products/petit-four-01.jpg" alt="Caja de Petit Fours" class="sim-check-thumb" loading="lazy">
+                  <div class="sim-check-info">
+                    <span class="sim-check-title">Petit Fours (Mini Pastelería)</span>
+                    <span class="sim-check-meta">Caja cerrada x 25 unidades · $60.000</span>
+                  </div>
+                  <span class="sim-check-indicator" aria-hidden="true">✓</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 3. Selector de estilo de consumo -->
+            <div class="sim-control-block">
+              <div class="sim-step-label">
+                <span class="sim-step-num">3</span>
+                <span>Estilo de consumo del evento</span>
+              </div>
+              <p class="sim-step-helper">Elegí tu preferencia para destacar la propuesta ideal (abajo podés comparar las 3).</p>
+
+              <div class="sim-style-selector" role="radiogroup" aria-label="Estilo de consumo">
+                <button type="button" class="sim-style-btn" data-style="justo" role="radio" aria-checked="false">
+                  <span class="sim-style-btn-top">
+                    <span class="sim-style-name">Lo justo y necesario</span>
+                    <span class="sim-style-tag">Conservador</span>
+                  </span>
+                  <span class="sim-style-desc">Cálculo medido para cumplir bien cuidando el presupuesto.</span>
+                </button>
+
+                <button type="button" class="sim-style-btn active" data-style="clasico" role="radio" aria-checked="true">
+                  <span class="sim-style-btn-top">
+                    <span class="sim-style-name">Clásico</span>
+                    <span class="sim-style-tag tag-popular">El más elegido</span>
+                  </span>
+                  <span class="sim-style-desc">Cálculo normal y equilibrado para que todos prueben variedad.</span>
+                </button>
+
+                <button type="button" class="sim-style-btn" data-style="abundante" role="radio" aria-checked="false">
+                  <span class="sim-style-btn-top">
+                    <span class="sim-style-name">Abundante</span>
+                    <span class="sim-style-tag">Generoso</span>
+                  </span>
+                  <span class="sim-style-desc">Ideal para estar 100% tranquilos y que todos puedan repetir.</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Encabezado de Resultados Comparativos -->
+        <div class="sim-results-header">
+          <div class="sim-results-title-wrap">
+            <h3 class="sim-results-heading">3 Propuestas Comparativas para <span id="sim-summary-guests">30</span> invitados</h3>
+            <p class="sim-results-sub">
+              Usá los botones <strong>−</strong> y <strong>+</strong> dentro de cualquier tarjeta para hacer ajustes finos y ver el precio en vivo.
+            </p>
+          </div>
+          <button type="button" class="sim-reset-all-btn" id="sim-reset-all-btn" style="display: none;" onclick="resetAllSimulatorOverrides()">
+            ↺ Restaurar cantidades sugeridas
+          </button>
+        </div>
+
+        <!-- Grilla de 3 Tarjetas Comparativas (Renderizadas en vivo desde app.js) -->
+        <div class="sim-proposals-grid" id="sim-proposals-grid" aria-live="polite">
+          <!-- Tarjetas generadas dinámicamente por app.js -->
+        </div>
+
+        <!-- Nota informativa al pie del simulador -->
+        <div class="sim-footer-note">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <span>
+            <strong>Nota:</strong> Los sabores específicos de cada torta (Rogel, Chocotorta, Red Velvet, Lemon Pie, Maracuyá, Cheesecake, etc.) y las variedades de Shots se eligen al confirmar el pedido por WhatsApp. Tomamos pedidos con 48 hs de anticipación y seña del 50%.
+          </span>
         </div>
       </div>
     </section>
@@ -836,6 +1030,82 @@
             + Sumar a mi lista
           </button>
         </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ========================================================================
+       Modal para Generar y Enviar Link de Propuesta a un Cliente (Uso LABRA)
+       ======================================================================== -->
+  <dialog id="share-proposal-modal" class="share-proposal-dialog" aria-labelledby="share-modal-title">
+    <button type="button" class="dialog-close-btn" id="share-modal-close-btn" aria-label="Cerrar ventana">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="share-modal-inner">
+      <span class="share-modal-badge">🔗 Enviar Presupuesto a un Cliente</span>
+      <h3 class="share-modal-title" id="share-modal-title">Link de Propuesta Fácil de Leer</h3>
+      <p class="share-modal-desc">
+        Cuando tu cliente abra este link, verá una <strong>pantalla súper clara, con letra grande y fotos</strong> del presupuesto armado, sin tener que usar el simulador.
+      </p>
+
+      <div class="share-modal-summary-pill" id="share-modal-summary-pill">
+        <!-- Resumen dinámico de la propuesta seleccionada -->
+      </div>
+
+      <div class="share-modal-field">
+        <label for="share-client-name-input" class="share-field-label">Nombre del cliente (opcional, para personalizar el saludo):</label>
+        <input 
+          type="text" 
+          id="share-client-name-input" 
+          class="share-field-input" 
+          placeholder="Ej: Marta, Familia Gómez, Cumple de Carlos..."
+          autocomplete="off"
+        >
+      </div>
+
+      <div class="share-modal-field">
+        <label for="share-generated-url" class="share-field-label">Link directo a la propuesta:</label>
+        <div class="share-url-copy-row">
+          <input type="text" id="share-generated-url" class="share-url-input" readonly>
+          <button type="button" class="btn-copy-proposal-url" id="btn-copy-proposal-url">
+            Copiar Link
+          </button>
+        </div>
+      </div>
+
+      <div class="share-modal-actions">
+        <button type="button" class="btn-copy-whatsapp-text" id="btn-copy-whatsapp-text">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          <span>Copiar mensaje + link para WhatsApp</span>
+        </button>
+
+        <button type="button" class="btn-preview-client-view" id="btn-preview-client-view">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>Ver cómo lo va a leer el cliente</span>
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ========================================================================
+       Vista Dedicada de Propuesta para el Cliente (Lectura Sencilla y Clara)
+       Se abre automáticamente al entrar con un link ?propuesta=1...
+       ======================================================================== -->
+  <dialog id="client-proposal-modal" class="client-proposal-dialog" aria-labelledby="client-proposal-title">
+    <div class="client-proposal-card">
+      <div class="client-proposal-topbar">
+        <div class="client-proposal-brand">
+          <img src="assets/images/logo-web.png" alt="LABRA Pastelería" class="client-proposal-logo">
+          <span class="client-proposal-brand-sub">PASTELERÍA ARTESANAL · CABALLITO</span>
+        </div>
+        <button type="button" class="client-proposal-close" id="client-proposal-close-btn" aria-label="Cerrar propuesta y ver toda la web">
+          <span>Cerrar</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="client-proposal-body" id="client-proposal-body">
+        <!-- Contenido renderizado dinámicamente desde app.js -->
       </div>
     </div>
   </dialog>
