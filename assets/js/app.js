@@ -1917,13 +1917,13 @@ function calculateSuggestedQuantities(guests, selectedProducts) {
 
   // Factores base por invitado cuando se eligen los 3 productos:
   // 1) Lo Justo y Necesario (Conservador: ~2 bocados totales por persona)
-  const justo = computeRawTier(0.60, 0.65, 0.65);
+  const justo = computeRawTier(0.48, 0.60, 0.60);
 
-  // 2) Clásico (Normal / Equilibrado: ~3 a 3.5 bocados totales por persona)
-  const clasico = computeRawTier(0.85, 0.80, 1.30);
+  // 2) Clásico (Normal / Equilibrado: ~2.8 a 3.2 bocados totales por persona)
+  const clasico = computeRawTier(0.65, 0.75, 1.10);
 
-  // 3) Abundante (Generoso: ~4 a 4.5 bocados totales por persona)
-  const abundante = computeRawTier(1.15, 1.35, 1.45);
+  // 3) Abundante (Generoso: ~3.5 a 4.2 bocados totales por persona)
+  const abundante = computeRawTier(0.90, 0.80, 1.30);
 
   // Garantizar que las 3 propuestas comparativas sean siempre progresivas y distintas entre sí
   // (ej: en eventos chicos de 15 o 20 personas donde el redondeo de cajas x25 podría igualar dos niveles)
