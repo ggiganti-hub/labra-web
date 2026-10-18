@@ -1879,7 +1879,10 @@ const simState = {
   activeShareProposal: null
 };
 
-// Calcula las cantidades sugeridas para los 3 niveles según invitados y productos marcados
+// Calcula las cantidades sugeridas para los 3 niveles basándose en el estándar de oro de catering:
+// - Lo Justo y Necesario: ~2 bocados por persona
+// - Clásico (Equilibrado): ~3 bocados por persona
+// - Abundante (Generoso): ~4 bocados por persona
 function calculateSuggestedQuantities(guests, selectedProducts) {
   const g = Math.max(1, Math.min(500, parseInt(guests, 10) || 30));
   const hasTortas = !!selectedProducts.tortas;
@@ -1887,47 +1890,93 @@ function calculateSuggestedQuantities(guests, selectedProducts) {
   const hasPetit = !!selectedProducts.petit;
 
   const activeCount = (hasTortas ? 1 : 0) + (hasShots ? 1 : 0) + (hasPetit ? 1 : 0);
-
-  // Multiplicador de cobertura por categoría según cuántos tipos de producto se combinan:
-  // Si eligen los 3 formatos se reparten el protagonismo; si eligen 1 o 2, cada formato cubre más porciones por persona.
-  let categoryWeight = 1.0;
-  if (activeCount === 1) {
-    categoryWeight = 1.70;
-  } else if (activeCount === 2) {
-    categoryWeight = 1.35;
+  if (activeCount === 0) {
+    return {
+      justo: { tortas: 0, shots: 0, petit: 0 },
+      clasico: { tortas: 0, shots: 0, petit: 0 },
+      abundante: { tortas: 0, shots: 0, petit: 0 }
+    };
   }
 
-  function computeRawTier( cakeFactor, shotsFactor, petitFactor ) {
+  const TARGET_RATIOS = {
+    justo: 2.0,
+    clasico: 3.0,
+    abundante: 4.0
+  };
+
+  const CAKE_FACTORS = {
+    justo: 0.40,
+    clasico: 0.55,
+    abundante: 0.75
+  };
+
+  function computeTier(tierKey) {
+    const targetRatio = TARGET_RATIOS[tierKey];
+    const totalTargetPieces = g * targetRatio;
     let tortas = 0;
     let shots = 0;
     let petit = 0;
 
-    if (hasTortas) {
-      tortas = Math.max(1, Math.round((g * cakeFactor * categoryWeight) / 14));
+    // Caso 1: Los 3 productos seleccionados (Mesa Dulce Completa)
+    if (hasTortas && hasShots && hasPetit) {
+      // Para festejos chicos (<= 25 invitados), Lo Justo no obliga a comprar 2 cajas cerradas:
+      // 1 Torta (14 porc.) + 1 Caja de Petits (25 u.) = 39 piezas cubre exactamente ~2 bocados/persona.
+      if (tierKey === 'justo' && g <= 25) {
+        tortas = 1;
+        shots = 0;
+        petit = 1;
+      } else {
+        const cakeRatio = CAKE_FACTORS[tierKey];
+        tortas = Math.max(1, Math.round((g * cakeRatio) / 14));
+        const remaining = Math.max(0, totalTargetPieces - (tortas * 14));
+        shots = Math.max(1, Math.round((remaining * 0.40) / 25));
+        const remPetit = Math.max(0, remaining - (shots * 25));
+        petit = Math.max(1, Math.round(remPetit / 25));
+      }
     }
-    if (hasShots) {
-      shots = Math.max(1, Math.ceil((g * shotsFactor * categoryWeight) / 25));
+    // Caso 2: Solo Tortas
+    else if (hasTortas && !hasShots && !hasPetit) {
+      const cakeCoverage = { justo: 1.0, clasico: 1.15, abundante: 1.35 }[tierKey];
+      tortas = Math.max(1, Math.ceil((g * cakeCoverage) / 14));
     }
-    if (hasPetit) {
-      petit = Math.max(1, Math.ceil((g * petitFactor * categoryWeight) / 25));
+    // Caso 3: Solo Shots + Petits (sin torta)
+    else if (!hasTortas && hasShots && hasPetit) {
+      shots = Math.max(1, Math.round((totalTargetPieces * 0.38) / 25));
+      const remP = Math.max(0, totalTargetPieces - (shots * 25));
+      petit = Math.max(1, Math.ceil(remP / 25));
+    }
+    // Caso 4: Tortas + Shots (sin petit)
+    else if (hasTortas && hasShots && !hasPetit) {
+      const cakeRatio = CAKE_FACTORS[tierKey] * 1.25;
+      tortas = Math.max(1, Math.round((g * cakeRatio) / 14));
+      const rem = Math.max(0, totalTargetPieces - (tortas * 14));
+      shots = Math.max(1, Math.ceil(rem / 25));
+    }
+    // Caso 5: Tortas + Petit (sin shots)
+    else if (hasTortas && !hasShots && hasPetit) {
+      const cakeRatio = CAKE_FACTORS[tierKey] * 1.25;
+      tortas = Math.max(1, Math.round((g * cakeRatio) / 14));
+      const rem = Math.max(0, totalTargetPieces - (tortas * 14));
+      petit = Math.max(1, Math.ceil(rem / 25));
+    }
+    // Caso 6: Solo Shots
+    else if (!hasTortas && hasShots && !hasPetit) {
+      shots = Math.max(1, Math.ceil(totalTargetPieces / 25));
+    }
+    // Caso 7: Solo Petits
+    else if (!hasTortas && !hasShots && hasPetit) {
+      petit = Math.max(1, Math.ceil(totalTargetPieces / 25));
     }
 
     return { tortas, shots, petit };
   }
 
-  // Factores base por invitado cuando se eligen los 3 productos:
-  // 1) Lo Justo y Necesario (Conservador: ~2 bocados totales por persona)
-  const justo = computeRawTier(0.48, 0.60, 0.60);
+  const justo = computeTier('justo');
+  const clasico = computeTier('clasico');
+  const abundante = computeTier('abundante');
 
-  // 2) Clásico (Normal / Equilibrado: ~2.8 a 3.2 bocados totales por persona)
-  const clasico = computeRawTier(0.65, 0.75, 1.10);
-
-  // 3) Abundante (Generoso: ~3.5 a 4.2 bocados totales por persona)
-  const abundante = computeRawTier(0.90, 0.80, 1.30);
-
-  // Garantizar que las 3 propuestas comparativas sean siempre progresivas y distintas entre sí
-  // (ej: en eventos chicos de 15 o 20 personas donde el redondeo de cajas x25 podría igualar dos niveles)
-  const totalJusto = justo.tortas + justo.shots + justo.petit;
+  // Escalera progresiva garantizada: asegurar que las 3 opciones sean siempre distintas y comparativas
+  let totalJusto = justo.tortas + justo.shots + justo.petit;
   let totalClasico = clasico.tortas + clasico.shots + clasico.petit;
 
   if (totalClasico <= totalJusto) {
@@ -1941,23 +1990,23 @@ function calculateSuggestedQuantities(guests, selectedProducts) {
     totalClasico = clasico.tortas + clasico.shots + clasico.petit;
   }
 
-  // Asegurar que Clásico nunca tenga menos de ningún ítem que Justo
+  // Clásico nunca tiene menos piezas que Justo
   if (clasico.tortas < justo.tortas) clasico.tortas = justo.tortas;
   if (clasico.shots < justo.shots) clasico.shots = justo.shots;
   if (clasico.petit < justo.petit) clasico.petit = justo.petit;
   totalClasico = clasico.tortas + clasico.shots + clasico.petit;
 
-  // Asegurar que Abundante nunca tenga menos de ningún ítem que Clásico y supere el total de Clásico
+  // Abundante nunca tiene menos piezas que Clásico y siempre supera el total de Clásico
   if (abundante.tortas < clasico.tortas) abundante.tortas = clasico.tortas;
   if (abundante.shots < clasico.shots) abundante.shots = clasico.shots;
   if (abundante.petit < clasico.petit) abundante.petit = clasico.petit;
 
   let totalAbundante = abundante.tortas + abundante.shots + abundante.petit;
   if (totalAbundante <= totalClasico) {
-    if (hasShots && abundante.shots === clasico.shots) {
-      abundante.shots = clasico.shots + 1;
-    } else if (hasTortas) {
+    if (hasTortas && abundante.tortas === clasico.tortas) {
       abundante.tortas = clasico.tortas + 1;
+    } else if (hasShots && abundante.shots === clasico.shots) {
+      abundante.shots = clasico.shots + 1;
     } else if (hasPetit) {
       abundante.petit = clasico.petit + 1;
     }
