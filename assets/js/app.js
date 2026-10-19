@@ -88,12 +88,12 @@ const PRODUCTS = [
     category: 'tortas',
     price: 60000,
     priceDisplay: '$60.000',
-    shortDesc: 'Masa sablée, ddl, chantilly y frutas frescas (precio por número).',
-    longDesc: 'Number Cake artesanal personalizada sobre base de doble masa sablée crocante, relleno con picos de dulce de leche colonial y crema chantilly suave. Decorada con frutillas, arándanos frescos, hojitas de menta y destellos dorados comestibles.\n\n*Aclaración importante:* El valor publicado ($60.000) corresponde a un (1) número individual. Si tu festejo requiere dos cifras (ej: 15, 30, 50), seleccioná 2 unidades y coordinamos los dígitos por WhatsApp.',
+    shortDesc: 'Masa sablée de almendras, ddl, crema de leche y frutas frescas (precio por número).',
+    longDesc: 'Number Cake artesanal personalizada sobre base de doble masa sablée de almendras crocante, rellena con picos de dulce de leche y crema de leche fresca. Decorada con frutillas, arándanos frescos, hojitas de menta y destellos dorados.\n\n• Aclaración de valor: El precio publicado ($60.000) corresponde a un (1) número o letra individual. Si tu festejo requiere dos cifras (ej: 15, 30, 50), seleccioná 2 unidades al armar tu pedido.\n• Sabores y rellenos personalizados: Si deseás consultar por otra masa, otro sabor de torta o diferentes opciones de relleno, ¡escribinos por WhatsApp y coordinamos tu propuesta a gusto!',
     ingredients: [
-      'Doble masa sablée artesanal',
-      'Dulce de leche repostero colonial',
-      'Crema chantilly suave',
+      'Doble masa sablée de almendras',
+      'Dulce de leche repostero',
+      'Crema de leche fresca batida',
       'Frutillas y arándanos frescos',
       'Hojitas de menta',
       'Destellos dorados comestibles'
@@ -107,14 +107,14 @@ const PRODUCTS = [
         src: 'assets/images/products/torta-number-cake-5.jpg',
         label: 'Número 5',
         desc: 'Ejemplo de dígito individual',
-        flavorDesc: 'Number Cake artesanal personalizada (ejemplo: Número 5). Doble masa sablée, dulce de leche, crema chantilly, frutillas y arándanos frescos.\n\n*Aclaración:* El valor publicado ($60.000) es por número individual.',
+        flavorDesc: 'Number Cake artesanal personalizada (ejemplo: Número 5). Masa sablée de almendras, ddl, crema de leche y frutas frescas.\n\n• El valor ($60.000) es por número individual.\n• ¿Buscás otro gusto o relleno? Consultanos por WhatsApp y armamos tu propuesta personalizada a medida.',
         flavorYield: 'Precio por número · Rinde aprox. 10 a 12 porciones por dígito'
       },
       {
         src: 'assets/images/products/torta-number-cake-0.jpg',
         label: 'Número 0',
         desc: 'Ejemplo de dígito individual',
-        flavorDesc: 'Number Cake artesanal personalizada (ejemplo: Número 0). Doble masa sablée, dulce de leche, crema chantilly, frutillas y arándanos frescos.\n\n*Aclaración:* El valor publicado ($60.000) es por número individual.',
+        flavorDesc: 'Number Cake artesanal personalizada (ejemplo: Número 0). Masa sablée de almendras, ddl, crema de leche y frutas frescas.\n\n• El valor ($60.000) es por número individual.\n• ¿Buscás otro gusto o relleno? Consultanos por WhatsApp y armamos tu propuesta personalizada a medida.',
         flavorYield: 'Precio por número · Rinde aprox. 10 a 12 porciones por dígito'
       }
     ],
