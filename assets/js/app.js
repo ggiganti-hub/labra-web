@@ -83,6 +83,45 @@ const PRODUCTS = [
     badgeType: 'badge-rose'
   },
   {
+    id: 'number-cake',
+    name: 'Number Cake',
+    category: 'tortas',
+    price: 60000,
+    priceDisplay: '$60.000',
+    shortDesc: 'Masa sablée, ddl, chantilly y frutas frescas (precio por número).',
+    longDesc: 'Number Cake artesanal personalizada sobre base de doble masa sablée crocante, relleno con picos de dulce de leche colonial y crema chantilly suave. Decorada con frutillas, arándanos frescos, hojitas de menta y destellos dorados comestibles.\n\n*Aclaración importante:* El valor publicado ($60.000) corresponde a un (1) número individual. Si tu festejo requiere dos cifras (ej: 15, 30, 50), seleccioná 2 unidades y coordinamos los dígitos por WhatsApp.',
+    ingredients: [
+      'Doble masa sablée artesanal',
+      'Dulce de leche repostero colonial',
+      'Crema chantilly suave',
+      'Frutillas y arándanos frescos',
+      'Hojitas de menta',
+      'Destellos dorados comestibles'
+    ],
+    yield: 'Precio por número · Rinde aprox. 10 a 12 porciones por dígito',
+    yieldBadge: 'Precio por número',
+    storage: 'Conservar en la heladera hasta 4 días. Retirar 15 min antes de consumir.',
+    image: 'assets/images/products/torta-number-cake-5.jpg',
+    images: [
+      {
+        src: 'assets/images/products/torta-number-cake-5.jpg',
+        label: 'Número 5',
+        desc: 'Ejemplo de dígito individual',
+        flavorDesc: 'Number Cake artesanal personalizada (ejemplo: Número 5). Doble masa sablée, dulce de leche, crema chantilly, frutillas y arándanos frescos.\n\n*Aclaración:* El valor publicado ($60.000) es por número individual.',
+        flavorYield: 'Precio por número · Rinde aprox. 10 a 12 porciones por dígito'
+      },
+      {
+        src: 'assets/images/products/torta-number-cake-0.jpg',
+        label: 'Número 0',
+        desc: 'Ejemplo de dígito individual',
+        flavorDesc: 'Number Cake artesanal personalizada (ejemplo: Número 0). Doble masa sablée, dulce de leche, crema chantilly, frutillas y arándanos frescos.\n\n*Aclaración:* El valor publicado ($60.000) es por número individual.',
+        flavorYield: 'Precio por número · Rinde aprox. 10 a 12 porciones por dígito'
+      }
+    ],
+    badges: ['Personalizada', 'Precio x Número', '2 Fotos'],
+    badgeType: 'badge-olive'
+  },
+  {
     id: 'chocotorta',
     name: 'Chocotorta',
     category: 'tortas',
@@ -693,7 +732,7 @@ function renderProducts() {
           <p class="product-card-desc">${prod.shortDesc}</p>
 
           <div class="product-card-footer">
-            <span class="product-yield-badge">${prod.category === 'cuchareables' ? 'Pote 250 cc' : (prod.category === 'tortas' || prod.category === 'keto' ? (prod.id === 'chocotorta' ? '16 x 18 cm' : 'Diámetro 22 cm') : 'Caja x 25 un.')}</span>
+            <span class="product-yield-badge">${prod.yieldBadge ? prod.yieldBadge : (prod.category === 'cuchareables' ? 'Pote 250 cc' : (prod.category === 'tortas' || prod.category === 'keto' ? (prod.id === 'chocotorta' ? '16 x 18 cm' : 'Diámetro 22 cm') : 'Caja x 25 un.'))}</span>
 
             <div class="product-card-actions">
               <button class="btn-card-whatsapp" onclick="orderSingleProductDirectly('${prod.id}')" title="Pedir ${prod.name} por WhatsApp" aria-label="Pedir ${prod.name} por WhatsApp">
@@ -1249,7 +1288,10 @@ function orderSingleProductDirectly(productId, flavorName = null) {
   });
 
   let productLine = `• 1x ${prod.name} (${prod.priceDisplay})`;
-  if (prod.category === 'cuchareables') {
+  if (prod.id === 'number-cake') {
+    const digitExample = flavorName ? ` (${flavorName})` : '';
+    productLine = `• 1x ${prod.name}${digitExample} - ${prod.priceDisplay} (valor por número)\n  (Quisiera coordinar el/los números que necesito)`;
+  } else if (prod.category === 'cuchareables') {
     if (flavorName && flavorName !== 'Los 3 Sabores') {
       productLine = `• 1x ${prod.name} - Sabor ${flavorName} (${prod.priceDisplay})`;
     } else if (flavorName === 'Los 3 Sabores') {
