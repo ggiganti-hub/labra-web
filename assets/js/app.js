@@ -89,14 +89,12 @@ const PRODUCTS = [
     price: 60000,
     priceDisplay: '$60.000',
     shortDesc: 'Masa sablée de almendras, ddl, crema de leche y frutas frescas (precio por número).',
-    longDesc: 'Number Cake artesanal personalizada sobre base de doble masa sablée de almendras crocante, rellena con picos de dulce de leche y crema de leche fresca. Decorada con frutillas, arándanos frescos, hojitas de menta y destellos dorados.\n\n• Aclaración de valor: El precio publicado ($60.000) corresponde a un (1) número o letra individual. Si tu festejo requiere dos cifras (ej: 15, 30, 50), seleccioná 2 unidades al armar tu pedido.\n• Sabores y rellenos personalizados: Si deseás consultar por otra masa, otro sabor de torta o diferentes opciones de relleno, ¡escribinos por WhatsApp y coordinamos tu propuesta a gusto!',
+    longDesc: 'Number Cake artesanal personalizada sobre base de doble masa sablée de almendras crocante, rellena con dulce de leche y crema de leche. Decorada con frutas de estación.\n\n• Aclaración de valor: El precio publicado ($60.000) corresponde a un (1) número o letra individual. Si tu festejo requiere dos cifras (ej: 15, 30, 50), seleccioná 2 unidades al armar tu pedido.\n• Sabores y rellenos personalizados: Si deseás consultar por otra masa, otro sabor de torta o diferentes opciones de relleno, ¡escribinos por WhatsApp y coordinamos tu propuesta a gusto!',
     ingredients: [
-      'Doble masa sablée de almendras',
-      'Dulce de leche repostero',
-      'Crema de leche fresca batida',
-      'Frutillas y arándanos frescos',
-      'Hojitas de menta',
-      'Destellos dorados comestibles'
+      'Masa sablée de almendras',
+      'Dulce de leche',
+      'Crema de leche',
+      'Frutas de estación'
     ],
     yield: 'Precio por número · Rinde aprox. 10 a 12 porciones por dígito',
     yieldBadge: 'Precio por número',
