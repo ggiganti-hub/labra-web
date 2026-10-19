@@ -2616,7 +2616,6 @@ function checkSharedProposalUrlOnLoad() {
   };
 
   renderClientProposalView(proposalData);
-  const clientModal = document.getElementById('client-proposal-modal');
   if (clientModal) {
     setTimeout(() => {
       try {
