@@ -2347,15 +2347,20 @@ function trackSimulatorWhatsApp(tierKey, totalPrice) {
 
 function buildShareableProposalUrl(proposalData) {
   let baseUrl;
-  // Si se está probando de forma local (protocolo file:) o sin origen web, usar el dominio oficial de la web
   if (!window.location.origin || window.location.origin === 'null' || window.location.protocol === 'file:') {
-    baseUrl = (typeof LABRA_CONFIG !== 'undefined' && LABRA_CONFIG.siteUrl) ? LABRA_CONFIG.siteUrl : 'https://www.labra.com.ar';
+    baseUrl = (typeof LABRA_CONFIG !== 'undefined' && LABRA_CONFIG.siteUrl) 
+      ? `${LABRA_CONFIG.siteUrl}/mesa-dulce.html` 
+      : 'https://www.labra.com.ar/mesa-dulce.html';
   } else {
-    // Si estamos en la web real, quitar /index.html para que el link quede limpio y corto
-    baseUrl = window.location.origin + window.location.pathname.replace(/\/index\.html$/, '');
+    const currentPath = window.location.pathname.replace(/\/index\.html$/, '');
+    if (currentPath.endsWith('mesa-dulce.html') || currentPath.endsWith('mesa-dulce')) {
+      baseUrl = window.location.origin + currentPath;
+    } else {
+      baseUrl = window.location.origin + '/mesa-dulce.html';
+    }
   }
 
-  const cleanBase = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/';
+  const cleanBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
   const params = new URLSearchParams();
   params.set('propuesta', '1');
   params.set('inv', String(proposalData.guests));
@@ -2568,6 +2573,13 @@ function checkSharedProposalUrlOnLoad() {
 
   const params = new URLSearchParams(searchStr);
   if (params.get('propuesta') !== '1') return;
+
+  const clientModal = document.getElementById('client-proposal-modal');
+  // Si abrieron el link en la portada (index.html), redirigir fluidamente a mesa-dulce.html
+  if (!clientModal && !window.location.pathname.includes('mesa-dulce')) {
+    window.location.replace('mesa-dulce.html' + window.location.search + window.location.hash);
+    return;
+  }
 
   const guests = Math.max(1, Math.min(500, parseInt(params.get('inv'), 10) || 30));
   const rawTier = params.get('estilo') || 'clasico';

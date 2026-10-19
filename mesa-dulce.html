@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Primario para el Cotizador de Eventos -->
+  <title>Cotizador de Mesa Dulce para Eventos y Cumpleaños · LABRA Pastelería</title>
+  <meta name="description" content="Calculá en segundos la cantidad exacta de tortas, shots y petit fours para tus invitados. Simulador de presupuestos interactivo para cumpleaños, reuniones y eventos en Caballito, CABA.">
+  <meta name="keywords" content="mesa dulce caballito, cotizador mesa dulce, catering dulce eventos, tortas artesanales cumpleaños, vasitos dulces shots, petit fours buenos aires">
+  <meta name="author" content="LABRA Pastelería">
+  <link rel="canonical" href="https://www.labra.com.ar/mesa-dulce.html">
+
+  <!-- Open Graph / Redes Sociales -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.labra.com.ar/mesa-dulce.html">
+  <meta property="og:title" content="Armá tu Mesa Dulce en segundos · LABRA Pastelería">
+  <meta property="og:description" content="Calculá la cantidad exacta de tortas, shots y petit fours para tus invitados. 3 propuestas a medida con precios en vivo.">
+  <meta property="og:image" content="https://www.labra.com.ar/assets/images/products/torta-rogel.jpg">
+  <meta property="og:locale" content="es_AR">
+
+  <!-- Favicon y App Icons -->
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+  <!-- Tipografías de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap">
+
+  <!-- Estilos del Sitio -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    /* Estilos específicos para la página dedicada de Mesa Dulce */
+    .mesa-dulce-page-main {
+      padding-top: 1.5rem;
+      padding-bottom: 4rem;
+    }
+    .page-nav-back-wrap {
+      padding: 1rem 0 0.5rem;
+    }
+    .btn-page-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--color-olive-dark);
+      text-decoration: none;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-full);
+      background: rgba(114, 131, 89, 0.1);
+      border: 1px solid var(--color-border);
+      transition: all var(--transition-fast);
+    }
+    .btn-page-back:hover {
+      background: rgba(114, 131, 89, 0.2);
+      transform: translateX(-2px);
+    }
+    .mesa-dulce-section.dedicated-page {
+      padding-top: 1.5rem;
+    }
+    .mesa-dulce-benefits {
+      margin-top: 3.5rem;
+      padding-top: 3rem;
+      border-top: 1px dashed var(--color-border);
+    }
+    .benefits-title {
+      font-family: var(--font-serif);
+      font-size: 1.7rem;
+      color: var(--color-olive-dark);
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+    .benefit-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .benefit-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .benefit-name {
+      font-weight: 700;
+      color: var(--color-text);
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+    }
+    .benefit-desc {
+      font-size: 0.88rem;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Aviso sutil superior -->
+  <div class="top-bar" aria-label="Aviso">
+    <div class="container top-bar-inner">
+      <span>Pedidos con <strong>48 hs de anticipación</strong> · Retiro por <strong>Caballito</strong> · Coordinación directa por WhatsApp</span>
+    </div>
+  </div>
+
+  <!-- Header minimalista dedicado -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo-wrap" aria-label="LABRA Pastelería - Ir al inicio">
+        <img src="assets/images/logo-web.png" alt="LABRA" class="brand-logo-img">
+        <span class="brand-subtitle">PASTELERÍA</span>
+      </a>
+
+      <!-- Navegación y retorno -->
+      <nav class="nav-desktop" aria-label="Navegación secundaria">
+        <a href="index.html#catalogo" class="nav-link">Catálogo de Tortas</a>
+        <a href="index.html#cuchareables" class="nav-link">Postres Cuchareables</a>
+        <a href="index.html#como-pedir" class="nav-link">Cómo Pedir</a>
+        <a href="index.html#faq" class="nav-link">Preguntas Frecuentes</a>
+      </nav>
+
+      <!-- Acciones directas -->
+      <div class="header-actions">
+        <a href="index.html" class="btn-page-back" title="Volver al catálogo principal de LABRA">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          <span>Volver al Catálogo</span>
+        </a>
+
+        <a href="https://wa.me/5491173718584?text=%C2%A1Hola%20LABRA!%20Quisiera%20consultar%20por%20una%20mesa%20dulce%20para%20un%20evento." target="_blank" rel="noopener" class="btn-whatsapp" title="WhatsApp directo" aria-label="Consultar por WhatsApp">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.676.15-.2.301-.776.98-1.002 1.23-.226.25-.452.276-.753.125-.301-.15-1.272-.469-2.424-1.498-.897-.8-1.503-1.789-1.68-2.09-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.175.2-.301.301-.501.1-.2.05-.376-.025-.526-.075-.15-.677-1.631-.928-2.235-.245-.589-.494-.509-.677-.518-.175-.008-.376-.01-.577-.01-.2 0-.527.075-.803.376s-1.054 1.03-1.054 2.511 1.079 2.912 1.23 3.113c.15.2 2.124 3.243 5.144 4.549.718.31 1.279.496 1.716.634.721.23 1.378.197 1.898.12.58-.087 1.78-.727 2.03-1.43.25-.702.25-1.303.175-1.43-.075-.126-.275-.201-.576-.351zM12.004 2C6.48 2 2 6.48 2 12c0 1.84.5 3.565 1.372 5.044L2.05 22l5.12-1.342A9.957 9.957 0 0 0 12.004 22c5.523 0 10.004-4.48 10.004-10s-4.481-10-10.004-10zm0 18.257c-1.606 0-3.1-.476-4.364-1.3l-.313-.205-3.057.802.816-2.98-.225-.327a8.21 8.21 0 0 1-1.36-4.447c0-4.557 3.708-8.265 8.265-8.265 4.557 0 8.265 3.708 8.265 8.265 0 4.558-3.708 8.266-8.265 8.266z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="mesa-dulce-page-main">
+    <div class="container page-nav-back-wrap">
+      <a href="index.html" class="btn-page-back">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+        <span>Volver a la portada de LABRA</span>
+      </a>
+    </div>
+
+    <!-- ======================================================================
+         Simulador Interactivo de Presupuestos: "Armá tu Mesa Dulce"
+         ====================================================================== -->
+    <section class="mesa-dulce-section dedicated-page" id="mesa-dulce" aria-labelledby="mesa-dulce-title">
+      <div class="container">
+        <div class="mesa-dulce-header">
+          <span class="mesa-dulce-badge">✨ Cotizador Automático para Eventos</span>
+          <h1 class="section-title" id="mesa-dulce-title" style="margin-top: 0.5rem;">Armá tu Mesa Dulce</h1>
+          <p class="section-subtitle">
+            Calculá en segundos la cantidad ideal para tu cumpleaños, reunión o festejo. Indicá cuántos invitados son, qué productos te gustan y ajustá las cantidades en tiempo real.
+          </p>
+        </div>
+
+        <!-- Panel de Configuración del Simulador -->
+        <div class="sim-controls-card">
+          <div class="sim-controls-grid">
+            
+            <!-- 1. Input numérico: ¿Cuántos invitados son? -->
+            <div class="sim-control-block">
+              <label for="sim-guests-input" class="sim-step-label">
+                <span class="sim-step-num">1</span>
+                <span>¿Cuántos invitados son?</span>
+              </label>
+              <p class="sim-step-helper">Indicá la cantidad aproximada de personas en tu festejo.</p>
+              
+              <div class="sim-guests-stepper-wrap">
+                <button type="button" class="sim-guest-step-btn" id="sim-guests-minus" aria-label="Restar un invitado">−</button>
+                <div class="sim-guests-input-box">
+                  <input 
+                    type="number" 
+                    id="sim-guests-input" 
+                    class="sim-guests-input" 
+                    value="30" 
+                    min="1" 
+                    max="500" 
+                    step="1"
+                    aria-label="Cantidad de invitados"
+                  >
+                  <span class="sim-guests-unit">invitados</span>
+                </div>
+                <button type="button" class="sim-guest-step-btn" id="sim-guests-plus" aria-label="Sumar un invitado">+</button>
+              </div>
+
+              <div class="sim-guests-presets" role="group" aria-label="Cantidades frecuentes de invitados">
+                <button type="button" class="sim-preset-chip" data-guests="10">10 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="20">20 pers.</button>
+                <button type="button" class="sim-preset-chip active" data-guests="30">30 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="40">40 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="50">50 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="60">60 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="70">70 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="80">80 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="90">90 pers.</button>
+                <button type="button" class="sim-preset-chip" data-guests="100">100 pers.</button>
+              </div>
+            </div>
+
+            <!-- 2. Checkboxes de productos deseados -->
+            <div class="sim-control-block">
+              <div class="sim-step-label">
+                <span class="sim-step-num">2</span>
+                <span>¿Qué productos querés incluir?</span>
+              </div>
+              <p class="sim-step-helper">Podés marcar uno, dos o combinar los tres formatos.</p>
+
+              <div class="sim-products-checks" role="group" aria-label="Productos deseados para la mesa dulce">
+                <!-- Tortas -->
+                <label class="sim-product-check-card checked" id="sim-check-label-tortas">
+                  <input type="checkbox" class="sim-product-checkbox" value="tortas" id="sim-check-tortas" checked>
+                  <img src="assets/images/products/torta-rogel.jpg" alt="Tortas Artesanales" class="sim-check-thumb" loading="lazy">
+                  <div class="sim-check-info">
+                    <span class="sim-check-title">Tortas Enteras</span>
+                    <span class="sim-check-meta">Rinden 12 a 16 porciones c/u · $65.000</span>
+                  </div>
+                  <span class="sim-check-indicator" aria-hidden="true">✓</span>
+                </label>
+
+                <!-- Shots / Vasitos -->
+                <label class="sim-product-check-card checked" id="sim-check-label-shots">
+                  <input type="checkbox" class="sim-product-checkbox" value="shots" id="sim-check-shots" checked>
+                  <img src="assets/images/products/vasito-chocotorta-solo.jpg" alt="Caja de Shots / Vasitos" class="sim-check-thumb" loading="lazy">
+                  <div class="sim-check-info">
+                    <span class="sim-check-title">Shots / Vasitos Dulces</span>
+                    <span class="sim-check-meta">Caja cerrada x 25 unidades · $42.000</span>
+                  </div>
+                  <span class="sim-check-indicator" aria-hidden="true">✓</span>
+                </label>
+
+                <!-- Petit Fours -->
+                <label class="sim-product-check-card checked" id="sim-check-label-petit">
+                  <input type="checkbox" class="sim-product-checkbox" value="petit" id="sim-check-petit" checked>
+                  <img src="assets/images/products/petit-four-01.jpg" alt="Caja de Petit Fours" class="sim-check-thumb" loading="lazy">
+                  <div class="sim-check-info">
+                    <span class="sim-check-title">Petit Fours (Mini Pastelería)</span>
+                    <span class="sim-check-meta">Caja cerrada x 25 unidades · $42.000</span>
+                  </div>
+                  <span class="sim-check-indicator" aria-hidden="true">✓</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 3. Selector de estilo de consumo -->
+            <div class="sim-control-block">
+              <div class="sim-step-label">
+                <span class="sim-step-num">3</span>
+                <span>Estilo de consumo del evento</span>
+              </div>
+              <p class="sim-step-helper">Elegí tu preferencia para destacar la propuesta ideal (abajo podés comparar las 3).</p>
+
+              <div class="sim-style-selector" role="radiogroup" aria-label="Estilo de consumo">
+                <button type="button" class="sim-style-btn" data-style="justo" role="radio" aria-checked="false">
+                  <span class="sim-style-btn-top">
+                    <span class="sim-style-name">Lo justo y necesario</span>
+                    <span class="sim-style-tag">Conservador (~2 boc./pers)</span>
+                  </span>
+                  <span class="sim-style-desc">Cálculo medido para cumplir muy bien cuidando el presupuesto.</span>
+                </button>
+
+                <button type="button" class="sim-style-btn active" data-style="clasico" role="radio" aria-checked="true">
+                  <span class="sim-style-btn-top">
+                    <span class="sim-style-name">Clásico</span>
+                    <span class="sim-style-tag tag-popular">El más elegido (~3 boc./pers)</span>
+                  </span>
+                  <span class="sim-style-desc">Cálculo normal y equilibrado para que todos prueben variedad.</span>
+                </button>
+
+                <button type="button" class="sim-style-btn" data-style="abundante" role="radio" aria-checked="false">
+                  <span class="sim-style-btn-top">
+                    <span class="sim-style-name">Abundante</span>
+                    <span class="sim-style-tag">Generoso (~4 boc./pers)</span>
+                  </span>
+                  <span class="sim-style-desc">Ideal para estar 100% tranquilos y que todos puedan repetir.</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Encabezado de Resultados Comparativos -->
+        <div class="sim-results-header">
+          <div class="sim-results-title-wrap">
+            <h3 class="sim-results-heading">3 Propuestas Comparativas para <span id="sim-summary-guests">30</span> invitados</h3>
+            <p class="sim-results-sub">
+              Usá los botones <strong>−</strong> y <strong>+</strong> dentro de cualquier tarjeta para hacer ajustes finos y ver el precio en vivo.
+            </p>
+          </div>
+          <button type="button" class="sim-reset-all-btn" id="sim-reset-all-btn" style="display: none;" onclick="resetAllSimulatorOverrides()">
+            ↺ Restaurar cantidades sugeridas
+          </button>
+        </div>
+
+        <!-- Grilla de 3 Tarjetas Comparativas (Renderizadas en vivo desde app.js) -->
+        <div class="sim-proposals-grid" id="sim-proposals-grid" aria-live="polite">
+          <!-- Tarjetas generadas dinámicamente por app.js -->
+        </div>
+
+        <!-- Nota informativa al pie del simulador -->
+        <div class="sim-footer-note">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <span>
+            <strong>Nota:</strong> Los sabores específicos de cada torta (Rogel, Chocotorta, Red Velvet, Lemon Pie, Maracuyá, Cheesecake, etc.) y las variedades de Shots se eligen al confirmar el pedido por WhatsApp. Tomamos pedidos con 48 hs de anticipación y seña del 50%.
+          </span>
+        </div>
+
+        <!-- Bloque de Beneficios de LABRA para Eventos -->
+        <div class="mesa-dulce-benefits">
+          <h2 class="benefits-title">¿Por qué elegir LABRA para tu mesa dulce?</h2>
+          <div class="benefits-grid">
+            <div class="benefit-card">
+              <div class="benefit-icon">🍰</div>
+              <div class="benefit-name">Pastelería 100% Artesanal</div>
+              <p class="benefit-desc">Elaborado con materia prima premium (dulce de leche repostero colonial, chocolate genuino y frutas frescas).</p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">🍸</div>
+              <div class="benefit-name">Shots en Vaso Tequilero</div>
+              <p class="benefit-desc">Tamaño ideal de 60 ml para degustar sin empalagar, llenando la mesa de colores y variedad.</p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">✨</div>
+              <div class="benefit-name">Sabores a tu Gusto</div>
+              <p class="benefit-desc">Combiná los gustos favoritos de tu familia o invitados para que todos encuentren lo que más les gusta.</p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">📍</div>
+              <div class="benefit-name">Retiro o Envíos</div>
+              <p class="benefit-desc">Punto de retiro cómodo en Caballito (CABA) o coordinación de envío a domicilio para tu tranquilidad.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       Footer Minimalista
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-minimal-inner">
+      <div class="footer-left">
+        <img src="assets/images/logo-web.png" alt="LABRA" class="footer-brand-logo">
+        <p class="footer-desc">
+          Pastelería artesanal en Caballito, Buenos Aires.
+        </p>
+      </div>
+
+      <div class="footer-right">
+        <a href="https://wa.me/5491173718584" target="_blank" rel="noopener" class="footer-link">
+          <svg class="footer-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.676.15-.2.301-.776.98-1.002 1.23-.226.25-.452.276-.753.125-.301-.15-1.272-.469-2.424-1.498-.897-.8-1.503-1.789-1.68-2.09-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.175.2-.301.301-.501.1-.2.05-.376-.025-.526-.075-.15-.677-1.631-.928-2.235-.245-.589-.494-.509-.677-.518-.175-.008-.376-.01-.577-.01-.2 0-.527.075-.803.376s-1.054 1.03-1.054 2.511 1.079 2.912 1.23 3.113c.15.2 2.124 3.243 5.144 4.549.718.31 1.279.496 1.716.634.721.23 1.378.197 1.898.12.58-.087 1.78-.727 2.03-1.43.25-.702.25-1.303.175-1.43-.075-.126-.275-.201-.576-.351zM12.004 2C6.48 2 2 6.48 2 12c0 1.84.5 3.565 1.372 5.044L2.05 22l5.12-1.342A9.957 9.957 0 0 0 12.004 22c5.523 0 10.004-4.48 10.004-10s-4.481-10-10.004-10zm0 18.257c-1.606 0-3.1-.476-4.364-1.3l-.313-.205-3.057.802.816-2.98-.225-.327a8.21 8.21 0 0 1-1.36-4.447c0-4.557 3.708-8.265 8.265-8.265 4.557 0 8.265 3.708 8.265 8.265 0 4.558-3.708 8.266-8.265 8.266z"/></svg>
+          <span>WhatsApp: 11 7371 8584</span>
+        </a>
+        <a href="https://instagram.com/labrapasteleria" target="_blank" rel="noopener" class="footer-link">
+          <svg class="footer-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.166.052 1.802.237 2.226.402.556.216.953.475 1.368.89.414.415.674.812.89 1.368.164.424.35 1.06.402 2.226.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.052 1.166-.237 1.802-.402 2.226-.216.556-.475.953-.89 1.368-.415.414-.812.674-1.368.89-.424.164-1.06.35-2.226.402-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.166-.052-1.802-.237-2.226-.402-.556-.216-.953-.475-1.368-.89-.414-.415-.674-.812-.89-1.368-.164-.424-.35-1.06-.402-2.226-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.052-1.166.237-1.802.402-2.226.216-.556.475-.953.89-1.368.415-.414.812-.674 1.368-.89.424-.164 1.06-.35 2.226-.402 1.266-.058 1.646-.07 4.85-.07zM12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.015 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.789.717 1.459 1.384 2.126s1.338 1.078 2.126 1.384c.766.297 1.636.499 2.913.558C8.333 23.985 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.261 2.913-.558.789-.306 1.459-.717 2.126-1.384s1.078-1.338 1.384-2.126c.297-.766.499-1.636.558-2.913.057-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.261-2.148-.558-2.913-.306-.789-.717-1.459-1.384-2.126S17.15.935 16.36.63c-.766-.297-1.636-.499-2.913-.558C13.667.015 13.26 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>
+          <span>Instagram: @labrapasteleria</span>
+        </a>
+        <a href="https://www.google.com/maps/place/Labra+Pasteleria/@-34.6166382,-58.4550514,15z/data=!4m6!3m5!1s0xabc00bbd0a59c733:0xdda0d5d54fcad09f!8m2!3d-34.6166562!4d-58.4447302!16s%2Fg%2F11mzwlhvkn!5m1!1e4?entry=ttu" target="_blank" rel="noopener" class="footer-link">
+          <svg class="footer-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Google Maps: Labra Pastelería (5.0 ★)</span>
+        </a>
+        <span class="footer-copy">© 2026 LABRA · Pastelería en Caballito · Todos los derechos reservados</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal / Dialog de Vista Cliente (para ver la propuesta en grande) -->
+  <dialog id="client-proposal-modal" class="client-proposal-dialog" aria-labelledby="client-proposal-title">
+    <div class="client-proposal-card">
+      <div class="client-proposal-topbar">
+        <div class="client-proposal-brand">
+          <img src="assets/images/logo-web.png" alt="LABRA Pastelería" class="client-proposal-logo">
+          <span class="client-proposal-brand-sub">PASTELERÍA ARTESANAL · CABALLITO</span>
+        </div>
+        <button type="button" class="client-proposal-close" id="client-proposal-close-btn" aria-label="Cerrar propuesta y ver el simulador">
+          <span>Cerrar</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="client-proposal-body" id="client-proposal-body">
+        <!-- Contenido renderizado dinámicamente desde app.js -->
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
