@@ -59,6 +59,17 @@
       <image:caption>Tarta de queso horneada estilo vasco, sin harinas refinadas ni azúcar agregada, con frutos rojos.</image:caption>
     </image:image>
 
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/torta-number-cake-5.jpg</image:loc>
+      <image:title>Number Cake Personalizada en Caballito · LABRA</image:title>
+      <image:caption>Number Cake artesanal con doble masa sablée de almendras, dulce de leche, crema y frutas de estación.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.labra.com.ar/assets/images/products/torta-number-cake-0.jpg</image:loc>
+      <image:title>Number Cake Personalizada (Número 0) · LABRA</image:title>
+      <image:caption>Torta de números para celebraciones con masa sablée de almendras y frutas frescas.</image:caption>
+    </image:image>
+
     <!-- Vasitos y Petit Four para Eventos / Mesas Dulces -->
     <image:image>
       <image:loc>https://www.labra.com.ar/assets/images/products/vasito-chocotorta-solo.jpg</image:loc>
@@ -85,5 +96,11 @@
       <image:title>Caja de Petit Four x 25 Bocados · LABRA Pastelería Caballito</image:title>
       <image:caption>Surtido de bocados finos: Mini Rogel, Mini Sablée de almendras con arándanos y Mini Brownie.</image:caption>
     </image:image>
+  </url>
+  <url>
+    <loc>https://www.labra.com.ar/mesa-dulce.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset>
