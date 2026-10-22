@@ -377,6 +377,27 @@ function trackAnalyticsEvent(eventName, params = {}) {
   }
 }
 
+// ==========================================================================
+// Módulo de Ciberseguridad & Sanitización (SecDevOps)
+// ==========================================================================
+function escapeHtml(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function sanitizeText(str, maxLen = 100) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/[\u0000-\u001F\u007F-\u009F]/g, '')
+    .trim()
+    .slice(0, maxLen);
+}
+
 // Estado de la aplicación
 const state = {
   cart: [], // Lista de items para armar pedido: [{ id, product, qty }]
@@ -401,10 +422,11 @@ document.addEventListener('DOMContentLoaded', () => {
   checkSharedProposalUrlOnLoad();
 });
 
-// Guardar / Cargar pedido en localStorage
+// Guardar / Cargar pedido en localStorage con validación e integridad de datos
 function saveCart() {
   try {
-    localStorage.setItem('labra_order_cart', JSON.stringify(state.cart));
+    const minimalCart = state.cart.map(i => ({ id: i.id, qty: i.qty }));
+    localStorage.setItem('labra_order_cart', JSON.stringify(minimalCart));
   } catch (e) {
     console.warn('Storage not available', e);
   }
@@ -414,11 +436,28 @@ function loadSavedCart() {
   try {
     const saved = localStorage.getItem('labra_order_cart');
     if (saved) {
-      state.cart = JSON.parse(saved);
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        state.cart = parsed
+          .map(item => {
+            if (!item || typeof item !== 'object') return null;
+            const validProd = PRODUCTS.find(p => p.id === item.id);
+            if (!validProd) return null;
+            const safeQty = Math.max(1, Math.min(99, parseInt(item.qty, 10) || 1));
+            return {
+              id: validProd.id,
+              product: validProd,
+              qty: safeQty
+            };
+          })
+          .filter(Boolean);
+        return;
+      }
     }
   } catch (e) {
-    state.cart = [];
+    console.warn('Storage validation fallback', e);
   }
+  state.cart = [];
 }
 
 // Configurar fecha mínima de pedido (hoy + 2 días = 48 hs de anticipación)
@@ -560,7 +599,7 @@ function initEventListeners() {
       });
 
       const url = buildWhatsAppUrl();
-      window.open(url, '_blank');
+      window.open(url, '_blank', 'noopener,noreferrer');
     });
   }
 
@@ -1309,7 +1348,7 @@ function orderSingleProductDirectly(productId, flavorName = null) {
   ].join('\n');
 
   const url = `https://wa.me/${LABRA_CONFIG.phone}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 // Toast flotante
@@ -1322,7 +1361,8 @@ function showToast(text) {
     document.body.appendChild(toast);
   }
 
-  toast.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>${text}</span>`;
+  const safeText = escapeHtml(text);
+  toast.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span>${safeText}</span>`;
   toast.classList.add('show');
 
   setTimeout(() => {
@@ -2242,7 +2282,7 @@ function renderSimulatorProposals() {
         </div>
 
         <div class="sim-card-actions">
-          <a href="${waUrl}" target="_blank" rel="noopener" class="btn-sim-whatsapp ${isEmpty ? 'is-disabled' : ''}" onclick="trackSimulatorWhatsApp('${tierKey}', ${totalPrice})">
+          <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn-sim-whatsapp ${isEmpty ? 'is-disabled' : ''}" onclick="trackSimulatorWhatsApp('${tierKey}', ${totalPrice})">
             <svg viewBox="0 0 24 24" width="19" height="19"><path fill="currentColor" d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.676.15-.2.301-.776.98-1.002 1.23-.226.25-.452.276-.753.125-.301-.15-1.272-.469-2.424-1.498-.897-.8-1.503-1.789-1.68-2.09-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.175.2-.301.301-.501.1-.2.05-.376-.025-.526-.075-.15-.677-1.631-.928-2.235-.245-.589-.494-.509-.677-.518-.175-.008-.376-.01-.577-.01-.2 0-.527.075-.803.376s-1.054 1.03-1.054 2.511 1.079 2.912 1.23 3.113c.15.2 2.124 3.243 5.144 4.549.718.31 1.279.496 1.716.634.721.23 1.378.197 1.898.12.58-.087 1.78-.727 2.03-1.43.25-.702.25-1.303.175-1.43-.075-.126-.275-.201-.576-.351zM12.004 2C6.48 2 2 6.48 2 12c0 1.84.5 3.565 1.372 5.044L2.05 22l5.12-1.342A9.957 9.957 0 0 0 12.004 22c5.523 0 10.004-4.48 10.004-10s-4.481-10-10.004-10zm0 18.257c-1.606 0-3.1-.476-4.364-1.3l-.313-.205-3.057.802.816-2.98-.225-.327a8.21 8.21 0 0 1-1.36-4.447c0-4.557 3.708-8.265 8.265-8.265 4.557 0 8.265 3.708 8.265 8.265 0 4.558-3.708 8.266-8.265 8.266z"/></svg>
             <span>Enviar pedido por WhatsApp</span>
           </a>
@@ -2581,7 +2621,7 @@ function renderClientProposalView(proposalData) {
       </div>
     </div>
 
-    <a href="${confirmWaUrl}" target="_blank" rel="noopener" class="cp-cta-whatsapp">
+    <a href="${confirmWaUrl}" target="_blank" rel="noopener noreferrer" class="cp-cta-whatsapp">
       <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.676.15-.2.301-.776.98-1.002 1.23-.226.25-.452.276-.753.125-.301-.15-1.272-.469-2.424-1.498-.897-.8-1.503-1.789-1.68-2.09-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.175.2-.301.301-.501.1-.2.05-.376-.025-.526-.075-.15-.677-1.631-.928-2.235-.245-.589-.494-.509-.677-.518-.175-.008-.376-.01-.577-.01-.2 0-.527.075-.803.376s-1.054 1.03-1.054 2.511 1.079 2.912 1.23 3.113c.15.2 2.124 3.243 5.144 4.549.718.31 1.279.496 1.716.634.721.23 1.378.197 1.898.12.58-.087 1.78-.727 2.03-1.43.25-.702.25-1.303.175-1.43-.075-.126-.275-.201-.576-.351zM12.004 2C6.48 2 2 6.48 2 12c0 1.84.5 3.565 1.372 5.044L2.05 22l5.12-1.342A9.957 9.957 0 0 0 12.004 22c5.523 0 10.004-4.48 10.004-10s-4.481-10-10.004-10zm0 18.257c-1.606 0-3.1-.476-4.364-1.3l-.313-.205-3.057.802.816-2.98-.225-.327a8.21 8.21 0 0 1-1.36-4.447c0-4.557 3.708-8.265 8.265-8.265 4.557 0 8.265 3.708 8.265 8.265 0 4.558-3.708 8.266-8.265 8.266z"/></svg>
       <span>Confirmar esta propuesta por WhatsApp</span>
     </a>
@@ -2627,7 +2667,7 @@ function checkSharedProposalUrlOnLoad() {
   const tortas = Math.max(0, Math.min(50, parseInt(params.get('t'), 10) || 0));
   const shots = Math.max(0, Math.min(50, parseInt(params.get('s'), 10) || 0));
   const petit = Math.max(0, Math.min(50, parseInt(params.get('p'), 10) || 0));
-  const clientName = params.get('cliente') || '';
+  const clientName = sanitizeText(params.get('cliente') || '', 50);
 
   if (tortas + shots + petit === 0) return;
 
