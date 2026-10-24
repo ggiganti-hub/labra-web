@@ -2618,6 +2618,7 @@ function renderClientProposalView(proposalData) {
         <span>✅ <strong>Reserva:</strong> Se confirma con una seña del 50% (${formatCurrency(depositPrice)}) por transferencia.</span>
         <span>📍 <strong>Entrega:</strong> Retiro por Caballito (CABA) o envío coordinado a domicilio.</span>
         <span>🍰 <strong>Sabores a tu gusto:</strong> Elegís los gustos de las tortas y vasitos al confirmar por WhatsApp.</span>
+        <span style="display:block;margin-top:0.35rem;font-size:0.82rem;color:var(--color-text-muted);">📋 Consulta nuestras <a href="terminos.html" target="_blank" style="color:var(--color-olive-dark);text-decoration:underline;">condiciones de seña, cancelación y retiro</a>.</span>
       </div>
     </div>
 
