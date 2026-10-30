@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.labra.com.ar/</loc>
-    <lastmod>2026-10-03</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     
@@ -99,7 +99,7 @@
   </url>
   <url>
     <loc>https://www.labra.com.ar/mesa-dulce.html</loc>
-    <lastmod>2026-10-23</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>

@@ -25,7 +25,14 @@
   <meta name="description" content="Calculá en segundos la cantidad exacta de tortas, shots y petit fours para tus invitados. Simulador de presupuestos interactivo para cumpleaños, reuniones y eventos en Caballito, CABA.">
   <meta name="keywords" content="mesa dulce caballito, cotizador mesa dulce, catering dulce eventos, tortas artesanales cumpleaños, vasitos dulces shots, petit fours buenos aires">
   <meta name="author" content="LABRA Pastelería">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://www.labra.com.ar/mesa-dulce.html">
+
+  <!-- SEO Local y Georreferenciación (Caballito, Buenos Aires) -->
+  <meta name="geo.region" content="AR-C">
+  <meta name="geo.placename" content="Caballito, Ciudad Autónoma de Buenos Aires">
+  <meta name="geo.position" content="-34.6166562;-58.4447302">
+  <meta name="ICBM" content="-34.6166562, -58.4447302">
 
   <!-- Open Graph / Redes Sociales -->
   <meta property="og:type" content="website">
@@ -61,6 +68,103 @@
 
   <!-- Estilos del Sitio -->
   <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- ======================================================================
+       Datos Estructurados Schema.org (JSON-LD) para Google
+       ====================================================================== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Bakery",
+        "@id": "https://www.labra.com.ar/#bakery",
+        "name": "LABRA Pastelería Artesanal",
+        "url": "https://www.labra.com.ar/",
+        "telephone": "+54-9-11-7371-8584",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Caballito",
+          "addressLocality": "Caballito",
+          "addressRegion": "Ciudad Autónoma de Buenos Aires",
+          "postalCode": "C1405",
+          "addressCountry": "AR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -34.6166562,
+          "longitude": -58.4447302
+        },
+        "hasMap": "https://www.google.com/maps/place/Labra+Pasteleria/@-34.6166382,-58.4550514,15z/data=!4m6!3m5!1s0xabc00bbd0a59c733:0xdda0d5d54fcad09f!8m2!3d-34.6166562!4d-58.4447302!16s%2Fg%2F11mzwlhvkn!5m1!1e4",
+        "sameAs": [
+          "https://instagram.com/labrapasteleria",
+          "https://www.google.com/maps/place/Labra+Pasteleria/@-34.6166382,-58.4550514,15z/data=!4m6!3m5!1s0xabc00bbd0a59c733:0xdda0d5d54fcad09f!8m2!3d-34.6166562!4d-58.4447302!16s%2Fg%2F11mzwlhvkn!5m1!1e4"
+        ]
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.labra.com.ar/mesa-dulce.html#service",
+        "name": "Catering y Mesas Dulces para Eventos en Caballito",
+        "provider": {
+          "@id": "https://www.labra.com.ar/#bakery"
+        },
+        "serviceType": "Pastelería para Eventos y Mesas Dulces",
+        "areaServed": {
+          "@type": "AdministrativeArea",
+          "name": "Caballito, Ciudad Autónoma de Buenos Aires"
+        },
+        "description": "Servicio de mesa dulce artesanal por encargo para cumpleaños, reuniones y eventos en Caballito. Tortas completas, vasitos individuales (shots) y petit fours frescos."
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.labra.com.ar/mesa-dulce.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Con cuánta anticipación debo reservar una mesa dulce para mi evento?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tomamos pedidos con un mínimo de 48 horas de anticipación. Para fechas de fin de semana o eventos grandes, sugerimos reservar con 1 a 2 semanas de anticipación para garantizar disponibilidad de calendario."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cómo calculo la cantidad de tortas y vasitos según mis invitados?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nuestro cotizador interactivo calcula automáticamente las porciones ideales. Para reuniones con comida previa se calculan entre 80 g y 100 g de mesa dulce por persona (combinando tortas y vasitos). Si es una merienda o evento dulce exclusivo, recomendamos entre 120 g y 150 g por persona."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cómo se transportan y entregan las tortas y vasitos para fiestas?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Las cajas de vasitos y las tortas se entregan con packaging protector cerrado y refrigerado. Podés retirar personalmente por Caballito o coordinamos el envío por mensajería especializada puerta a puerta en CABA."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Se pueden elegir los sabores de las tortas y los vasitos shots?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí, podés combinar tus variedades preferidas: Rogel, Cheesecake de frutos rojos, Lemon Pie, Chocotorta, Tiramisú, Marquise o Brownie, y surtido de vasitos clásicos y frutales."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cómo se confirma el pedido armado en el simulador?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Al tocar el botón 'Pedir por WhatsApp' se genera automáticamente un resumen detallado con las cantidades y el total estimado. Coordinamos fecha, sabores y seña del 50% por transferencia bancaria."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 
   <style>
     /* Estilos específicos para la página dedicada de Mesa Dulce */
@@ -305,6 +409,110 @@
           </span>
         </div>
 
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Guía Práctica de Catering: Cómo armar tu Mesa Dulce en Caballito
+         ====================================================================== -->
+    <section class="how-to-order-minimal" style="padding-top: 1rem; padding-bottom: 2.5rem;">
+      <div class="container">
+        <div class="minimal-box">
+          <h2 class="minimal-box-title">Guía rápida: Cómo calcular la Mesa Dulce perfecta para tu evento</h2>
+          
+          <div class="minimal-steps-grid">
+            <div class="minimal-step">
+              <div class="minimal-step-num">01</div>
+              <h4>La porción ideal por invitado</h4>
+              <p>En eventos con comida previa se estiman entre 80 g y 100 g de pastelería por persona (1 torta cada 10-12 invitados o 1 a 2 vasitos). Si es té o merienda, calculá entre 120 g y 150 g.</p>
+            </div>
+
+            <div class="minimal-step">
+              <div class="minimal-step-num">02</div>
+              <h4>El mix ideal de sabores</h4>
+              <p>Sugerimos combinar una torta chocolatosa o intensa (Rogel o Marquise) con una opción fresca frutal (Cheesecake o Lemon Pie) y vasitos surtidos que agilizan el servicio.</p>
+            </div>
+
+            <div class="minimal-step">
+              <div class="minimal-step-num">03</div>
+              <h4>Retiro en Caballito o Envío en CABA</h4>
+              <p>Elaboramos todo a mano con 48 hs de antelación. Podés retirar por nuestro punto en Caballito o coordinamos el envío directo en vehículo refrigerado hasta tu salón o domicilio.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Preguntas Frecuentes sobre Mesas Dulces y Eventos
+         ====================================================================== -->
+    <section class="faq-section" id="faq" style="padding-top: 1.5rem; padding-bottom: 4rem;">
+      <div class="container" style="max-width: 780px;">
+        <div class="faq-header">
+          <h2 class="section-title">Preguntas Frecuentes sobre Mesas Dulces</h2>
+        </div>
+
+        <div class="faq-list">
+          <div class="faq-item active">
+            <button type="button" class="faq-question-btn" aria-expanded="true">
+              <span>¿Con cuánta anticipación debo reservar una mesa dulce para mi evento?</span>
+              <span class="faq-icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Elaboramos de manera artesanal y bajo pedido exclusivo. El plazo mínimo es de <strong>48 horas de anticipación</strong>. Para fechas de alta demanda (fines de semana, bautismos, comuniones o cumpleaños grandes) sugerimos confirmar con 1 a 2 semanas de antelación para congelar precio y fecha en calendario.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn" aria-expanded="false">
+              <span>¿Cómo calculo la cantidad de tortas y vasitos según mis invitados?</span>
+              <span class="faq-icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>
+                El simulador interactivo de arriba te ofrece 3 alternativas equilibradas: solo tortas completas, combinación de tortas con vasitos shots, o mesa full vasitos y petits fours. Una regla práctica es prever 1 torta mediana (22 cm) cada 10 a 12 personas, o 1 a 2 vasitos individuales por invitado.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn" aria-expanded="false">
+              <span>¿Cómo se entregan y conservan las tortas y vasitos?</span>
+              <span class="faq-icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Todos los productos se entregan en packaging reforzado con base rígida. Las cajas de vasitos (x 25 unidades) vienen listas para apoyar directamente sobre la mesa dulce sin necesidad de desmoldar ni sumar vajilla. Deben mantenerse refrigerados hasta 15-20 minutos antes de servir.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn" aria-expanded="false">
+              <span>¿Se pueden elegir los sabores de tortas y vasitos?</span>
+              <span class="faq-icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>
+                ¡Sí! Una vez generado el presupuesto estimado en el simulador, al tocar <em>Pedir por WhatsApp</em> nos indicás tus preferencias: Rogel con merengue italiano, Lemon Pie, Cheesecake con frutos rojos, Tiramisú con café de especialidad, Chocotorta o Brownie, más los sabores de vasitos que más le gusten a tus invitados.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question-btn" aria-expanded="false">
+              <span>¿Cómo se abona y confirma el pedido?</span>
+              <span class="faq-icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+            </button>
+            <div class="faq-answer">
+              <p>
+                Para confirmar y reservar la fecha en el taller se solicita una <strong>seña del 50% mediante transferencia bancaria</strong>. El 50% restante se abona contra entrega o previo al despacho de la mensajería.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
