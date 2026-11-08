@@ -820,10 +820,10 @@ button {
 }
 
 .event-promo-subtitle {
-  font-size: 1.04rem;
+  font-size: 1.2rem;
   color: var(--color-text-secondary);
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+  line-height: 1.55;
+  margin-bottom: 1.75rem;
 }
 
 .event-promo-action {
@@ -908,6 +908,8 @@ button {
   }
   .event-promo-subtitle {
     max-width: 52ch;
+    font-size: 1.08rem;
+    margin-bottom: 1.5rem;
   }
 }
 
