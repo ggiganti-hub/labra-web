@@ -724,6 +724,9 @@ button {
   .hero-slide {
     transition: none !important;
   }
+  .fab-whatsapp-bubble.is-tucked {
+    transform: none;
+  }
 }
 
 /* ==========================================================================
@@ -1014,6 +1017,22 @@ button {
 .results-meta {
   font-size: 0.82rem;
   color: var(--color-text-muted);
+}
+
+@media (max-width: 640px) {
+  .search-sort-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .search-box-wrap {
+    max-width: none;
+  }
+
+  .results-meta {
+    padding-left: 0.25rem;
+  }
 }
 
 /* Grilla de Productos Minimalista */
@@ -2811,12 +2830,18 @@ button {
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-md);
-  transition: all var(--transition-fast);
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1), opacity 220ms cubic-bezier(0.23, 1, 0.32, 1), background-color var(--transition-fast);
 }
 
 .fab-whatsapp-bubble:hover {
   transform: scale(1.05);
   background-color: var(--color-whatsapp-hover);
+}
+
+.fab-whatsapp-bubble.is-tucked {
+  opacity: 0;
+  transform: translateY(12px) scale(0.92);
+  pointer-events: none;
 }
 
 .fab-whatsapp-bubble svg {
@@ -2998,6 +3023,7 @@ button {
 }
 
 .mesa-dulce-badge {
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -3297,6 +3323,8 @@ button {
 }
 
 .sim-style-tag {
+  flex-shrink: 0;
+  white-space: nowrap;
   font-size: 0.7rem;
   font-weight: 600;
   padding: 0.15rem 0.55rem;
@@ -3428,6 +3456,8 @@ button {
   font-family: var(--font-serif);
   font-size: 1.4rem;
   font-weight: 700;
+  line-height: 1.2;
+  text-wrap: balance;
   color: var(--color-text-primary);
 }
 
@@ -3448,6 +3478,10 @@ button {
   color: var(--color-text-muted);
   line-height: 1.4;
   margin-bottom: 0.75rem;
+}
+
+.sim-yield-icon {
+  flex-shrink: 0;
 }
 
 .sim-card-yield-pill {
@@ -3472,11 +3506,14 @@ button {
   flex: 1;
 }
 
+/* Foto y texto a todo el ancho, y el selector de cantidad debajo:
+   en las tarjetas angostas el texto quedaba apretado en 4 renglones */
 .sim-item-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.65rem;
+  gap: 0.55rem 0.65rem;
   padding: 0.65rem 0.75rem;
   background: var(--color-bg);
   border: 1px solid var(--color-border);
@@ -3495,7 +3532,7 @@ button {
   align-items: center;
   gap: 0.6rem;
   min-width: 0;
-  flex: 1;
+  flex: 1 1 100%;
 }
 
 .sim-item-thumb {
@@ -3542,28 +3579,36 @@ button {
   border-radius: 8px;
   padding: 0.18rem;
   flex-shrink: 0;
+  margin-left: calc(38px + 0.6rem);
 }
 
 .sim-qty-btn {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   border-radius: 6px;
   border: none;
   background: var(--color-bg);
   color: var(--color-text-primary);
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), color var(--transition-fast), transform 120ms ease-out;
   user-select: none;
+  touch-action: manipulation;
 }
 
-.sim-qty-btn:hover:not(:disabled) {
-  background: var(--color-olive-dark);
-  color: #fff;
+.sim-qty-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sim-qty-btn:hover:not(:disabled) {
+    background: var(--color-olive-dark);
+    color: #fff;
+  }
 }
 
 .sim-qty-btn:disabled {
@@ -3596,6 +3641,7 @@ button {
 }
 
 .sim-price-label {
+  white-space: nowrap;
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -3751,6 +3797,11 @@ button {
   .sim-results-heading {
     font-size: 1.38rem;
   }
+
+  .sim-proposal-card {
+    padding: 1.4rem 1.1rem;
+  }
+
 }
 
 /* ==========================================================================
