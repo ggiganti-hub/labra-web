@@ -465,7 +465,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroSlider();
   initGoogleReviewsSlider();
   initMesaDulceSimulator();
-  checkSharedProposalUrlOnLoad();
 });
 
 // Guardar / Cargar pedido en localStorage con validación e integridad de datos
@@ -695,7 +694,9 @@ function initEventListeners() {
     const href = anchor.getAttribute('href') || '';
 
     if (href.includes('wa.me') || href.includes('api.whatsapp.com')) {
-      if (anchor.id !== 'btn-send-whatsapp-order') {
+      // Los botones que ya registran su propio contacto (con valor) se saltean
+      // para no contarlo dos veces: carrito (#btn-send-whatsapp-order) y cotizador (data-lead-tracked).
+      if (anchor.id !== 'btn-send-whatsapp-order' && !anchor.hasAttribute('data-lead-tracked')) {
         const linkText = anchor.innerText.trim() || 'WhatsApp Flotante';
         trackAnalyticsEvent('generate_lead', {
           lead_type: 'whatsapp_general_contact',
@@ -2001,8 +2002,7 @@ const simState = {
     justo: null,
     clasico: null,
     abundante: null
-  },
-  activeShareProposal: null
+  }
 };
 
 // Calcula las cantidades sugeridas para los 3 niveles basándose en el estándar de oro de catering:
@@ -2328,7 +2328,7 @@ function renderSimulatorProposals() {
         </div>
 
         <div class="sim-card-actions">
-          <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn-sim-whatsapp ${isEmpty ? 'is-disabled' : ''}" onclick="trackSimulatorWhatsApp('${tierKey}', ${totalPrice})">
+          <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn-sim-whatsapp ${isEmpty ? 'is-disabled' : ''}" data-lead-tracked onclick="trackSimulatorWhatsApp('${tierKey}', ${totalPrice})">
             <svg viewBox="0 0 24 24" width="19" height="19"><path fill="currentColor" d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.676.15-.2.301-.776.98-1.002 1.23-.226.25-.452.276-.753.125-.301-.15-1.272-.469-2.424-1.498-.897-.8-1.503-1.789-1.68-2.09-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.175.2-.301.301-.501.1-.2.05-.376-.025-.526-.075-.15-.677-1.631-.928-2.235-.245-.589-.494-.509-.677-.518-.175-.008-.376-.01-.577-.01-.2 0-.527.075-.803.376s-1.054 1.03-1.054 2.511 1.079 2.912 1.23 3.113c.15.2 2.124 3.243 5.144 4.549.718.31 1.279.496 1.716.634.721.23 1.378.197 1.898.12.58-.087 1.78-.727 2.03-1.43.25-.702.25-1.303.175-1.43-.075-.126-.275-.201-.576-.351zM12.004 2C6.48 2 2 6.48 2 12c0 1.84.5 3.565 1.372 5.044L2.05 22l5.12-1.342A9.957 9.957 0 0 0 12.004 22c5.523 0 10.004-4.48 10.004-10s-4.481-10-10.004-10zm0 18.257c-1.606 0-3.1-.476-4.364-1.3l-.313-.205-3.057.802.816-2.98-.225-.327a8.21 8.21 0 0 1-1.36-4.447c0-4.557 3.708-8.265 8.265-8.265 4.557 0 8.265 3.708 8.265 8.265 0 4.558-3.708 8.266-8.265 8.266z"/></svg>
             <span>Enviar pedido por WhatsApp</span>
           </a>
@@ -2467,297 +2467,6 @@ function trackSimulatorWhatsApp(tierKey, totalPrice) {
   });
 }
 
-// ============================================================================
-// GENERADOR Y LECTOR DE PROPUESTA COMPARTIBLE PARA CLIENTES
-// ============================================================================
-
-function buildShareableProposalUrl(proposalData) {
-  let baseUrl;
-  if (!window.location.origin || window.location.origin === 'null' || window.location.protocol === 'file:') {
-    baseUrl = (typeof LABRA_CONFIG !== 'undefined' && LABRA_CONFIG.siteUrl) 
-      ? `${LABRA_CONFIG.siteUrl}/mesa-dulce.html` 
-      : 'https://www.labra.com.ar/mesa-dulce.html';
-  } else {
-    const currentPath = window.location.pathname.replace(/\/index\.html$/, '');
-    if (currentPath.endsWith('mesa-dulce.html') || currentPath.endsWith('mesa-dulce')) {
-      baseUrl = window.location.origin + currentPath;
-    } else {
-      baseUrl = window.location.origin + '/mesa-dulce.html';
-    }
-  }
-
-  const cleanBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-  const params = new URLSearchParams();
-  params.set('propuesta', '1');
-  params.set('inv', String(proposalData.guests));
-  params.set('estilo', proposalData.tierKey);
-  params.set('t', String(proposalData.tortas));
-  params.set('s', String(proposalData.shots));
-  params.set('p', String(proposalData.petit));
-  if (proposalData.clientName && proposalData.clientName.trim() !== '') {
-    params.set('cliente', proposalData.clientName.trim());
-  }
-  return `${cleanBase}?${params.toString()}`;
-}
-
-function openShareProposalModal(tierKey) {
-  const q = getEffectiveTierQuantities(tierKey);
-  const meta = SIM_TIERS_META[tierKey];
-  const totalPrice =
-    (q.tortas * SIM_PRODUCTS_CONFIG.tortas.unitPrice) +
-    (q.shots * SIM_PRODUCTS_CONFIG.shots.unitPrice) +
-    (q.petit * SIM_PRODUCTS_CONFIG.petit.unitPrice);
-
-  simState.activeShareProposal = {
-    tierKey,
-    title: meta.title,
-    guests: simState.guests,
-    tortas: q.tortas,
-    shots: q.shots,
-    petit: q.petit,
-    totalPrice,
-    clientName: ''
-  };
-
-  const modal = document.getElementById('share-proposal-modal');
-  const summaryPill = document.getElementById('share-modal-summary-pill');
-  const clientInput = document.getElementById('share-client-name-input');
-  const urlInput = document.getElementById('share-generated-url');
-
-  if (clientInput) {
-    clientInput.value = '';
-  }
-
-  if (summaryPill) {
-    const parts = [];
-    if (q.tortas > 0) parts.push(`${q.tortas} ${q.tortas === 1 ? 'Torta' : 'Tortas'}`);
-    if (q.shots > 0) parts.push(`${q.shots} ${q.shots === 1 ? 'Caja Shots x25' : 'Cajas Shots x25'}`);
-    if (q.petit > 0) parts.push(`${q.petit} ${q.petit === 1 ? 'Caja Petit Fours x25' : 'Cajas Petit Fours x25'}`);
-
-    summaryPill.innerHTML = `
-      <strong>${meta.title} (${simState.guests} invitados)</strong><br>
-      Incluye: ${parts.join(' + ')} · <strong>Total: ${formatCurrency(totalPrice)}</strong>
-    `;
-  }
-
-  if (urlInput) {
-    urlInput.value = buildShareableProposalUrl(simState.activeShareProposal);
-  }
-
-  if (modal && typeof modal.showModal === 'function') {
-    modal.showModal();
-  }
-}
-
-function renderClientProposalView(proposalData) {
-  const bodyEl = document.getElementById('client-proposal-body');
-  if (!bodyEl) return;
-
-  const meta = SIM_TIERS_META[proposalData.tierKey] || SIM_TIERS_META.clasico;
-  const totalPrice =
-    (proposalData.tortas * SIM_PRODUCTS_CONFIG.tortas.unitPrice) +
-    (proposalData.shots * SIM_PRODUCTS_CONFIG.shots.unitPrice) +
-    (proposalData.petit * SIM_PRODUCTS_CONFIG.petit.unitPrice);
-  const depositPrice = Math.round(totalPrice / 2);
-
-  const greetingText = proposalData.clientName
-    ? `Propuesta preparada para ${escapeHtml(proposalData.clientName)}`
-    : `Presupuesto de Mesa Dulce · LABRA`;
-
-  const itemsCards = [];
-
-  if (proposalData.tortas > 0) {
-    const cfg = SIM_PRODUCTS_CONFIG.tortas;
-    const minS = proposalData.tortas * 12;
-    const maxS = proposalData.tortas * 16;
-    itemsCards.push(`
-      <div class="cp-item-card">
-        <img src="${cfg.image}" alt="${cfg.name}" class="cp-item-img">
-        <div class="cp-item-content">
-          <div class="cp-item-qty-title">${proposalData.tortas} ${proposalData.tortas === 1 ? cfg.singularLabel : cfg.pluralLabel}</div>
-          <div class="cp-item-desc">
-            <strong>Rinde ${minS} a ${maxS} porciones en total.</strong><br>
-            ${cfg.clientDescription}
-          </div>
-        </div>
-        <div class="cp-item-subtotal">${formatCurrency(proposalData.tortas * cfg.unitPrice)}</div>
-      </div>
-    `);
-  }
-
-  if (proposalData.shots > 0) {
-    const cfg = SIM_PRODUCTS_CONFIG.shots;
-    const units = proposalData.shots * 25;
-    itemsCards.push(`
-      <div class="cp-item-card">
-        <img src="${cfg.image}" alt="${cfg.name}" class="cp-item-img">
-        <div class="cp-item-content">
-          <div class="cp-item-qty-title">${proposalData.shots} ${proposalData.shots === 1 ? cfg.singularLabel : cfg.pluralLabel}</div>
-          <div class="cp-item-desc">
-            <strong>Son ${units} vasitos individuales en total.</strong><br>
-            ${cfg.clientDescription}
-          </div>
-        </div>
-        <div class="cp-item-subtotal">${formatCurrency(proposalData.shots * cfg.unitPrice)}</div>
-      </div>
-    `);
-  }
-
-  if (proposalData.petit > 0) {
-    const cfg = SIM_PRODUCTS_CONFIG.petit;
-    const units = proposalData.petit * 25;
-    itemsCards.push(`
-      <div class="cp-item-card">
-        <img src="${cfg.image}" alt="${cfg.name}" class="cp-item-img">
-        <div class="cp-item-content">
-          <div class="cp-item-qty-title">${proposalData.petit} ${proposalData.petit === 1 ? cfg.singularLabel : cfg.pluralLabel}</div>
-          <div class="cp-item-desc">
-            <strong>Son ${units} bocados dulces en total.</strong><br>
-            ${cfg.clientDescription}
-          </div>
-        </div>
-        <div class="cp-item-subtotal">${formatCurrency(proposalData.petit * cfg.unitPrice)}</div>
-      </div>
-    `);
-  }
-
-  // Construir link de WhatsApp de confirmación para el cliente
-  const waLines = [
-    `¡Hola LABRA! 👋 Vi la propuesta de Mesa Dulce que me armaron para *${proposalData.guests} invitados* (${meta.title}):`,
-    ``
-  ];
-  if (proposalData.tortas > 0) {
-    waLines.push(`• ${proposalData.tortas}x ${proposalData.tortas === 1 ? 'Torta Artesanal Grande' : 'Tortas Artesanales Grandes'} (${proposalData.tortas * 12}-${proposalData.tortas * 16} porciones)`);
-  }
-  if (proposalData.shots > 0) {
-    waLines.push(`• ${proposalData.shots}x ${proposalData.shots === 1 ? 'Caja de 25 Shots / Vasitos' : 'Cajas de 25 Shots / Vasitos'} (${proposalData.shots * 25} u.)`);
-  }
-  if (proposalData.petit > 0) {
-    waLines.push(`• ${proposalData.petit}x ${proposalData.petit === 1 ? 'Caja de 25 Petit Fours' : 'Cajas de 25 Petit Fours'} (${proposalData.petit * 25} u.)`);
-  }
-  waLines.push(``);
-  waLines.push(`💰 *Total del presupuesto:* ${formatCurrency(totalPrice)}`);
-  waLines.push(`Quiero avanzar con el pedido y elegir los sabores. ¡Gracias!`);
-
-  const confirmWaUrl = buildWhatsAppLink(waLines.join('\n'));
-
-  bodyEl.innerHTML = `
-    <span class="cp-greeting-badge">✨ ${greetingText}</span>
-    <h2 class="cp-main-title" id="client-proposal-title">
-      Propuesta para ${proposalData.guests} invitados · ${meta.title}
-    </h2>
-    <p class="cp-intro-text">
-      Armamos esta combinación pensada para que en tu evento de <strong>${proposalData.guests} personas</strong> todos disfruten de nuestra pastelería recién horneada.
-    </p>
-
-    <div class="cp-items-title">¿Qué incluye esta propuesta?</div>
-    <div class="cp-items-list">
-      ${itemsCards.join('')}
-    </div>
-
-    <div class="cp-total-box">
-      <div class="cp-total-row">
-        <span class="cp-total-label">Total del Presupuesto</span>
-        <span class="cp-total-amount">${formatCurrency(totalPrice)}</span>
-      </div>
-      <div class="cp-total-details">
-        <span>✅ <strong>Reserva:</strong> Se confirma con una seña del 50% (${formatCurrency(depositPrice)}) por transferencia.</span>
-        <span>📍 <strong>Entrega:</strong> Retiro por Caballito (CABA) o envío coordinado a domicilio.</span>
-        <span>🍰 <strong>Sabores a tu gusto:</strong> Elegís los gustos de las tortas y vasitos al confirmar por WhatsApp.</span>
-        <span style="display:block;margin-top:0.35rem;font-size:0.82rem;color:var(--color-text-muted);">📋 Consulta nuestras <a href="terminos.html" target="_blank" style="color:var(--color-olive-dark);text-decoration:underline;">condiciones de seña, cancelación y retiro</a>.</span>
-      </div>
-    </div>
-
-    <a href="${confirmWaUrl}" target="_blank" rel="noopener noreferrer" class="cp-cta-whatsapp">
-      <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.476-.15-.676.15-.2.301-.776.98-1.002 1.23-.226.25-.452.276-.753.125-.301-.15-1.272-.469-2.424-1.498-.897-.8-1.503-1.789-1.68-2.09-.176-.301-.019-.464.132-.614.136-.135.301-.351.452-.527.15-.175.2-.301.301-.501.1-.2.05-.376-.025-.526-.075-.15-.677-1.631-.928-2.235-.245-.589-.494-.509-.677-.518-.175-.008-.376-.01-.577-.01-.2 0-.527.075-.803.376s-1.054 1.03-1.054 2.511 1.079 2.912 1.23 3.113c.15.2 2.124 3.243 5.144 4.549.718.31 1.279.496 1.716.634.721.23 1.378.197 1.898.12.58-.087 1.78-.727 2.03-1.43.25-.702.25-1.303.175-1.43-.075-.126-.275-.201-.576-.351zM12.004 2C6.48 2 2 6.48 2 12c0 1.84.5 3.565 1.372 5.044L2.05 22l5.12-1.342A9.957 9.957 0 0 0 12.004 22c5.523 0 10.004-4.48 10.004-10s-4.481-10-10.004-10zm0 18.257c-1.606 0-3.1-.476-4.364-1.3l-.313-.205-3.057.802.816-2.98-.225-.327a8.21 8.21 0 0 1-1.36-4.447c0-4.557 3.708-8.265 8.265-8.265 4.557 0 8.265 3.708 8.265 8.265 0 4.558-3.708 8.266-8.265 8.266z"/></svg>
-      <span>Confirmar esta propuesta por WhatsApp</span>
-    </a>
-
-    <button type="button" class="cp-secondary-btn" onclick="closeClientProposalAndGoToSimulator()">
-      Quiero modificar cantidades o ver otras opciones
-    </button>
-  `;
-}
-
-function closeClientProposalAndGoToSimulator() {
-  const clientModal = document.getElementById('client-proposal-modal');
-  if (clientModal && clientModal.open) {
-    clientModal.close();
-  }
-  const section = document.getElementById('mesa-dulce');
-  if (section) {
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-
-function checkSharedProposalUrlOnLoad() {
-  let searchStr = window.location.search;
-  if (!searchStr && window.location.hash.includes('?')) {
-    searchStr = window.location.hash.substring(window.location.hash.indexOf('?'));
-  } else if (!searchStr && window.location.hash.includes('propuesta=')) {
-    searchStr = '?' + window.location.hash.replace(/^#/, '');
-  }
-
-  const params = new URLSearchParams(searchStr);
-  if (params.get('propuesta') !== '1') return;
-
-  const clientModal = document.getElementById('client-proposal-modal');
-  // Si abrieron el link en la portada (index.html), redirigir fluidamente a mesa-dulce.html
-  if (!clientModal && !window.location.pathname.includes('mesa-dulce')) {
-    window.location.replace('mesa-dulce.html' + window.location.search + window.location.hash);
-    return;
-  }
-
-  const guests = Math.max(1, Math.min(500, parseInt(params.get('inv'), 10) || 30));
-  const rawTier = params.get('estilo') || 'clasico';
-  const tierKey = ['justo', 'clasico', 'abundante'].includes(rawTier) ? rawTier : 'clasico';
-  const tortas = Math.max(0, Math.min(50, parseInt(params.get('t'), 10) || 0));
-  const shots = Math.max(0, Math.min(50, parseInt(params.get('s'), 10) || 0));
-  const petit = Math.max(0, Math.min(50, parseInt(params.get('p'), 10) || 0));
-  const clientName = sanitizeText(params.get('cliente') || '', 50);
-
-  if (tortas + shots + petit === 0) return;
-
-  // Sincronizar también el simulador de fondo con los datos del link
-  simState.guests = guests;
-  simState.activeStyle = tierKey;
-  simState.selectedProducts = {
-    tortas: tortas > 0,
-    shots: shots > 0,
-    petit: petit > 0
-  };
-  simState.overrides[tierKey] = { tortas, shots, petit };
-
-  const guestsInput = document.getElementById('sim-guests-input');
-  if (guestsInput) guestsInput.value = guests;
-
-  renderSimulatorProposals();
-
-  const proposalData = {
-    tierKey,
-    guests,
-    tortas,
-    shots,
-    petit,
-    clientName
-  };
-
-  renderClientProposalView(proposalData);
-  if (clientModal) {
-    setTimeout(() => {
-      try {
-        if (typeof clientModal.showModal === 'function') {
-          if (!clientModal.open) clientModal.showModal();
-        } else {
-          clientModal.setAttribute('open', '');
-        }
-      } catch (err) {
-        clientModal.setAttribute('open', '');
-      }
-    }, 60);
-  }
-}
-
 function initMesaDulceSimulator() {
   const guestsInput = document.getElementById('sim-guests-input');
   const minusBtn = document.getElementById('sim-guests-minus');
@@ -2868,97 +2577,6 @@ function initMesaDulceSimulator() {
     });
   });
 
-  // Eventos de los modales de Compartir Propuesta y Vista Cliente
-  const shareModal = document.getElementById('share-proposal-modal');
-  const shareCloseBtn = document.getElementById('share-modal-close-btn');
-  const shareClientInput = document.getElementById('share-client-name-input');
-  const shareUrlInput = document.getElementById('share-generated-url');
-  const copyUrlBtn = document.getElementById('btn-copy-proposal-url');
-  const copyWaTextBtn = document.getElementById('btn-copy-whatsapp-text');
-  const previewClientBtn = document.getElementById('btn-preview-client-view');
-
-  if (shareCloseBtn && shareModal) {
-    shareCloseBtn.addEventListener('click', () => shareModal.close());
-    shareModal.addEventListener('click', (e) => {
-      if (e.target === shareModal) shareModal.close();
-    });
-  }
-
-  if (shareClientInput && shareUrlInput) {
-    shareClientInput.addEventListener('input', (e) => {
-      if (!simState.activeShareProposal) return;
-      simState.activeShareProposal.clientName = e.target.value;
-      shareUrlInput.value = buildShareableProposalUrl(simState.activeShareProposal);
-    });
-  }
-
-  if (copyUrlBtn && shareUrlInput) {
-    copyUrlBtn.addEventListener('click', () => {
-      const urlToCopy = shareUrlInput.value;
-      navigator.clipboard.writeText(urlToCopy).then(() => {
-        showToast('¡Link de propuesta copiado al portapapeles!');
-        copyUrlBtn.textContent = '¡Copiado! ✓';
-        setTimeout(() => { copyUrlBtn.textContent = 'Copiar Link'; }, 2200);
-      }).catch(() => {
-        shareUrlInput.select();
-        document.execCommand('copy');
-        showToast('¡Link copiado!');
-      });
-    });
-  }
-
-  if (copyWaTextBtn && shareUrlInput) {
-    copyWaTextBtn.addEventListener('click', () => {
-      if (!simState.activeShareProposal) return;
-      const p = simState.activeShareProposal;
-      const url = shareUrlInput.value;
-      const saludo = p.clientName ? `¡Hola ${p.clientName}!` : `¡Hola!`;
-
-      const details = [];
-      if (p.tortas > 0) details.push(`• ${p.tortas} ${p.tortas === 1 ? 'Torta grande (12-16 porc.)' : 'Tortas grandes (' + (p.tortas * 12) + '-' + (p.tortas * 16) + ' porc.)'}`);
-      if (p.shots > 0) details.push(`• ${p.shots} ${p.shots === 1 ? 'Caja de 25 Shots dulces' : 'Cajas de 25 Shots dulces'} (${p.shots * 25} u.)`);
-      if (p.petit > 0) details.push(`• ${p.petit} ${p.petit === 1 ? 'Caja de 25 Petit Fours' : 'Cajas de 25 Petit Fours'} (${p.petit * 25} u.)`);
-
-      const msg = [
-        `${saludo} 😊 Te armé esta propuesta de Mesa Dulce de *LABRA Pastelería* para *${p.guests} invitados* (${p.title}):`,
-        ``,
-        ...details,
-        ``,
-        `💰 *Total:* ${formatCurrency(p.totalPrice)}`,
-        ``,
-        `👉 Tocá este link para ver el presupuesto completo con fotos y detalles de forma súper clara:`,
-        url
-      ].join('\n');
-
-      navigator.clipboard.writeText(msg).then(() => {
-        showToast('¡Mensaje + Link copiado! Ya podés pegarlo en el WhatsApp del cliente');
-      }).catch(() => {
-        showToast('Copiá el link de arriba para enviarlo');
-      });
-    });
-  }
-
-  if (previewClientBtn) {
-    previewClientBtn.addEventListener('click', () => {
-      if (!simState.activeShareProposal) return;
-      if (shareModal && shareModal.open) shareModal.close();
-      renderClientProposalView(simState.activeShareProposal);
-      const clientModal = document.getElementById('client-proposal-modal');
-      if (clientModal && typeof clientModal.showModal === 'function') {
-        clientModal.showModal();
-      }
-    });
-  }
-
-  const clientModal = document.getElementById('client-proposal-modal');
-  const clientCloseBtn = document.getElementById('client-proposal-close-btn');
-  if (clientCloseBtn && clientModal) {
-    clientCloseBtn.addEventListener('click', () => clientModal.close());
-    clientModal.addEventListener('click', (e) => {
-      if (e.target === clientModal) clientModal.close();
-    });
-  }
-
   // Render inicial de las 3 propuestas
   renderSimulatorProposals();
 }
@@ -2977,7 +2595,5 @@ window.toggleReviewExpand = toggleReviewExpand;
 window.adjustProposalQty = adjustProposalQty;
 window.resetSingleTierOverride = resetSingleTierOverride;
 window.resetAllSimulatorOverrides = resetAllSimulatorOverrides;
-window.openShareProposalModal = openShareProposalModal;
-window.closeClientProposalAndGoToSimulator = closeClientProposalAndGoToSimulator;
 window.trackSimulatorWhatsApp = trackSimulatorWhatsApp;
 window.copyProposalTextToClipboard = copyProposalTextToClipboard;
