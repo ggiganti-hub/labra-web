@@ -3432,6 +3432,8 @@ button {
 }
 
 .sim-card-badge {
+  flex-shrink: 0;
+  white-space: nowrap;
   font-size: 0.72rem;
   font-weight: 600;
   padding: 0.2rem 0.6rem;
