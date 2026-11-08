@@ -465,7 +465,24 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroSlider();
   initGoogleReviewsSlider();
   initMesaDulceSimulator();
+  initFloatingWhatsAppAutoHide();
 });
+
+// En el celular, el botón flotante de WhatsApp tapaba el "+ Sumar" de las tarjetas.
+// Mientras el catálogo está en pantalla se oculta: cada tarjeta ya tiene su propio botón de WhatsApp.
+function initFloatingWhatsAppAutoHide() {
+  const fab = document.querySelector('.fab-whatsapp-bubble');
+  const grid = document.getElementById('products-grid');
+  if (!fab || !grid || !('IntersectionObserver' in window)) return;
+  const mobile = window.matchMedia('(max-width: 768px)');
+  let gridVisible = false;
+  const apply = () => fab.classList.toggle('is-tucked', mobile.matches && gridVisible);
+  new IntersectionObserver((entries) => {
+    gridVisible = entries[0].isIntersecting;
+    apply();
+  }, { rootMargin: '-25% 0px -25% 0px' }).observe(grid);
+  if (mobile.addEventListener) mobile.addEventListener('change', apply);
+}
 
 // Guardar / Cargar pedido en localStorage con validación e integridad de datos
 function saveCart() {
@@ -1266,7 +1283,7 @@ function renderOrderDrawer() {
       <div class="drawer-item">
         <img src="${item.product.image}" alt="${item.product.name}" class="drawer-item-img">
         <div class="drawer-item-info">
-          <h5>${item.product.name}</h5>
+          <h4>${item.product.name}</h4>
           <div class="drawer-item-price">${item.product.priceDisplay} c/u</div>
         </div>
         <div class="drawer-item-controls">
@@ -2293,16 +2310,17 @@ function renderSimulatorProposals() {
 
     return `
       <article class="sim-proposal-card ${isSelected ? 'is-selected' : ''}" data-tier="${tierKey}">
-        ${isSelected ? `<div class="sim-card-ribbon">★ Tu Estilo Seleccionado</div>` : ''}
+        ${isSelected ? `<div class="sim-card-ribbon">Tu estilo seleccionado</div>` : ''}
         
         <div class="sim-card-header">
           <div class="sim-card-top-row">
-            <h4 class="sim-card-title">${meta.title}</h4>
+            <h3 class="sim-card-title">${meta.title}</h3>
             <span class="sim-card-badge">${meta.badge}</span>
           </div>
           <p class="sim-card-subtitle">${meta.subtitle}</p>
           <div class="sim-card-yield-pill">
-            <span>🍽️ ${yieldText}</span>
+            <svg class="sim-yield-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>
+            <span>${yieldText}</span>
           </div>
         </div>
 
