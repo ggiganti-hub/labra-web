@@ -375,6 +375,45 @@ function trackAnalyticsEvent(eventName, params = {}) {
   } catch (err) {
     console.debug('Analytics dispatch error:', err);
   }
+  trackMetaPixelEvent(eventName, params);
+}
+
+// ==========================================================================
+// Integración Meta Pixel (traduce los eventos de GA4 a eventos estándar de Meta)
+// ==========================================================================
+const META_EVENT_MAP = {
+  view_item: 'ViewContent',
+  add_to_cart: 'AddToCart',
+  generate_lead: 'Contact' // toda consulta o pedido enviado por WhatsApp
+};
+
+function trackMetaPixelEvent(eventName, params = {}) {
+  const metaEvent = META_EVENT_MAP[eventName];
+  if (!metaEvent) return;
+  try {
+    if (typeof window.fbq !== 'function') return;
+    const data = {};
+    if (typeof params.value === 'number' && params.value > 0) {
+      data.value = params.value;
+      data.currency = params.currency || 'ARS';
+    }
+    const items = Array.isArray(params.items) ? params.items : [];
+    const ids = items.map(i => i.item_id).filter(Boolean);
+    if (!ids.length && params.item_id) ids.push(params.item_id);
+    if (ids.length) {
+      data.content_ids = ids.map(String);
+      data.content_type = 'product';
+    }
+    const name = (items[0] && items[0].item_name) || params.item_name;
+    if (name) data.content_name = name;
+    if (items[0] && items[0].item_category) data.content_category = items[0].item_category;
+    if (params.lead_type) data.lead_type = params.lead_type;
+    // eventID único: permite que Meta no duplique si más adelante se suma la API de Conversiones propia
+    const eventID = `${metaEvent}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    window.fbq('track', metaEvent, data, { eventID });
+  } catch (err) {
+    console.debug('Meta Pixel dispatch error:', err);
+  }
 }
 
 // ==========================================================================
