@@ -1283,7 +1283,7 @@ function renderOrderDrawer() {
       <div class="drawer-item">
         <img src="${item.product.image}" alt="${item.product.name}" class="drawer-item-img">
         <div class="drawer-item-info">
-          <h5>${item.product.name}</h5>
+          <h4>${item.product.name}</h4>
           <div class="drawer-item-price">${item.product.priceDisplay} c/u</div>
         </div>
         <div class="drawer-item-controls">
@@ -2314,7 +2314,7 @@ function renderSimulatorProposals() {
         
         <div class="sim-card-header">
           <div class="sim-card-top-row">
-            <h4 class="sim-card-title">${meta.title}</h4>
+            <h3 class="sim-card-title">${meta.title}</h3>
             <span class="sim-card-badge">${meta.badge}</span>
           </div>
           <p class="sim-card-subtitle">${meta.subtitle}</p>

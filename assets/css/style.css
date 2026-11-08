@@ -190,11 +190,11 @@ button {
 
 .brand-subtitle {
   font-family: var(--font-sans);
-  font-size: 0.70rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--color-rose-deep);
-  letter-spacing: 0.44em;
-  text-indent: 0.44em;
+  letter-spacing: 0.4em;
+  text-indent: 0.4em;
   text-transform: uppercase;
   line-height: 1;
   display: block;
@@ -1376,7 +1376,7 @@ button {
   line-height: 1;
 }
 
-.minimal-step h4 {
+.minimal-step h3 {
   font-size: 1rem;
   font-weight: 700;
   color: var(--color-olive-dark);
@@ -2255,7 +2255,7 @@ button {
   margin-bottom: 1rem;
 }
 
-.dialog-section-block h5 {
+.dialog-section-block h4 {
   font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -2597,7 +2597,7 @@ button {
   object-fit: cover;
 }
 
-.drawer-item-info h5 {
+.drawer-item-info h4 {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--color-olive-dark);
@@ -2667,7 +2667,7 @@ button {
   gap: 0.75rem;
 }
 
-.drawer-form-box h5 {
+.drawer-form-box h4 {
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -2924,7 +2924,9 @@ button {
     height: 38px;
   }
   .brand-subtitle {
-    font-size: 0.62rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
   }
   .nav-desktop, .header-actions .btn-whatsapp {
     display: none;
