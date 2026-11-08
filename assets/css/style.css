@@ -757,363 +757,164 @@ button {
 }
 
 /* ==========================================================================
-   Banner "Armá tu Mesa Dulce": mini cotizador en vivo (entre Hero y Catálogo)
-   Fotos reales + selector de invitados. Fondo plano lino, sin degradados.
+   Banner "Armá tu Mesa Dulce" (entre Hero y Catálogo): lleva al cotizador
+   Banda oliva plana + fotos reales. Toda la tarjeta es el enlace.
    ========================================================================== */
 .mesa-dulce-promo-strip {
   padding: 3.5rem 0;
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
 }
 
-.md-promo {
+.md-banner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: 3rem;
   align-items: center;
-  background: #F4EFE6;
-  border: 1px solid var(--color-border);
+  padding: 2.75rem 2.75rem 2.75rem 3.25rem;
+  background: var(--color-olive-dark);
   border-radius: 24px;
-  padding: 2.75rem;
+  color: #FAF7F2;
+  text-decoration: none;
+  overflow: hidden;
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 220ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.md-promo-title {
+.md-banner:focus-visible {
+  outline: 3px solid var(--color-rose);
+  outline-offset: 4px;
+}
+
+.md-banner-title {
   font-family: var(--font-serif);
   font-size: clamp(1.8rem, 2.8vw, 2.4rem);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.01em;
-  color: var(--color-olive-dark);
+  color: #FAF7F2;
   text-wrap: balance;
-  margin-bottom: 0.85rem;
+  margin-bottom: 1rem;
 }
 
-.md-promo-title em {
+.md-banner-title em {
   font-style: italic;
   font-weight: 600;
+  color: #F6EAE7;
 }
 
-.md-promo-lead {
+.md-banner-lead {
   font-size: 1.02rem;
   line-height: 1.6;
-  color: var(--color-text-secondary);
-  max-width: 34ch;
-  margin-bottom: 1.75rem;
+  color: #D9DFD2;
+  max-width: 42ch;
+  margin-bottom: 1.9rem;
 }
 
-/* Selector de invitados */
-.md-calc {
-  border-top: 1px solid #E2DACB;
-  border-bottom: 1px solid #E2DACB;
-  padding: 1rem 0 0.9rem;
-  margin-bottom: 1.5rem;
-}
-
-.md-calc-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 0.75rem;
-}
-
-.md-calc-label {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--color-text);
-}
-
-.md-calc-stepper {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.md-step {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-olive-dark);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  touch-action: manipulation;
-  transition: background-color 160ms ease, border-color 160ms ease, transform 120ms ease-out;
-}
-
-.md-step:active {
-  transform: scale(0.94);
-}
-
-.md-step:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .md-step:hover:not(:disabled) {
-    background: #EEF2EB;
-    border-color: var(--color-olive);
-  }
-}
-
-.md-guests {
-  min-width: 3ch;
-  text-align: center;
-  font-family: var(--font-serif);
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--color-olive-dark);
-  font-variant-numeric: tabular-nums;
-}
-
-/* Barra deslizante en oliva */
-.md-range {
-  --md-fill: 18%;
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 28px;
-  background: transparent;
-  cursor: pointer;
-  touch-action: pan-y;
-}
-
-.md-range::-webkit-slider-runnable-track {
-  height: 6px;
-  border-radius: 999px;
-  background: linear-gradient(to right, var(--color-olive) 0 var(--md-fill), #E6DFD2 var(--md-fill) 100%);
-}
-
-.md-range::-moz-range-track {
-  height: 6px;
-  border-radius: 999px;
-  background: #E6DFD2;
-}
-
-.md-range::-moz-range-progress {
-  height: 6px;
-  border-radius: 999px;
-  background: var(--color-olive);
-}
-
-.md-range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 24px;
-  height: 24px;
-  margin-top: -9px;
-  border-radius: 50%;
-  background: var(--color-surface);
-  border: 2px solid var(--color-olive);
-  box-shadow: 0 2px 8px rgba(70, 84, 61, 0.18);
-  transition: transform 120ms ease-out;
-}
-
-.md-range::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--color-surface);
-  border: 2px solid var(--color-olive);
-  box-shadow: 0 2px 8px rgba(70, 84, 61, 0.18);
-}
-
-.md-range:active::-webkit-slider-thumb {
-  transform: scale(1.12);
-}
-
-.md-range:focus-visible {
-  outline: none;
-}
-
-.md-range:focus-visible::-webkit-slider-thumb {
-  box-shadow: 0 0 0 4px rgba(70, 84, 61, 0.22);
-}
-
-.md-range:focus-visible::-moz-range-thumb {
-  box-shadow: 0 0 0 4px rgba(70, 84, 61, 0.22);
-}
-
-/* Total + botón */
-.md-promo-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem 1.5rem;
-  flex-wrap: wrap;
-}
-
-.md-total {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.md-total-label {
-  font-size: 0.86rem;
-  color: var(--color-text-secondary);
-}
-
-.md-total-value {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--color-olive-dark);
-  font-variant-numeric: tabular-nums;
-  line-height: 1.1;
-}
-
-.btn-event-promo-cta {
+.md-banner-cta {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.95rem 1.7rem;
-  background: var(--color-olive);
-  color: #FFFFFF !important;
+  min-height: 52px;
+  padding: 0.9rem 1.7rem;
+  background: #FAF7F2;
+  color: var(--color-olive-dark);
   border-radius: var(--radius-full);
   font-size: 1rem;
   font-weight: 600;
-  text-decoration: none;
   transition: background-color 160ms ease, transform 120ms ease-out;
 }
 
-.btn-event-promo-cta:active {
+.md-banner-cta svg {
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.md-banner:active .md-banner-cta {
   transform: scale(0.97);
 }
 
-.btn-event-promo-cta svg {
-  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .btn-event-promo-cta:hover {
-    background: var(--color-olive-dark);
-  }
-  .btn-event-promo-cta:hover svg {
-    transform: translateX(3px);
-  }
-}
-
 /* La mesa: tres fotos reales */
-.md-table {
+.md-banner-table {
   display: grid;
-  grid-template-columns: 1.35fr 1fr;
+  grid-template-columns: 1.3fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 0.85rem;
-  aspect-ratio: 1.15 / 1;
+  gap: 0.75rem;
+  aspect-ratio: 1.2 / 1;
 }
 
-.md-dish {
-  position: relative;
-  margin: 0;
+.md-plate {
   overflow: hidden;
   border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: #EAE3D6;
-  transition: opacity 260ms ease;
+  background: #4A5741;
 }
 
-.md-dish--torta {
+.md-plate--torta {
   grid-row: 1 / span 2;
 }
 
-.md-dish img {
+.md-plate img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 600ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .md-dish:hover img {
-    transform: scale(1.03);
+  .md-banner:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(70, 84, 61, 0.18);
   }
+  .md-banner:hover .md-banner-cta {
+    background: #FFFFFF;
+  }
+  .md-banner:hover .md-banner-cta svg {
+    transform: translateX(4px);
+  }
+  .md-banner:hover .md-plate img {
+    transform: scale(1.04);
+  }
+  .md-banner:hover .md-plate:nth-child(2) img { transition-delay: 40ms; }
+  .md-banner:hover .md-plate:nth-child(3) img { transition-delay: 80ms; }
 }
 
-/* Fotos que "revelan" como una copia en papel, una sola vez al aparecer */
-.md-promo.is-armed .md-dish img {
-  filter: grayscale(1) contrast(0.7) brightness(1.12);
-  opacity: 0.55;
+/* Las fotos se "revelan" como una copia en papel, una sola vez al llegar */
+.md-banner.is-armed .md-plate img {
+  filter: grayscale(1) contrast(0.75) brightness(1.1);
+  opacity: 0.5;
 }
 
-.md-promo.is-developed .md-dish img {
-  filter: none;
-  opacity: 1;
-  transition: filter 1.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.1s ease, transform 500ms cubic-bezier(0.23, 1, 0.32, 1);
+.md-banner.is-developed .md-plate img {
+  transition: filter 1.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.1s ease, transform 600ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.md-promo.is-developed .md-dish:nth-child(2) img { transition-delay: 140ms, 140ms, 0ms; }
-.md-promo.is-developed .md-dish:nth-child(3) img { transition-delay: 280ms, 280ms, 0ms; }
-
-/* Plato sin unidades (0) se apaga */
-.md-dish.is-empty {
-  opacity: 0.45;
-}
-
-.md-chip {
-  position: absolute;
-  top: 0.7rem;
-  left: 0.7rem;
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.3rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid var(--color-border);
-  color: var(--color-olive-dark);
-  font-size: 0.8rem;
-  font-weight: 600;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-
-.md-chip-short {
-  display: none;
-}
-
-.md-chip-num {
-  display: inline-block;
-  font-size: 0.95rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-/* El número entra desde abajo cuando cambia */
-.md-chip-num.is-rolling,
-.md-total-value.is-rolling {
-  animation: mdRoll 260ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-@keyframes mdRoll {
-  from { transform: translateY(45%); opacity: 0; }
-  to { transform: none; opacity: 1; }
-}
-
-.md-total-value { display: inline-block; }
+.md-banner.is-developed .md-plate:nth-child(2) img { transition-delay: 140ms, 140ms, 0ms; }
+.md-banner.is-developed .md-plate:nth-child(3) img { transition-delay: 280ms, 280ms, 0ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  .md-promo.is-armed .md-dish img { filter: none; opacity: 1; }
-  .md-chip-num.is-rolling,
-  .md-total-value.is-rolling { animation: none; }
-  .md-dish img { transition: none; }
+  .md-banner,
+  .md-banner-cta,
+  .md-banner-cta svg,
+  .md-plate img {
+    transition: none;
+  }
+  .md-banner.is-armed .md-plate img {
+    filter: none;
+    opacity: 1;
+  }
 }
 
 @media (max-width: 900px) {
-  .md-promo {
+  .md-banner {
     grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 2rem 1.5rem;
+    gap: 1.75rem;
+    padding: 1.25rem 1.25rem 1.75rem;
   }
-  .md-promo-lead {
-    max-width: none;
-  }
-  .md-table {
+  .md-banner-table {
     order: -1;
+  }
+  .md-banner-copy {
+    padding: 0 0.5rem;
+  }
+  .md-banner-lead {
+    max-width: none;
   }
 }
 
@@ -1121,36 +922,18 @@ button {
   .mesa-dulce-promo-strip {
     padding: 2rem 0 2.5rem;
   }
-  .md-promo {
-    padding: 1.25rem 1.1rem 1.5rem;
+  .md-banner {
     border-radius: 20px;
-    gap: 1.5rem;
   }
-  .md-table {
-    gap: 0.55rem;
+  .md-banner-table {
+    gap: 0.5rem;
   }
-  .md-chip {
-    top: 0.5rem;
-    left: 0.5rem;
-    padding: 0.28rem 0.6rem;
-    font-size: 0.72rem;
+  .md-banner-title {
+    font-size: 1.6rem;
   }
-  .md-chip-num {
-    font-size: 0.85rem;
-  }
-  .md-chip-unit {
-    display: none;
-  }
-  .md-chip-short {
-    display: inline;
-  }
-  .md-promo-foot {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .btn-event-promo-cta {
+  .md-banner-cta {
+    display: flex;
     justify-content: center;
-    min-height: 52px;
   }
 }
 

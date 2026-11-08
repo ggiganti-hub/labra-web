@@ -650,59 +650,27 @@
     </section>
 
     <!-- ======================================================================
-         Banner "Armá tu Mesa Dulce": mini cotizador en vivo
-         Elegís invitados y las fotos reales muestran cuánto de cada cosa.
+         Banner "Armá tu Mesa Dulce": lleva al cotizador (mesa-dulce.html)
+         Banda oliva con fotos reales de la mesa: torta, vasitos y petit fours.
          ====================================================================== -->
     <section class="mesa-dulce-promo-strip" aria-labelledby="md-promo-title">
       <div class="container">
-        <div class="md-promo" data-md-promo>
-          <div class="md-promo-copy">
-            <h2 class="md-promo-title" id="md-promo-title">¿Cuánto dulce necesita tu <em>festejo</em>?</h2>
-            <p class="md-promo-lead">Decinos cuántos invitados vienen y te mostramos la mesa: tortas enteras, vasitos y petit fours en cajas de 25.</p>
-
-            <div class="md-calc" role="group" aria-labelledby="md-guests-label">
-              <div class="md-calc-head">
-                <span class="md-calc-label" id="md-guests-label">Invitados</span>
-                <div class="md-calc-stepper">
-                  <button type="button" class="md-step" data-md-step="-5" aria-label="5 invitados menos">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg>
-                  </button>
-                  <output class="md-guests" id="md-guests-value" for="md-guests-range" aria-live="polite">30</output>
-                  <button type="button" class="md-step" data-md-step="5" aria-label="5 invitados más">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                  </button>
-                </div>
-              </div>
-              <input type="range" class="md-range" id="md-guests-range" min="10" max="120" step="5" value="30" aria-label="Cantidad de invitados">
-            </div>
-
-            <div class="md-promo-foot">
-              <p class="md-total">
-                <span class="md-total-label">Mesa clásica, estimado</span>
-                <span class="md-total-value" id="md-total-value">$240.000</span>
-              </p>
-              <a href="mesa-dulce.html?invitados=30" class="btn-event-promo-cta" id="md-promo-cta" title="Ir al cotizador de Mesa Dulce">
-                <span>Armá tu Mesa Dulce</span>
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </a>
-            </div>
+        <a href="mesa-dulce.html" class="md-banner" data-md-banner title="Ir al cotizador de Mesa Dulce">
+          <div class="md-banner-copy">
+            <h2 class="md-banner-title" id="md-promo-title">Calculá la cantidad de tortas, shots y petits para tus <em>invitados</em></h2>
+            <p class="md-banner-lead">¿Tenés un festejo o evento? Elegí cuántos son, qué delicias te gustan y armá tu presupuesto ideal en segundos con nuestro simulador interactivo.</p>
+            <span class="md-banner-cta">
+              <span>Armá tu Mesa Dulce</span>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
           </div>
 
-          <div class="md-table">
-            <figure class="md-dish md-dish--torta" data-md-dish="tortas">
-              <img src="assets/images/products/torta-brownie.jpg" alt="Torta Brownie entera de LABRA" loading="lazy" width="1000" height="1000">
-              <span class="md-chip"><b class="md-chip-num">1</b> <span class="md-chip-unit">torta</span><span class="md-chip-short">torta</span></span>
-            </figure>
-            <figure class="md-dish" data-md-dish="shots">
-              <img src="assets/images/products/vasitos-surtidos.jpg" alt="Vasitos dulces surtidos de LABRA" loading="lazy" width="1000" height="1000">
-              <span class="md-chip"><b class="md-chip-num">1</b> <span class="md-chip-unit">caja de vasitos</span><span class="md-chip-short">caja</span></span>
-            </figure>
-            <figure class="md-dish" data-md-dish="petit">
-              <img src="assets/images/products/petit-four-bandeja.jpg" alt="Bandeja de petit fours de LABRA" loading="lazy" width="1000" height="1250">
-              <span class="md-chip"><b class="md-chip-num">2</b> <span class="md-chip-unit">cajas de petit</span><span class="md-chip-short">cajas</span></span>
-            </figure>
+          <div class="md-banner-table" aria-hidden="true">
+            <div class="md-plate md-plate--torta"><img src="assets/images/products/torta-brownie.jpg" alt="" loading="lazy" width="1000" height="1000"></div>
+            <div class="md-plate"><img src="assets/images/products/vasitos-surtidos.jpg" alt="" loading="lazy" width="1000" height="1000"></div>
+            <div class="md-plate"><img src="assets/images/products/petit-four-bandeja.jpg" alt="" loading="lazy" width="1000" height="1250"></div>
           </div>
-        </div>
+        </a>
       </div>
     </section>
 
