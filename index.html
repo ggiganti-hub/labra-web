@@ -650,27 +650,36 @@
     </section>
 
     <!-- ======================================================================
-         Banner "Armá tu Mesa Dulce": lleva al cotizador (mesa-dulce.html)
-         Banda oliva con fotos reales de la mesa: torta, vasitos y petit fours.
+         Banner Promocional Destacado: "Armá tu Mesa Dulce"
+         Entre la sección Hero y el Catálogo. Se anima una vez al aparecer.
          ====================================================================== -->
-    <section class="mesa-dulce-promo-strip" aria-labelledby="md-promo-title">
+    <section class="mesa-dulce-promo-strip" aria-label="Cotizador de Mesa Dulce para Eventos">
       <div class="container">
-        <a href="mesa-dulce.html" class="md-banner" data-md-banner title="Ir al cotizador de Mesa Dulce">
-          <div class="md-banner-copy">
-            <h2 class="md-banner-title" id="md-promo-title">Calculá la cantidad de tortas, shots y petits para tus <em>invitados</em></h2>
-            <p class="md-banner-lead">¿Tenés un festejo o evento? Elegí cuántos son, qué delicias te gustan y armá tu presupuesto ideal en segundos con nuestro simulador interactivo.</p>
-            <span class="md-banner-cta">
-              <span>Armá tu Mesa Dulce</span>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </span>
+        <div class="event-promo-card" data-promo-reveal>
+          <div class="event-promo-main">
+            <div class="event-promo-badge">
+              <span class="event-promo-badge-dot" aria-hidden="true"></span>
+              <span>¿Tenés un festejo o evento?</span>
+            </div>
+
+            <h2 class="event-promo-title">
+              Calculá la cantidad de tortas, shots y petits para tus <span class="event-promo-mark">invitados</span>
+            </h2>
           </div>
 
-          <div class="md-banner-table" aria-hidden="true">
-            <div class="md-plate md-plate--torta"><img src="assets/images/products/torta-brownie.jpg" alt="" loading="lazy" width="1000" height="1000"></div>
-            <div class="md-plate"><img src="assets/images/products/vasitos-surtidos.jpg" alt="" loading="lazy" width="1000" height="1000"></div>
-            <div class="md-plate"><img src="assets/images/products/petit-four-bandeja.jpg" alt="" loading="lazy" width="1000" height="1250"></div>
+          <div class="event-promo-side">
+            <p class="event-promo-subtitle">
+              Elegí cuántos son, qué delicias te gustan y armá tu presupuesto ideal en segundos con nuestro simulador interactivo.
+            </p>
+
+            <div class="event-promo-action">
+              <a href="mesa-dulce.html" class="btn-event-promo-cta" title="Ir a la página del cotizador de Mesa Dulce">
+                <span>Armá tu Mesa Dulce</span>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
           </div>
-        </a>
+        </div>
       </div>
     </section>
 

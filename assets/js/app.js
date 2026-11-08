@@ -466,37 +466,66 @@ document.addEventListener('DOMContentLoaded', () => {
   initGoogleReviewsSlider();
   initMesaDulceSimulator();
   initFloatingWhatsAppAutoHide();
-  initMesaDulcePromo();
+  initPromoReveal();
 });
 
-// Banner de Mesa Dulce en la portada: las fotos se "revelan" de una copia gris a color,
-// una sola vez, cuando la tarjeta llega a la pantalla (chequeo por scroll, sin IntersectionObserver).
-function initMesaDulcePromo() {
-  const banner = document.querySelector('[data-md-banner]');
-  if (!banner) return;
-  banner.addEventListener('click', () => {
-    trackAnalyticsEvent('click_mesa_dulce_promo', { link_url: 'mesa-dulce.html' });
-  });
+// Cartel de Mesa Dulce: al llegar, la etiqueta entra, el título sube palabra por palabra,
+// se dibuja el trazo bajo "invitados" y aparecen el texto y el botón. Una sola vez.
+function initPromoReveal() {
+  const card = document.querySelector('[data-promo-reveal]');
+  if (!card) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const table = banner.querySelector('.md-banner-table');
+  const title = card.querySelector('.event-promo-title');
   const inView = () => {
-    const r = table.getBoundingClientRect();
-    return r.top < window.innerHeight * 0.8 && r.bottom > window.innerHeight * 0.15;
+    const r = card.getBoundingClientRect();
+    return r.top < window.innerHeight * 0.85 && r.bottom > window.innerHeight * 0.1;
   };
-  if (inView()) return; // ya visible al cargar: fotos normales, sin efecto
-  banner.classList.add('is-armed');
-  // Control liviano cada 250 ms (y en cada scroll) hasta que se revela; después se apaga.
+  if (!title || inView()) return; // ya visible al cargar: queda quieto
+
+  // Partir el título en palabras (el texto queda igual para lectores de pantalla)
+  title.setAttribute('aria-label', title.textContent.replace(/\s+/g, ' ').trim());
+  let i = 0;
+  const wrapWords = (node) => {
+    [...node.childNodes].forEach(child => {
+      if (child.nodeType === Node.TEXT_NODE) {
+        const frag = document.createDocumentFragment();
+        child.textContent.split(/(\s+)/).forEach(part => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+          const w = document.createElement('span');
+          w.className = 'promo-word';
+          w.setAttribute('aria-hidden', 'true');
+          w.style.setProperty('--d', `${120 + i * 45}ms`);
+          w.textContent = part;
+          i += 1;
+          frag.appendChild(w);
+        });
+        child.replaceWith(frag);
+      } else if (child.nodeType === Node.ELEMENT_NODE && child.classList.contains('event-promo-mark')) {
+        child.classList.add('promo-word');
+        child.setAttribute('aria-hidden', 'true');
+        child.style.setProperty('--d', `${120 + i * 45}ms`);
+        i += 1;
+      }
+    });
+  };
+  wrapWords(title);
+  const wordsEnd = 120 + i * 45;
+  card.style.setProperty('--d-mark', `${wordsEnd + 250}ms`);
+  card.querySelector('.event-promo-side').style.setProperty('--d', `${wordsEnd + 100}ms`);
+  card.classList.add('is-armed');
+
   let done = false;
-  const check = () => {
+  const play = () => {
     if (done || !inView()) return;
     done = true;
     clearInterval(timer);
-    window.removeEventListener('scroll', check);
-    banner.classList.add('is-developed');
-    banner.classList.remove('is-armed');
+    window.removeEventListener('scroll', play);
+    card.classList.add('is-playing');
+    card.classList.remove('is-armed');
   };
-  const timer = setInterval(check, 250);
-  window.addEventListener('scroll', check, { passive: true });
+  const timer = setInterval(play, 250);
+  window.addEventListener('scroll', play, { passive: true });
 }
 
 // En el celular, el botón flotante de WhatsApp tapaba el "+ Sumar" de las tarjetas.
