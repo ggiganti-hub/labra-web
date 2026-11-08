@@ -364,6 +364,13 @@ const LABRA_CONFIG = {
   siteUrl: 'https://www.labra.com.ar'
 };
 
+// Link de WhatsApp con mensaje prearmado.
+// Se usa api.whatsapp.com directo y NO wa.me: la redirección de wa.me
+// reemplaza los emojis por "�" (verificado el 2026-11-08).
+function buildWhatsAppLink(text) {
+  return `https://api.whatsapp.com/send?phone=${LABRA_CONFIG.phone}&text=${encodeURIComponent(text)}`;
+}
+
 // ==========================================================================
 // Integración Google Analytics 4 (Eventos de Conversión)
 // ==========================================================================
@@ -687,7 +694,7 @@ function initEventListeners() {
     if (!anchor) return;
     const href = anchor.getAttribute('href') || '';
 
-    if (href.includes('wa.me')) {
+    if (href.includes('wa.me') || href.includes('api.whatsapp.com')) {
       if (anchor.id !== 'btn-send-whatsapp-order') {
         const linkText = anchor.innerText.trim() || 'WhatsApp Flotante';
         trackAnalyticsEvent('generate_lead', {
@@ -1340,7 +1347,7 @@ function generateOrderTextMessage() {
 
 function buildWhatsAppUrl() {
   const text = generateOrderTextMessage();
-  return `https://wa.me/${LABRA_CONFIG.phone}?text=${encodeURIComponent(text)}`;
+  return buildWhatsAppLink(text);
 }
 
 // Pedido 1-click directo de un solo producto
@@ -1386,7 +1393,7 @@ function orderSingleProductDirectly(productId, flavorName = null) {
     '¿Tienen disponibilidad en estos días? ¡Muchas gracias!'
   ].join('\n');
 
-  const url = `https://wa.me/${LABRA_CONFIG.phone}?text=${encodeURIComponent(msg)}`;
+  const url = buildWhatsAppLink(msg);
   window.open(url, '_blank', 'noopener,noreferrer');
 }
 
@@ -2228,7 +2235,7 @@ function buildSimulatorWhatsAppUrl(tierKey) {
   lines.push(``);
   lines.push(`¿Tienen disponibilidad para mi fecha? ¡Muchas gracias!`);
 
-  return `https://wa.me/${LABRA_CONFIG.phone}?text=${encodeURIComponent(lines.join('\n'))}`;
+  return buildWhatsAppLink(lines.join('\n'));
 }
 
 function renderSimulatorProposals() {
@@ -2632,7 +2639,7 @@ function renderClientProposalView(proposalData) {
   waLines.push(`💰 *Total del presupuesto:* ${formatCurrency(totalPrice)}`);
   waLines.push(`Quiero avanzar con el pedido y elegir los sabores. ¡Gracias!`);
 
-  const confirmWaUrl = `https://wa.me/${LABRA_CONFIG.phone}?text=${encodeURIComponent(waLines.join('\n'))}`;
+  const confirmWaUrl = buildWhatsAppLink(waLines.join('\n'));
 
   bodyEl.innerHTML = `
     <span class="cp-greeting-badge">✨ ${greetingText}</span>
