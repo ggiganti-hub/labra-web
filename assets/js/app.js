@@ -470,7 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Cartel de Mesa Dulce: al llegar, la etiqueta entra, el título sube palabra por palabra,
-// se dibuja el trazo bajo "invitados" y aparecen el texto y el botón. Una sola vez.
+// "invitados" pasa a rosa y aparecen el texto y el botón. Una sola vez.
 function initPromoReveal() {
   const card = document.querySelector('[data-promo-reveal]');
   if (!card) return;
