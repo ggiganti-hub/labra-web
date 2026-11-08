@@ -466,7 +466,102 @@ document.addEventListener('DOMContentLoaded', () => {
   initGoogleReviewsSlider();
   initMesaDulceSimulator();
   initFloatingWhatsAppAutoHide();
+  initMesaDulcePromo();
 });
+
+// Banner de la portada: mini cotizador en vivo.
+// Usa el mismo cálculo que el cotizador (Mesa clásica, los 3 productos) y lleva
+// los invitados elegidos a mesa-dulce.html?invitados=N.
+function initMesaDulcePromo() {
+  const root = document.querySelector('[data-md-promo]');
+  if (!root) return;
+  const range = root.querySelector('#md-guests-range');
+  const out = root.querySelector('#md-guests-value');
+  const totalEl = root.querySelector('#md-total-value');
+  const cta = root.querySelector('#md-promo-cta');
+  const steps = root.querySelectorAll('[data-md-step]');
+  const dishes = {};
+  root.querySelectorAll('[data-md-dish]').forEach(el => { dishes[el.dataset.mdDish] = el; });
+
+  const UNITS = {
+    tortas: ['torta', 'tortas', 'torta', 'tortas'],
+    shots: ['caja de vasitos', 'cajas de vasitos', 'caja', 'cajas'],
+    petit: ['caja de petit', 'cajas de petit', 'caja', 'cajas']
+  };
+  const min = parseInt(range.min, 10);
+  const max = parseInt(range.max, 10);
+
+  function roll(el, text) {
+    if (el.textContent === text) return;
+    el.textContent = text;
+    el.classList.remove('is-rolling');
+    void el.offsetWidth; // reinicia la animación
+    el.classList.add('is-rolling');
+  }
+
+  function render(guests) {
+    const g = Math.max(min, Math.min(max, guests));
+    range.value = g;
+    range.style.setProperty('--md-fill', `${((g - min) / (max - min)) * 100}%`);
+    out.textContent = g;
+    const q = calculateSuggestedQuantities(g, { tortas: true, shots: true, petit: true }).clasico;
+    Object.keys(dishes).forEach(key => {
+      const n = q[key] || 0;
+      const dish = dishes[key];
+      roll(dish.querySelector('.md-chip-num'), String(n));
+      const u = UNITS[key];
+      dish.querySelector('.md-chip-unit').textContent = n === 1 ? u[0] : u[1];
+      dish.querySelector('.md-chip-short').textContent = n === 1 ? u[2] : u[3];
+      dish.classList.toggle('is-empty', n === 0);
+    });
+    const total = (q.tortas * SIM_PRODUCTS_CONFIG.tortas.unitPrice) +
+      (q.shots * SIM_PRODUCTS_CONFIG.shots.unitPrice) +
+      (q.petit * SIM_PRODUCTS_CONFIG.petit.unitPrice);
+    roll(totalEl, formatCurrency(total));
+    cta.href = `mesa-dulce.html?invitados=${g}`;
+    steps.forEach(btn => {
+      const d = parseInt(btn.dataset.mdStep, 10);
+      btn.disabled = (d < 0 && g <= min) || (d > 0 && g >= max);
+    });
+  }
+
+  range.addEventListener('input', () => render(parseInt(range.value, 10)));
+  steps.forEach(btn => btn.addEventListener('click', () => {
+    render(parseInt(range.value, 10) + parseInt(btn.dataset.mdStep, 10));
+  }));
+  cta.addEventListener('click', () => {
+    trackAnalyticsEvent('click_mesa_dulce_promo', { guests: parseInt(range.value, 10) });
+  });
+  render(parseInt(range.value, 10));
+
+  // Las fotos aparecen como una copia que se revela, una sola vez,
+  // cuando la mesa entra en pantalla (chequeo por scroll: no depende de IntersectionObserver)
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  const table = root.querySelector('.md-table');
+  const inView = () => {
+    const r = table.getBoundingClientRect();
+    return r.top < window.innerHeight * 0.8 && r.bottom > window.innerHeight * 0.15;
+  };
+  if (inView()) return; // ya visible al cargar: sin efecto, fotos normales
+  root.classList.add('is-armed');
+  let ticking = false;
+  const check = () => {
+    ticking = false;
+    if (!inView()) return;
+    root.classList.add('is-developed');
+    root.classList.remove('is-armed');
+    window.removeEventListener('scroll', onScroll);
+    window.removeEventListener('resize', onScroll);
+  };
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    setTimeout(check, 50);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+}
 
 // En el celular, el botón flotante de WhatsApp tapaba el "+ Sumar" de las tarjetas.
 // Mientras el catálogo está en pantalla se oculta: cada tarjeta ya tiene su propio botón de WhatsApp.
@@ -2495,6 +2590,13 @@ function initMesaDulceSimulator() {
 
   if (!guestsInput) return;
 
+  // Si viene del banner de la portada (?invitados=N), arrancar con esa cantidad
+  const linkedGuests = parseInt(new URLSearchParams(window.location.search).get('invitados'), 10);
+  if (!isNaN(linkedGuests) && linkedGuests >= 1) {
+    simState.guests = Math.min(500, linkedGuests);
+    guestsInput.value = simState.guests;
+  }
+
   function syncPresetChips(guestsVal) {
     presetChips.forEach(chip => {
       const chipVal = parseInt(chip.dataset.guests, 10);
@@ -2596,6 +2698,7 @@ function initMesaDulceSimulator() {
   });
 
   // Render inicial de las 3 propuestas
+  syncPresetChips(simState.guests);
   renderSimulatorProposals();
 }
 
