@@ -761,46 +761,21 @@ button {
    ========================================================================== */
 .mesa-dulce-promo-strip {
   padding: 3rem 0 3.5rem;
-  background: linear-gradient(180deg, #FBF8F3 0%, #FAF6EE 100%);
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
 }
 
+/* Fondo plano lino, texto a la izquierda y la acción a la derecha */
 .event-promo-card {
-  background: linear-gradient(135deg, #FFFDF8 0%, #F5ECE0 55%, #EFE1CE 100%);
-  border: 1.5px solid rgba(114, 131, 89, 0.4);
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: 2.5rem 3.5rem;
+  align-items: end;
+  background: #F4EFE6;
+  border: 1px solid var(--color-border);
   border-radius: 24px;
-  padding: 3.25rem 2.5rem;
-  text-align: center;
-  max-width: 980px;
-  margin: 0 auto;
-  box-shadow: 0 14px 40px rgba(70, 84, 61, 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-.event-promo-card::before {
-  content: "";
-  position: absolute;
-  top: -60px;
-  right: -60px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(114, 131, 89, 0.16) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.event-promo-card::after {
-  content: "";
-  position: absolute;
-  bottom: -60px;
-  left: -60px;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(197, 132, 132, 0.14) 0%, transparent 70%);
-  pointer-events: none;
+  padding: 3rem 3.25rem;
+  text-align: left;
 }
 
 .event-promo-badge {
@@ -815,7 +790,7 @@ button {
   background: rgba(114, 131, 89, 0.14);
   padding: 0.38rem 1rem;
   border-radius: var(--radius-full);
-  margin-bottom: 0.95rem;
+  margin-bottom: 1.1rem;
 }
 
 .event-promo-badge-dot {
@@ -827,21 +802,28 @@ button {
 }
 
 .event-promo-title {
-  font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 3.2vw, 2.45rem);
-  font-weight: 700;
-  color: #1F1D1A;
-  line-height: 1.25;
-  max-width: 780px;
-  margin: 0 auto 0.85rem;
+  font-family: 'Fraunces', var(--font-serif);
+  font-variation-settings: 'SOFT' 100;
+  font-optical-sizing: auto;
+  font-size: clamp(1.9rem, 3.4vw, 2.75rem);
+  font-weight: 600;
+  color: var(--color-olive-dark);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+/* "invitados" en rosa (al aparecer pasa de oliva a rosa) */
+.event-promo-mark {
+  white-space: nowrap;
+  color: var(--color-rose-deep);
 }
 
 .event-promo-subtitle {
-  font-size: 1.08rem;
-  color: #4A453E;
+  font-size: 1.04rem;
+  color: var(--color-text-secondary);
   line-height: 1.6;
-  max-width: 680px;
-  margin: 0 auto 1.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .event-promo-action {
@@ -852,45 +834,101 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 1.05rem 2.4rem;
+  padding: 1.05rem 2.2rem;
   background: var(--color-olive-dark);
   color: #FFFFFF !important;
   border-radius: var(--radius-full);
-  font-size: 1.08rem;
+  font-size: 1.05rem;
   font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 6px 22px rgba(58, 70, 43, 0.32);
-  transition: all var(--transition-fast);
+  box-shadow: 0 6px 22px rgba(58, 70, 43, 0.22);
+  transition: background-color 160ms ease, box-shadow 200ms ease, transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.btn-event-promo-cta:hover {
-  background: #343E26;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 26px rgba(58, 70, 43, 0.42);
+.btn-event-promo-cta:active {
+  transform: scale(0.97);
 }
 
 .btn-event-promo-cta svg {
-  transition: transform var(--transition-fast);
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.btn-event-promo-cta:hover svg {
-  transform: translateX(4px);
+@media (hover: hover) and (pointer: fine) {
+  .btn-event-promo-cta:hover {
+    background: #343E26;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 26px rgba(58, 70, 43, 0.3);
+  }
+  .btn-event-promo-cta:hover svg {
+    transform: translateX(4px);
+  }
 }
 
-@media (max-width: 768px) {
+/* --- Efecto al aparecer (una sola vez). Sin JS o con "reducir movimiento" se ve todo quieto --- */
+.event-promo-card.is-armed .event-promo-badge,
+.event-promo-card.is-armed .event-promo-side {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.event-promo-card.is-armed .promo-word {
+  opacity: 0;
+  transform: translateY(0.45em);
+}
+
+.event-promo-card.is-armed .event-promo-mark {
+  color: var(--color-olive-dark);
+}
+
+.promo-word {
+  display: inline-block;
+}
+
+.event-promo-card.is-playing .event-promo-badge,
+.event-promo-card.is-playing .event-promo-side,
+.event-promo-card.is-playing .promo-word {
+  opacity: 1;
+  transform: none;
+  transition: opacity 500ms ease, transform 650ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition-delay: var(--d, 0ms);
+}
+
+.event-promo-card.is-playing .event-promo-mark {
+  transition:
+    opacity 500ms ease var(--d, 0ms),
+    transform 650ms cubic-bezier(0.23, 1, 0.32, 1) var(--d, 0ms),
+    color 600ms ease var(--d-mark, 600ms);
+}
+
+@media (max-width: 900px) {
+  .event-promo-card {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 2.25rem 2rem;
+  }
+  .event-promo-subtitle {
+    max-width: 52ch;
+  }
+}
+
+@media (max-width: 640px) {
   .mesa-dulce-promo-strip {
     padding: 2rem 0 2.5rem;
   }
   .event-promo-card {
-    padding: 2.2rem 1.4rem;
+    padding: 1.9rem 1.35rem;
     border-radius: 20px;
   }
+  .event-promo-badge {
+    font-size: 0.75rem;
+    padding: 0.34rem 0.85rem;
+  }
   .event-promo-title {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
   .event-promo-subtitle {
-    font-size: 0.96rem;
-    margin-bottom: 1.35rem;
+    font-size: 0.98rem;
+    margin-bottom: 1.25rem;
   }
   .btn-event-promo-cta {
     width: 100%;

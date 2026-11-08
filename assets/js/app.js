@@ -466,7 +466,67 @@ document.addEventListener('DOMContentLoaded', () => {
   initGoogleReviewsSlider();
   initMesaDulceSimulator();
   initFloatingWhatsAppAutoHide();
+  initPromoReveal();
 });
+
+// Cartel de Mesa Dulce: al llegar, la etiqueta entra, el título sube palabra por palabra,
+// "invitados" pasa a rosa y aparecen el texto y el botón. Una sola vez.
+function initPromoReveal() {
+  const card = document.querySelector('[data-promo-reveal]');
+  if (!card) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const title = card.querySelector('.event-promo-title');
+  const inView = () => {
+    const r = card.getBoundingClientRect();
+    return r.top < window.innerHeight * 0.85 && r.bottom > window.innerHeight * 0.1;
+  };
+  if (!title || inView()) return; // ya visible al cargar: queda quieto
+
+  // Partir el título en palabras (el texto queda igual para lectores de pantalla)
+  title.setAttribute('aria-label', title.textContent.replace(/\s+/g, ' ').trim());
+  let i = 0;
+  const wrapWords = (node) => {
+    [...node.childNodes].forEach(child => {
+      if (child.nodeType === Node.TEXT_NODE) {
+        const frag = document.createDocumentFragment();
+        child.textContent.split(/(\s+)/).forEach(part => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+          const w = document.createElement('span');
+          w.className = 'promo-word';
+          w.setAttribute('aria-hidden', 'true');
+          w.style.setProperty('--d', `${120 + i * 45}ms`);
+          w.textContent = part;
+          i += 1;
+          frag.appendChild(w);
+        });
+        child.replaceWith(frag);
+      } else if (child.nodeType === Node.ELEMENT_NODE && child.classList.contains('event-promo-mark')) {
+        child.classList.add('promo-word');
+        child.setAttribute('aria-hidden', 'true');
+        child.style.setProperty('--d', `${120 + i * 45}ms`);
+        i += 1;
+      }
+    });
+  };
+  wrapWords(title);
+  const wordsEnd = 120 + i * 45;
+  card.style.setProperty('--d-mark', `${wordsEnd + 250}ms`);
+  card.querySelector('.event-promo-side').style.setProperty('--d', `${wordsEnd + 100}ms`);
+  card.classList.add('is-armed');
+
+  let done = false;
+  const play = () => {
+    if (done || !inView()) return;
+    done = true;
+    clearInterval(timer);
+    window.removeEventListener('scroll', play);
+    card.classList.add('is-playing');
+    card.classList.remove('is-armed');
+  };
+  const timer = setInterval(play, 250);
+  window.addEventListener('scroll', play, { passive: true });
+}
 
 // En el celular, el botón flotante de WhatsApp tapaba el "+ Sumar" de las tarjetas.
 // Mientras el catálogo está en pantalla se oculta: cada tarjeta ya tiene su propio botón de WhatsApp.

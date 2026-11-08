@@ -83,7 +83,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="image" href="assets/images/products/torta-rogel.jpg" fetchpriority="high">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Fraunces:opsz,wght,SOFT@9..144,600,100&display=swap">
   
   <!-- Estilos -->
   <link rel="stylesheet" href="assets/css/style.css">
@@ -651,29 +651,33 @@
 
     <!-- ======================================================================
          Banner Promocional Destacado: "Armá tu Mesa Dulce"
-         Centrado y destacado entre la sección Hero y el Catálogo
+         Entre la sección Hero y el Catálogo. Se anima una vez al aparecer.
          ====================================================================== -->
     <section class="mesa-dulce-promo-strip" aria-label="Cotizador de Mesa Dulce para Eventos">
       <div class="container">
-        <div class="event-promo-card">
-          <div class="event-promo-badge">
-            <span class="event-promo-badge-dot" aria-hidden="true"></span>
-            <span>¿Tenés un festejo o evento?</span>
+        <div class="event-promo-card" data-promo-reveal>
+          <div class="event-promo-main">
+            <div class="event-promo-badge">
+              <span class="event-promo-badge-dot" aria-hidden="true"></span>
+              <span>¿Tenés un festejo o evento?</span>
+            </div>
+
+            <h2 class="event-promo-title">
+              Calculá la cantidad de tortas, shots y petits para tus <span class="event-promo-mark">invitados</span>
+            </h2>
           </div>
 
-          <h2 class="event-promo-title">
-            Calculá la cantidad de tortas, shots y petits para tus invitados
-          </h2>
+          <div class="event-promo-side">
+            <p class="event-promo-subtitle">
+              Elegí cuántos son, qué delicias te gustan y armá tu presupuesto ideal en segundos con nuestro simulador interactivo.
+            </p>
 
-          <p class="event-promo-subtitle">
-            Elegí cuántos son, qué delicias te gustan y armá tu presupuesto ideal en segundos con nuestro simulador interactivo.
-          </p>
-
-          <div class="event-promo-action">
-            <a href="mesa-dulce.html" class="btn-event-promo-cta" title="Ir a la página del cotizador de Mesa Dulce">
-              <span>Armá tu Mesa Dulce</span>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </a>
+            <div class="event-promo-action">
+              <a href="mesa-dulce.html" class="btn-event-promo-cta" title="Ir a la página del cotizador de Mesa Dulce">
+                <span>Armá tu Mesa Dulce</span>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>
