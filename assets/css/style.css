@@ -3168,22 +3168,26 @@ button {
 }
 
 .sim-guests-input-box {
-  position: relative;
   flex: 1;
   min-width: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
   background: #fff;
   border: 2px solid var(--color-olive);
   border-radius: var(--radius-md);
   height: 48px;
+  padding: 0 0.75rem;
+  cursor: text;
 }
 
-/* El número va centrado en la caja; "invitados" queda a la derecha sin empujarlo */
+/* "30 invitados" se centra como conjunto: el campo mide lo justo de las cifras (lo ajusta app.js) */
 .sim-guests-input {
-  width: 100%;
+  width: 2.4ch;
+  min-width: 1.4ch;
   height: 100%;
-  padding: 0 0.5rem;
+  padding: 0;
   border: none;
   background: transparent;
   font-family: var(--font-serif);
@@ -3203,21 +3207,11 @@ button {
 }
 
 .sim-guests-unit {
-  position: absolute;
-  right: 0.85rem;
-  top: 50%;
-  transform: translateY(-50%);
   font-size: 0.88rem;
   color: var(--color-text-secondary);
   font-weight: 500;
-  pointer-events: none;
-}
-
-@media (max-width: 380px) {
-  .sim-guests-unit {
-    right: 0.6rem;
-    font-size: 0.8rem;
-  }
+  /* baja un poco para alinearse con la base del número */
+  padding-top: 0.3em;
 }
 
 .sim-guests-presets {
