@@ -3168,7 +3168,6 @@ button {
 }
 
 .sim-guests-input-box {
-  position: relative;
   flex: 1;
   min-width: 0;
   display: flex;
@@ -3177,13 +3176,18 @@ button {
   border: 2px solid var(--color-olive);
   border-radius: var(--radius-md);
   height: 48px;
+  padding: 0 0.85rem 0 0;
+  cursor: text;
 }
 
-/* El número va centrado en la caja; "invitados" queda a la derecha sin empujarlo */
+/* "invitados" fijo contra el borde derecho; el número se centra en el espacio
+   que queda entre el borde izquierdo de la caja y la palabra "invitados" */
 .sim-guests-input {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
+  width: auto;
   height: 100%;
-  padding: 0 0.5rem;
+  padding: 0 0.25rem;
   border: none;
   background: transparent;
   font-family: var(--font-serif);
@@ -3203,21 +3207,12 @@ button {
 }
 
 .sim-guests-unit {
-  position: absolute;
-  right: 0.85rem;
-  top: 50%;
-  transform: translateY(-50%);
+  flex-shrink: 0;
   font-size: 0.88rem;
   color: var(--color-text-secondary);
   font-weight: 500;
-  pointer-events: none;
-}
-
-@media (max-width: 380px) {
-  .sim-guests-unit {
-    right: 0.6rem;
-    font-size: 0.8rem;
-  }
+  /* baja un poco para alinearse con la base del número */
+  padding-top: 0.3em;
 }
 
 .sim-guests-presets {
