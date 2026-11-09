@@ -3321,6 +3321,11 @@ button {
   color: #fff;
 }
 
+.footer-star {
+  display: inline-block;
+  vertical-align: -1px;
+}
+
 /* Paso 3: Selector de Estilo de Consumo */
 .sim-style-selector {
   display: flex;
