@@ -3172,22 +3172,22 @@ button {
   min-width: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
   background: #fff;
   border: 2px solid var(--color-olive);
   border-radius: var(--radius-md);
   height: 48px;
-  padding: 0 0.75rem;
+  padding: 0 0.85rem 0 0;
   cursor: text;
 }
 
-/* "30 invitados" se centra como conjunto: el campo mide lo justo de las cifras (lo ajusta app.js) */
+/* "invitados" fijo contra el borde derecho; el número se centra en el espacio
+   que queda entre el borde izquierdo de la caja y la palabra "invitados" */
 .sim-guests-input {
-  width: 2.4ch;
-  min-width: 1.4ch;
+  flex: 1;
+  min-width: 0;
+  width: auto;
   height: 100%;
-  padding: 0;
+  padding: 0 0.25rem;
   border: none;
   background: transparent;
   font-family: var(--font-serif);
@@ -3207,6 +3207,7 @@ button {
 }
 
 .sim-guests-unit {
+  flex-shrink: 0;
   font-size: 0.88rem;
   color: var(--color-text-secondary);
   font-weight: 500;

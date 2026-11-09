@@ -2562,38 +2562,17 @@ function initMesaDulceSimulator() {
     });
   }
 
-  // La caja del número mide justo lo que ocupan las cifras, así "30 invitados"
-  // se centra como un conjunto dentro del recuadro.
-  const guestsMeasure = document.createElement('span');
-  guestsMeasure.setAttribute('aria-hidden', 'true');
-  guestsMeasure.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;pointer-events:none;';
-  document.body.appendChild(guestsMeasure);
-  function fitGuestsInput() {
-    const cs = getComputedStyle(guestsInput);
-    guestsMeasure.style.fontFamily = cs.fontFamily;
-    guestsMeasure.style.fontSize = cs.fontSize;
-    guestsMeasure.style.fontWeight = cs.fontWeight;
-    guestsMeasure.style.fontVariantNumeric = cs.fontVariantNumeric;
-    guestsMeasure.textContent = String(guestsInput.value || '0');
-    guestsInput.style.width = `${Math.ceil(guestsMeasure.getBoundingClientRect().width) + 2}px`;
-  }
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitGuestsInput);
-
   function updateGuestsValue(newVal) {
     const raw = parseInt(newVal, 10);
     const clamped = Math.max(1, Math.min(500, isNaN(raw) ? 30 : raw));
     simState.guests = clamped;
     guestsInput.value = clamped;
-    fitGuestsInput();
     simState.overrides = { justo: null, clasico: null, abundante: null };
     syncPresetChips(clamped);
     renderSimulatorProposals();
   }
 
-  fitGuestsInput();
-
   guestsInput.addEventListener('input', (e) => {
-    fitGuestsInput();
     const raw = parseInt(e.target.value, 10);
     if (!isNaN(raw) && raw >= 1) {
       simState.guests = Math.min(500, raw);
