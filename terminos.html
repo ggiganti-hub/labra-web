@@ -71,6 +71,9 @@
   <!-- Tipografías de Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Precarga de las fuentes principales (latin) para que el texto no salte al cargar -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://fonts.gstatic.com/s/outfit/v15/QGYvz_MVcBeNP4NJtEtqUYLknw.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap">
 
   <!-- Estilos del Sitio -->
@@ -89,7 +92,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="/" class="brand-logo-wrap" aria-label="LABRA Pastelería - Ir al inicio">
-        <img src="assets/images/logo-web.png" alt="LABRA" class="brand-logo-img">
+        <img src="assets/images/logo-web.png" alt="LABRA" class="brand-logo-img" width="800" height="295">
         <span class="brand-subtitle">PASTELERÍA</span>
       </a>
 
@@ -281,7 +284,7 @@
   <footer class="site-footer">
     <div class="container footer-minimal-inner">
       <div class="footer-left">
-        <img src="assets/images/logo-web.png" alt="LABRA" class="footer-brand-logo">
+        <img src="assets/images/logo-web.png" alt="LABRA" class="footer-brand-logo" width="800" height="295">
         <p class="footer-desc">
           Pastelería artesanal en Caballito, Buenos Aires.
         </p>

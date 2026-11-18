@@ -82,6 +82,9 @@
   <!-- Optimización de Rendimiento y Core Web Vitals (LCP / Tipografías) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Precarga de las fuentes principales (latin) para que el texto no salte al cargar -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgEM86xQ.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://fonts.gstatic.com/s/outfit/v15/QGYvz_MVcBeNP4NJtEtqUYLknw.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/images/products/torta-rogel.jpg" fetchpriority="high">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Fraunces:opsz,wght,SOFT@9..144,600,100&display=swap">
   
@@ -148,7 +151,7 @@
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "5.0",
-      "reviewCount": "71",
+      "reviewCount": "91",
       "bestRating": "5",
       "worstRating": "1"
     },
@@ -185,26 +188,6 @@
               "@type": "Brand",
               "name": "LABRA"
             },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "5.0",
-              "reviewCount": "71",
-              "bestRating": "5",
-              "worstRating": "1"
-            },
-            "review": {
-              "@type": "Review",
-              "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": "5",
-                "bestRating": "5"
-              },
-              "author": {
-                "@type": "Person",
-                "name": "Carolina Pla"
-              },
-              "reviewBody": "Excelente sabor y muy linda presentación de todas las tortas. El lemon pie mi favorito, pero muy recomendables todas. Los vuelvo a elegir sin dudas!"
-            },
             "offers": {
               "@type": "Offer",
               "price": "60000",
@@ -229,26 +212,6 @@
             "brand": {
               "@type": "Brand",
               "name": "LABRA"
-            },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "5.0",
-              "reviewCount": "71",
-              "bestRating": "5",
-              "worstRating": "1"
-            },
-            "review": {
-              "@type": "Review",
-              "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": "5",
-                "bestRating": "5"
-              },
-              "author": {
-                "@type": "Person",
-                "name": "Antonella Di Giacomo"
-              },
-              "reviewBody": "Riquísimo todo! Súper recomendable! Encargué 2 tortas para mi cumple (cheesecake y chocotorta) y estaban increíbles! Todos repitieron!"
             },
             "offers": {
               "@type": "Offer",
@@ -275,26 +238,6 @@
               "@type": "Brand",
               "name": "LABRA"
             },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "5.0",
-              "reviewCount": "71",
-              "bestRating": "5",
-              "worstRating": "1"
-            },
-            "review": {
-              "@type": "Review",
-              "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": "5",
-                "bestRating": "5"
-              },
-              "author": {
-                "@type": "Person",
-                "name": "Milagros Pérez Capristo"
-              },
-              "reviewBody": "Excelente. Riquísimo. No falla! Probé las tortas, son espectaculares, rendidoras y se nota lo artesanal y fresco. Recomiendo!!"
-            },
             "offers": {
               "@type": "Offer",
               "price": "65000",
@@ -320,26 +263,6 @@
               "@type": "Brand",
               "name": "LABRA"
             },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "5.0",
-              "reviewCount": "71",
-              "bestRating": "5",
-              "worstRating": "1"
-            },
-            "review": {
-              "@type": "Review",
-              "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": "5",
-                "bestRating": "5"
-              },
-              "author": {
-                "@type": "Person",
-                "name": "Laura Bettina Yoghurtchian"
-              },
-              "reviewBody": "Excelente producto, rico, prolijo, un toque dulce y elegante para compartir. 100% recomendable!"
-            },
             "offers": {
               "@type": "Offer",
               "price": "60000",
@@ -364,26 +287,6 @@
             "brand": {
               "@type": "Brand",
               "name": "LABRA"
-            },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "5.0",
-              "reviewCount": "71",
-              "bestRating": "5",
-              "worstRating": "1"
-            },
-            "review": {
-              "@type": "Review",
-              "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": "5",
-                "bestRating": "5"
-              },
-              "author": {
-                "@type": "Person",
-                "name": "Sandra Bootz"
-              },
-              "reviewBody": "Super recomendable! Espectacular presentación y sabores de Shots! Riquísimos, mercadería casera y fresca. Altamente recomendable!"
             },
             "offers": {
               "@type": "Offer",
@@ -478,7 +381,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="#" class="brand-logo-wrap" aria-label="LABRA Pastelería">
-        <img src="assets/images/logo-web.png" alt="LABRA" class="brand-logo-img">
+        <img src="assets/images/logo-web.png" alt="LABRA" class="brand-logo-img" width="800" height="295">
         <span class="brand-subtitle">PASTELERÍA</span>
       </a>
 
@@ -810,7 +713,7 @@
                   <svg viewBox="0 0 24 24" class="elf-star-icon" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                   <svg viewBox="0 0 24 24" class="elf-star-icon" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                 </div>
-                <span class="elf-count">(71)</span>
+                <span class="elf-count">(91)</span>
               </div>
             </div>
             <div class="elf-header-right">
@@ -943,7 +846,7 @@
   <footer class="site-footer">
     <div class="container footer-minimal-inner">
       <div class="footer-left">
-        <img src="assets/images/logo-web.png" alt="LABRA" class="footer-brand-logo">
+        <img src="assets/images/logo-web.png" alt="LABRA" class="footer-brand-logo" width="800" height="295">
         <p class="footer-desc">
           Pastelería artesanal en Caballito, Buenos Aires.
         </p>
