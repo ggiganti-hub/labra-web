@@ -242,21 +242,6 @@ const PRODUCTS = [
     badgeType: 'badge-olive'
   },
   {
-    id: 'cheesecake-keto',
-    name: 'Cheesecake Keto',
-    category: 'keto',
-    price: 60000,
-    priceDisplay: '$60.000',
-    shortDesc: 'Crema de queso y frutos rojos (sin harinas ni azúcar agregada).',
-    longDesc: 'Crema de queso y frutos rojos (sin harinas ni azúcar agregada).',
-    ingredients: ['Crema de queso', 'Frutos rojos (sin harinas ni azúcar agregada)'],
-    yield: 'Diámetro 22 cm · Rinde de 10 a 12 porciones',
-    storage: 'Conservar en la heladera hasta 4 días. Retirar 15 min antes de consumir.',
-    image: 'assets/images/products/torta-cheesecake-keto.jpg',
-    badges: ['Sin Harinas', 'Sin Azúcar Agregada', 'Keto Friendly'],
-    badgeType: 'badge-keto'
-  },
-  {
     id: 'vasitos-chocotorta',
     name: 'Vasitos Chocotorta (Caja x 25)',
     category: 'vasitos',
