@@ -8,31 +8,48 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
-  <!-- Google tag (gtag.js) - Google Analytics 4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWPDBJZ0EX"></script>
+  <!-- Medición: Google Analytics 4, Meta Pixel (conjunto "Labra Web") y Metricool.
+       Las funciones gtag/fbq quedan listas al instante y los eventos se encolan;
+       los scripts se descargan 2 s después de que la página terminó de cargar,
+       o antes si la persona toca, escribe o hace scroll (velocidad en celular, 2026-11-18). -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-SWPDBJZ0EX');
-  </script>
 
-  <!-- Meta Pixel (conjunto de datos "Labra Web") -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    !function(f){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];}(window);
     fbq('init', '1782093576201818');
     fbq('track', 'PageView');
-  </script>
 
-  <!-- Metricool Tracker -->
-  <script>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:"88a2afc5c38d543d46685d82d41457b6"})});</script>
+    (function () {
+      var started = false;
+      var triggers = ['scroll', 'pointerdown', 'keydown', 'touchstart'];
+      var opts = { passive: true, once: true };
+      function add(src, onload) {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = src;
+        if (onload) s.onload = onload;
+        document.head.appendChild(s);
+      }
+      function start() {
+        if (started) return;
+        started = true;
+        triggers.forEach(function (e) { removeEventListener(e, start, opts); });
+        add('https://www.googletagmanager.com/gtag/js?id=G-SWPDBJZ0EX');
+        add('https://connect.facebook.net/en_US/fbevents.js');
+        add('https://tracker.metricool.com/resources/be.js', function () {
+          if (window.beTracker) beTracker.t({ hash: '88a2afc5c38d543d46685d82d41457b6' });
+        });
+      }
+      triggers.forEach(function (e) { addEventListener(e, start, opts); });
+      if (document.readyState === 'complete') setTimeout(start, 2000);
+      else addEventListener('load', function () { setTimeout(start, 2000); });
+    })();
+  </script>
 
   <!-- SEO Primario -->
   <title>Términos, Condiciones y Políticas de Pedidos · LABRA Pastelería</title>
