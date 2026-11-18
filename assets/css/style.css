@@ -4,6 +4,30 @@
    Estilo: Minimalista, cálido, editorial y enfocado en la calidad
    ========================================================================== */
 
+/* Letra de reemplazo con las medidas de Playfair Display: mientras carga la fuente
+   real, Georgia ocupa el mismo ancho y el título no "salta" (medido el 2026-11-18). */
+@font-face {
+  font-family: 'Playfair Fallback';
+  src: local('Georgia');
+  font-style: normal;
+  font-weight: 400 900;
+  size-adjust: 89.3%;
+  ascent-override: 121%;
+  descent-override: 28%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Playfair Fallback';
+  src: local('Georgia Italic'), local('Georgia-Italic'), local('Georgia');
+  font-style: italic;
+  font-weight: 400 900;
+  size-adjust: 93.5%;
+  ascent-override: 116%;
+  descent-override: 27%;
+  line-gap-override: 0%;
+}
+
 :root {
   /* Marca: Verde Oliva Artesanal */
   --color-olive-dark: #35402E;
@@ -38,7 +62,7 @@
   --color-keto-bg: #ECFDF5;
 
   /* Tipografías */
-  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-serif: 'Playfair Display', 'Playfair Fallback', Georgia, serif;
   --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   /* Sombras y Bordes */
