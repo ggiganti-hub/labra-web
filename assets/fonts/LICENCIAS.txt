@@ -1,0 +1,7 @@
+Fuentes de la web de LABRA (subconjunto "latin", descargadas de Google Fonts el 2026-11-18)
+
+- Outfit — SIL Open Font License 1.1 — https://fonts.google.com/specimen/Outfit
+- Playfair Display (normal e itálica) — SIL Open Font License 1.1 — https://fonts.google.com/specimen/Playfair+Display
+- Fraunces (600, eje SOFT 100) — SIL Open Font License 1.1 — https://fonts.google.com/specimen/Fraunces
+
+La licencia OFL permite usarlas, incrustarlas y servirlas desde un sitio web.

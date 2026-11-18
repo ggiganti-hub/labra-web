@@ -1616,7 +1616,10 @@ function initHeroSlider() {
 
   // Inicializar en primera diapositiva y reproducir
   updateHeroSlide(0);
-  startAutoplay();
+  // El carrusel empieza a rotar recién cuando la página terminó de cargar,
+  // así no compite con la primera pintura (velocidad en celular).
+  if (document.readyState === 'complete') startAutoplay();
+  else window.addEventListener('load', startAutoplay, { once: true });
 }
 
 // Navegar directamente a la categoría Cuchareables desde el Hero Banner
