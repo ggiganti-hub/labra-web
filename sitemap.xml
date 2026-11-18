@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.labra.com.ar/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     
@@ -52,11 +52,6 @@
       <image:loc>https://www.labra.com.ar/assets/images/products/torta-manzana.jpg</image:loc>
       <image:title>Tarta de Manzana Especiada y Crumble de Almendras · LABRA</image:title>
       <image:caption>Manzanas verdes caramelizadas, masa especiada con canela y crumble crocante con almendras.</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://www.labra.com.ar/assets/images/products/torta-cheesecake-keto.jpg</image:loc>
-      <image:title>Cheesecake Keto sin Harinas ni Azúcar · Pastelería Caballito</image:title>
-      <image:caption>Tarta de queso horneada estilo vasco, sin harinas refinadas ni azúcar agregada, con frutos rojos.</image:caption>
     </image:image>
 
     <image:image>
